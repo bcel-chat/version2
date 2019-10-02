@@ -1,0 +1,40 @@
+@import "../variables.scss";
+
+#room {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.chatroom-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: #eff2f7;
+    overflow: hidden;
+}
+
+/* ========================================================= */
+#body {
+    flex: 1 1 auto;
+    position: relative;
+    order: 2;
+    overflow: hidden;
+}
+
+// ================================== Footer ==========================
+
+#footer {
+    flex: 0 0 4rem;
+    order: 3;
+    height: auto;
+
+    @media screen and (min-width: 760px) {
+        padding: 0 10%;
+    }
+}

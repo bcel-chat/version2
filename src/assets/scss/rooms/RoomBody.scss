@@ -1,0 +1,168 @@
+@import "../variables.scss";
+
+#room-body {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    // scroll-behavior: smooth;
+
+    @media screen and (min-width: 760px) {
+        padding: 0 10%;
+    }
+}
+
+.room-inside {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.bb-space {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .room-logo {
+        position: relative;
+        width: 15rem;
+        height: 15rem;
+        margin: 1.5rem;
+
+        .logo {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+}
+
+.bubble-wrapper {
+    padding-bottom: 1.2rem;
+}
+
+.new>.bubble-container {
+    margin-top: .6rem;
+}
+
+.in.bubble-container {
+    justify-content: flex-start;
+}
+
+.out.bubble-container {
+    justify-content: flex-end;
+}
+
+.bubble-container {
+    flex: 0 0 auto;
+    display: flex;
+    padding-left: .6rem;
+    padding-right: .6rem;
+
+    .bubble-box-inside {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.bb-profile-box {
+    position: relative;
+    display: flex;
+    width: auto;
+}
+
+.bb-avatar {
+    flex: 0 0 auto;
+    position: relative;
+    margin-right: .6rem;
+
+    .bb-avatar-inside {
+        position: relative;
+        height: 2.500rem;
+        width: 2.500rem;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
+
+.bb-name-time.in {
+    text-align: right;
+}
+
+.bb-name-time.out {
+    text-align: left;
+}
+
+.bb-name-time {
+    flex: 1 1 auto;
+    position: relative;
+    font-size: 0.750rem;
+    color: $secondary-color;
+}
+
+.msg-box {
+    position: relative;
+    margin-left: 3.125rem;
+
+    .msg-inside {
+        padding: 0.563rem .750rem .500rem .688rem;
+        box-shadow: 0 .1rem .3rem -.2rem rgba(0, 0, 0, .5);
+
+        .msg-box {
+            position: relative;
+            display: inline;
+            flex-grow: 0;
+            flex-shrink: 0;
+            overflow: visible;
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+            font-size: 0.875rem;
+            line-height: 1.4rem;
+            letter-spacing: -0.2px;
+            align-self: stretch;
+            font-weight: 400;
+            user-select: text;
+            cursor: text;
+        }
+    }
+}
+
+.msg-box.out {
+    margin-top: 0;
+
+    .msg-inside {
+        color: $secondary-color;
+        background-color: white;
+        border-radius: 0.625rem 0 0.625rem 0.625rem;
+    }
+}
+
+.msg-box.in {
+    margin-top: -1.28rem;
+
+    .msg-inside {
+        color: white;
+        background: rgb(236, 121, 121);
+        background: linear-gradient(145deg, rgba(236, 121, 121, 1) 0%, rgba(135, 76, 76, 1) 87%);
+        border-radius: 0 0.625rem 0.625rem;
+    }
+}

@@ -1,0 +1,193 @@
+@import "../variables.scss";
+
+#contact {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: white
+}
+
+.content-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.content-group {
+    position: relative;
+    margin-top: -0.063rem;
+    overflow: hidden;
+}
+
+.list-group {
+    position: relative;
+
+    .alpha-box {
+        position: relative;
+        padding: 1rem 0 0 1rem;
+
+        .alpha {
+            font-size: 1.4rem;
+            font-weight: 700;
+            line-height: 100%;
+            margin-right: 1rem;
+            border-bottom: solid 0.063rem rgba(136, 152, 170, .12);
+        }
+    }
+
+}
+
+.item-inbox {
+    position: relative;
+    display: flex;
+    height: 5rem;
+    color: $secondary-color;
+    overflow: hidden;
+}
+
+.avatar-inbox-panel {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    padding: 0 .8rem 0 1.2rem;
+}
+
+.avatar-inbox {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 .15rem .6rem -.2rem rgba(0, 0, 0, .8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .avatar {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .avatar-default {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+.inbox-detail {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    border-top: solid .01rem #dbdbdb;
+    overflow: hidden;
+}
+
+
+.name-time-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+    line-height: 100%;
+    overflow: hidden;
+}
+
+.sender-name-box {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #707070;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.time-box {
+    margin-top: .12rem;
+    margin-left: .2rem;
+    font-size: .750rem;
+}
+
+.msg-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+    margin-top: .3rem;
+    width: 100%;
+    font-size: .8rem;
+}
+
+.msg {
+    flex: 1 1 auto;
+    color: #707070;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+
+.send-box {
+    flex: 0 0 3rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.2rem;
+    margin-left: .8rem;
+
+    .send {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .3rem .6rem;
+        background-color: #0bca0b;
+        color: white;
+        border-radius: 2rem;
+        width: 5rem;
+        text-align: center;
+        font-size: .8rem;
+        box-shadow: 0 .1rem .5rem -.05rem rgba(16, 231, 27, .8);
+
+        &.border {
+            background-color: white;
+            border: solid .05rem #0bca0b;
+            color: #0bca0b;
+            box-shadow: none;
+            pointer-events: none;
+            padding-right: .8rem;
+
+            .ic {
+                display: inline-block;
+            }
+
+            .st {
+                display: inline-block;
+            }
+
+            .sd {
+                display: none;
+            }
+        }
+
+        .ic {
+            margin-right: .3rem;
+            font-size: 1.02rem;
+            display: none;
+        }
+
+        .st {
+            display: none;
+        }
+
+        .sd {
+            display: inline-block;
+        }
+
+    }
+}

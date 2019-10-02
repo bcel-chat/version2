@@ -1,0 +1,4 @@
+VUE_APP_ACCESS_API=http://localhost:8011/api
+VUE_APP_DEEPSTREAM_HOST=ws://10.0.5.170:6020/bcelconnect
+VUE_APP_PICTURE_PROFILE=http://localhost/picture/profile/
+VUE_APP_PICTURE_MSG=http://localhost/picture/msg/

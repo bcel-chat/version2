@@ -1,0 +1,171 @@
+@import "../variables.scss";
+
+#room-footer {
+    position: relative;
+    flex: none;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.footer-box {
+    padding: 0.313rem 0.625rem;
+    display: flex;
+    position: relative;
+    max-width: 100%;
+    height: 100%;
+    align-items: flex-end;
+    box-sizing: border-box;
+    z-index: 2;
+
+    // @media screen and (min-width: 760px) {
+    //     margin: 0 6rem;
+    // }
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0rem 0.113rem 0.425rem -0.225rem rgba(136, 152, 170, .8);
+    border-radius: 1.5rem;
+    padding: .5rem;
+    margin: 0.313rem 0.313rem 0.313rem 0;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    font-size: 0.938rem;
+    font-weight: 400;
+    line-height: 1.3rem;
+    min-height: 1.450rem;
+    min-width: 0;
+    width: inherit;
+    will-change: width;
+    transition: all .2s;
+}
+
+.input-box.reply {
+    border-radius: .6rem .6rem 1.5rem 1.5rem;
+
+    .input-box-inside {
+        margin-top: .5rem;
+    }
+
+}
+
+
+
+.input-box-inside {
+    display: flex;
+    flex: 1 1 auto;
+    font-size: 0.938rem;
+    font-weight: 400;
+    line-height: 1.3rem;
+    min-height: 1.450rem;
+    min-width: 0;
+
+    .emo-icon {
+        flex: 0 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding: 0 .1rem;
+
+        i {
+            color: $semi-secondary-color;
+            font-size: 1.7rem;
+        }
+
+        .att {
+            transform: rotate(-40deg)
+        }
+    }
+
+    .left {
+        margin-right: .6rem;
+    }
+
+    .right {
+        margin-left: .6rem;
+    }
+}
+
+// @media screen and (min-width: 760px) {
+//     .input-box {
+//         border-radius: .6rem;
+//     }
+// }
+
+.input-inside {
+    position: relative;
+    /* flex: 1;
+    display: flex; */
+    flex: 1 1 auto;
+    overflow: hidden;
+}
+
+
+.input {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6rem;
+    max-height: 6.250rem;
+    min-height: 1.750rem;
+    outline: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: relative;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    z-index: 1;
+    border-left: .1px solid transparent;
+    color: black;
+    caret-color: $primary-color;
+
+}
+
+.emo-box {
+    position: relative;
+    padding: 0.313rem 0;
+    margin-left: .1rem;
+}
+
+.emo-ico {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 2.625rem;
+    width: 1.625rem;
+    transition: width .3s;
+    color: rgba(38, 50, 56, 0.45);
+}
+
+.circle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.680rem;
+    height: 2.680rem;
+    border-radius: 50%;
+    font-size: .8rem;
+    background-color: $primary-color;
+    box-shadow: 0rem 0.113rem 0.425rem -0.225rem rgba(238, 14, 14, 1);
+
+    i {
+        color: white;
+        font-size: 1.2rem;
+    }
+}
+
+.hint {
+    color: #a0a0a0;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    pointer-events: none;
+    position: absolute;
+    top: 0px;
+    transition: opacity .08s linear;
+    user-select: none;
+    z-index: 2;
+}

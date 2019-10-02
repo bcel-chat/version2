@@ -1,0 +1,218 @@
+@import "../variables.scss";
+
+#group-member {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 3;
+    background-color: white;
+    pointer-events: auto;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+
+// ===================== Header =======================
+
+.header {
+    position: relative;
+    flex: 0 0 3.6rem;
+    order: 1;
+    background-color: $info-color;
+    border-bottom: solid 0.063rem rgba(136, 152, 170, .12);
+}
+
+.header-box {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 1rem;
+}
+
+.back-button {
+    color: $primary-color;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    width: 22px;
+
+    i {
+        animation-duration: .3s;
+        transform: rotate(90deg)
+    }
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-left: 1rem;
+    color: $secondary-color;
+    line-height: 100%;
+
+    .main {
+        margin-top: .8rem;
+        align-self: flex-end;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+
+    .sub {
+        margin-top: .4rem;
+        font-size: .82rem;
+    }
+}
+
+.control-box {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: flex-end;
+    height: 100%;
+}
+
+.button-box {
+    display: flex;
+    height: 100%;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: .2rem;
+}
+
+.ico-box {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    padding: .4rem;
+    border-radius: 50%;
+    transition: all .2s;
+}
+
+.ico-box>.material-icons {
+    color: $primary-color;
+}
+
+.mobile>.header>.header-box>.control-box>.button-box>.ico-box:active {
+    background-color: rgba(239, 83, 83, .3);
+}
+
+.desktop>.header>.header-box>.control-box>.button-box>.ico-box:hover>.material-icons {
+    color: $primary-color;
+}
+
+.desktop>.header>.header-box>.control-box>.button-box>.ico-box:active {
+    background-color: rgba(239, 83, 83, .3);
+}
+
+.search-box {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #f8eaea;
+}
+
+.search-icon-box {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+}
+
+.search-input-box {
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.search {
+    position: relative;
+    width: 100%;
+    height: 2rem;
+    padding: .1rem 1rem;
+    box-sizing: border-box;
+    font-size: 1.2rem;
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+.material-icons {
+    color: $secondary-color;
+    line-height: 100%;
+    font-size: 1.4rem !important;
+}
+
+// ===================== Member Section =============
+
+.members-section {
+    position: relative;
+    flex: 0 0 auto;
+    order: 2;
+    overflow: hidden;
+}
+
+.members-section-inside {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
+.members-box {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 10rem;
+}
+
+// ===================== Body =======================
+
+.content {
+    position: relative;
+    flex: 1 1 auto;
+    order: 3;
+    background-color: white;
+    overflow: hidden;
+}
+
+// ==================== Footer =========================
+
+#footer {
+    position: relative;
+    flex: 0 0 3rem;
+    order: 4;
+    animation-duration: .4s;
+    background-color: $info-color;
+
+    .btn-next {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background-color: $primary-color;
+
+        i.material-icons {
+            font-size: 2.5rem !important;
+            color: white !important;
+        }
+    }
+
+    @media screen and (min-width: 760px) {
+        flex: 0 0 3.875rem;
+    }
+}

@@ -1,0 +1,77 @@
+@import "../variables.scss";
+
+.container {
+    flex: 0 0 auto;
+    display: flex;
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    position: relative;
+    box-shadow: 0 .1rem .3rem -.05rem rgba(0, 0, 0, .2);
+    border-radius: 1rem;
+
+    .reply-box {
+        width: 100%;
+        overflow: hidden;
+
+        .reply-side {
+            padding: 0.563rem 0.75rem 0 0.6rem;
+            position: relative;
+
+            .inside {
+                position: relative;
+                background-color: #EEF7FB;
+                border-radius: 0.3rem 0.3rem 0.3rem 0.3rem;
+                overflow: hidden;
+
+                &::before {
+                    position: absolute;
+                    content: "";
+                    width: 0.3rem;
+                    height: 100%;
+                    background-color: $primary-color;
+                }
+
+                .title-name {
+                    color: $primary-color;
+                    font-weight: 600;
+                    margin-top: .3rem;
+                    padding: 0 .8rem;
+                    font-size: 1rem;
+                }
+
+                .title-msg {
+                    margin-bottom: .3rem;
+                    padding: 0 .8rem;
+                    font-size: .9rem;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
+                    overflow: auto;
+                    max-height: 4rem;
+                }
+            }
+        }
+
+        .msg-inside {
+            // padding: 0.563rem 0.75rem 0.5rem 0.688rem;
+            position: relative;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+
+
+            .msg {
+                font-size: 0.875rem;
+                margin: .6rem .6rem;
+                outline: none;
+                max-height: 3rem;
+                overflow: auto;
+            }
+
+            [contenteditable=true]:empty:before {
+                content: attr(placeholder);
+                display: block;
+                color: $secondary-color;
+                cursor: text;
+            }
+        }
+    }
+}

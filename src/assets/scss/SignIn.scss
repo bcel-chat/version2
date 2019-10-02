@@ -1,0 +1,500 @@
+@import "./variables.scss";
+
+#signin {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: white;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: auto
+}
+
+.log-item {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    // @media screen and (min-width: 760px) {
+    //     width: 70rem;
+    //     height: 40rem;
+    //     border-radius: 2rem;
+    // }
+}
+
+.ball-item-box {
+    position: absolute;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    @media screen and (min-width: 960px) {
+        display: flex;
+        width: 70rem;
+        height: 40rem;
+        border-radius: 2rem;
+    }
+}
+
+.ball-slite {
+    position: relative;
+    flex: 0 0 50%;
+    height: 100%;
+
+    &.sleft {
+        position: relative;
+        height: 100%;
+        width: 100%;
+
+        .ball {
+            position: absolute;
+            border-radius: 50%;
+            z-index: 5;
+
+            &.b1 {
+                position: absolute;
+                top: 0;
+                right: 0;
+                width: 18rem;
+                height: 18rem;
+                transform: translate(-1.5rem, -5rem);
+                background: rgb(204, 9, 9);
+                // background: linear-gradient(117deg, rgba(204, 9, 9, 1) 10%, rgb(247, 236, 236) 100%);
+                background: rgb(100, 6, 177);
+                background: radial-gradient(circle, rgba(255, 255, 255, .3) 10%, rgba(255, 255, 255, 0.1) 80%);
+            }
+
+            &.b2 {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 12rem;
+                height: 12rem;
+                transform: translate(-5rem, 7rem);
+                // background: rgb(245, 215, 215);
+                // background: linear-gradient(55deg, rgb(252, 252, 252) 0%, rgba(204, 9, 9, 1) 100%);
+                background: rgb(100, 6, 177);
+                background: radial-gradient(circle, rgba(255, 255, 255, .3) 10%, rgba(255, 255, 255, 0.1) 80%);
+            }
+
+            &.b3 {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5rem;
+                height: 5rem;
+                transform: translate(14rem, 22rem);
+                // background: rgb(204, 9, 9);
+                // background: linear-gradient(117deg, rgba(204, 9, 9, 1) 0%, rgb(255, 255, 255) 100%);
+                background: rgb(100, 6, 177);
+                background: radial-gradient(circle, rgba(255, 255, 255, .5) 10%, rgba(255, 255, 255, 0.1) 80%);
+            }
+
+            &.b4 {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 8rem;
+                height: 8rem;
+                transform: translate(1.8rem, -8rem);
+                // background: rgb(204, 9, 9);
+                // background: linear-gradient(117deg, rgba(204, 9, 9, 1) 0%, rgb(255, 255, 255) 100%);
+                background: rgb(100, 6, 177);
+                background: radial-gradient(circle, rgba(255, 255, 255, .4) 10%, rgba(255, 255, 255, 0.1) 80%);
+            }
+
+            &.b5 {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 10rem;
+                height: 10rem;
+                transform: translate(4rem, 3rem);
+                // background: rgb(177, 6, 6);
+                // background: linear-gradient(122deg, rgb(223, 12, 12) 20%, rgb(255, 255, 255) 100%);
+                background: rgb(100, 6, 177);
+                background: radial-gradient(circle, rgba(255, 255, 255, .5) 10%, rgba(255, 255, 255, 0.1) 80%);
+            }
+        }
+    }
+}
+
+.text-box {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    z-index: 10;
+    color: white;
+
+    .title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        text-shadow: .2rem .2rem .25rem rgba(0, 0, 0, .3);
+    }
+
+    .subtitle {
+        font-size: 2rem;
+        font-weight: 500;
+        text-shadow: .2rem .2rem .25rem rgba(0, 0, 0, .3);
+    }
+}
+
+.log-item-inside {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+
+    @media screen and (min-width: 760px) {
+        overflow: auto;
+
+        &.log-mobile {
+            height: 100%;
+            overflow: auto;
+            margin: 0;
+        }
+
+        &.log-desktop {
+            margin: 0 2rem;
+            width: 70rem;
+            height: 40rem;
+            border-radius: 2rem;
+            box-shadow: 0rem .15rem .8rem -.15rem rgba(0, 0, 0, .3);
+        }
+    }
+}
+
+.splite {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    &._left {
+        display: none;
+        position: relative;
+        background-color: $primary-color;
+
+        @media screen and (min-width: 960px) {
+            display: block;
+        }
+
+        .sign-bg-box {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+
+            .bg {
+                object-fit: cover;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+}
+
+.app-signin {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.signin-bg {
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.signin-panel {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, .75)
+}
+
+.signin-logo-box {
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .signin-logo {
+        flex: 1 1 auth;
+        position: relative;
+        width: 5rem;
+        height: auto;
+        transition: all .4s;
+
+        img {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+    }
+
+    .alert-box {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        flex: 0 0 3rem;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+
+        .alert {
+            line-height: 100%;
+            font-size: 1.5rem;
+            color: #d60c0c;
+        }
+    }
+}
+
+
+
+.signin-box {
+    flex: 1 1 auto;
+    order: 2;
+    display: flex;
+    justify-content: center;
+}
+
+.signin-insider {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 2rem 1rem;
+    width: 100%;
+    align-items: center;
+}
+
+.gp-control {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-radius: .6rem;
+    border: solid 1px rgba(136, 152, 170, .5);
+}
+
+.gp-control.err {
+    border: solid 1px rgba(223, 14, 14, 0.5);
+}
+
+.input-icon-box {
+    display: flex;
+}
+
+.input-ico {
+    position: relative;
+    height: 100%;
+    display: flex;
+    padding: .8rem .8rem;
+}
+
+
+.input-ico>i {
+    font-size: 1.2rem;
+    color: #636363;
+}
+
+input {
+    position: relative;
+    width: 100%;
+    flex: 1 1 auto;
+    outline: none;
+    border: none;
+    border-radius: 0 .6rem .6rem 0;
+    padding: .6rem .6rem .6rem 0rem;
+    margin-top: .1rem;
+    margin-bottom: .1rem;
+    font-size: 1.2rem;
+}
+
+
+.gp-control>label {
+    position: absolute;
+    left: 2.6rem;
+    transition: all .2s;
+    pointer-events: none;
+    color: #636363;
+    font-size: 1.2rem;
+}
+
+.gp-control>input:focus+label {
+    transform: translateY(-2.2rem);
+    font-size: 1rem;
+    color: #474747;
+    left: .6rem;
+    color: rgba(226, 19, 19, 0.698);
+}
+
+.gp-control>.floating-top {
+    transform: translateY(-2.2rem);
+    font-size: 1rem;
+    color: #474747;
+    left: .6rem;
+    color: rgba(226, 19, 19, 0.698);
+}
+
+.btn-login {
+    position: relative;
+    width: 100%;
+    height: 2.8rem;
+    outline: none;
+    border: solid 1px rgba(226, 19, 19, .4);
+    border-radius: .6rem;
+    background-color: $primary-color;
+    color: white;
+    transition: all .2s;
+    font-size: 1.2rem;
+}
+
+.btn-login:active {
+    color: rgba(226, 19, 19, 0.698);
+    background-color: white;
+}
+
+
+.btn-login-desktop {
+    position: relative;
+    width: 100%;
+    height: 2.8rem;
+    outline: none;
+    border: solid 1px rgba(226, 19, 19, .4);
+    border-radius: .6rem;
+    color: white;
+    transition: all .2s;
+    font-size: 1.2rem;
+    margin-top: 2rem;
+    box-shadow: 0rem .4rem .4rem -.4rem rgba(255, 0, 0, 1);
+    transform: translateY(0rem);
+    color: rgba(226, 19, 19, 0.698);
+    background-color: white;
+    border-radius: 2rem;
+    width: 10rem;
+}
+
+.btn-login-desktop:hover {
+    box-shadow: 0rem .65rem .65rem -.3rem rgba(255, 0, 0, 1);
+    /* box-shadow: 0rem .4rem .8rem -.3rem rgba(97, 96, 96, .35); */
+    transform: translateY(-.3rem)
+}
+
+.btn-login-desktop:active {
+    box-shadow: 0rem .4rem .4rem -.4rem rgba(255, 0, 0, 1);
+    transform: translateY(0rem);
+    color: rgba(226, 19, 19, 0.698);
+    background-color: white;
+}
+
+
+
+#signin-footer {
+    position: relative;
+    order: 3;
+    min-height: 2.5rem;
+}
+
+.footer-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    color: #B5B5B5;
+    font-size: .8rem;
+}
+
+.copyright {
+    margin-right: .3rem;
+}
+
+.band {
+    margin-left: .3rem;
+}
+
+@media screen and (min-width: 760px) {
+    .signin-box {
+        flex: 2 2 auto;
+    }
+
+    .signin-insider {
+        width: 30rem;
+        padding: 2rem 2rem;
+    }
+}
+
+@media screen and (min-height: 300px) {
+    .signin-logo-box {
+        .signin-logo {
+            position: relative;
+            width: 10rem;
+            height: auto;
+        }
+    }
+
+    .signin-insider {
+        width: 30rem;
+        padding: 2rem 2rem 1rem;
+    }
+}
+
+@media screen and (min-height: 640px) {
+    .signin-logo-box {
+        .signin-logo {
+            position: relative;
+            width: 16rem;
+            height: auto;
+        }
+    }
+}
+
+@media screen and (min-height: 812px) {
+    .signin-logo-box {
+        .signin-logo {
+            position: relative;
+            width: 15rem;
+            height: auto;
+        }
+    }
+}
+
+@media screen and (min-width: 760px) {
+    .signin-logo-box {
+        .signin-logo {
+            position: relative;
+            width: 12rem;
+            height: auto;
+        }
+    }
+}

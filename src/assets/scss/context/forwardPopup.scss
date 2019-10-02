@@ -1,0 +1,151 @@
+@import "@/assets/scss/variables.scss";
+
+#forward-popup {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.panel {
+    position: relative;
+    width: 90%;
+    height: 95%;
+    background-color: white;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-radius: 1rem;
+
+    @media screen and (min-width: 760px) {
+        width: 30rem;
+        height: 80%;
+
+    }
+}
+
+.header {
+    position: relative;
+    flex: 0 0 6rem;
+    width: 100%;
+    padding: 0.6rem 1.2rem 0;
+    display: flex;
+    flex-direction: column;
+
+    .h-item {
+        flex: 1 1 50%;
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .title {
+            width: 100%;
+            color: $secondary-color;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .close {
+            color: $primary-color;
+            padding-top: .4rem;
+        }
+
+        .done {
+            font-size: 1.2rem;
+            color: #49971D;
+        }
+    }
+}
+
+.header-inside {
+    position: relative;
+    height: 100%;
+    border-bottom: solid .1rem #e6e6e6;
+}
+
+.message-box {
+    position: relative;
+    flex: 0 0 auto;
+    width: 100%;
+    padding: 1.2rem;
+}
+
+.search-box {
+    position: relative;
+    flex: 0 0 4rem;
+    width: 100%;
+    padding: 1rem;
+    padding-left: 1.2rem;
+    background-color: #47b6f1;
+
+    .search-inside {
+        display: flex;
+
+        .s-item {
+            flex-grow: 1;
+            overflow: hidden;
+
+            .search {
+                font-size: 1.6rem;
+                height: 100%;
+                width: 100%;
+                background-color: transparent;
+                outline: none;
+                border: none;
+                color: white;
+                white-space: nowrap;
+                word-wrap: break-word;
+                overflow: hidden;
+            }
+
+            [contenteditable=true]:empty:before {
+                content: attr(placeholder);
+                display: block;
+                color: white;
+                cursor: text;
+            }
+        }
+
+        ::placeholder {
+            color: white;
+            opacity: 1;
+        }
+
+        .s-clear {
+            flex: 0 0 auto;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            .clear {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: white;
+                font-size: 1rem;
+            }
+
+        }
+    }
+}
+
+.contact-box {
+    position: relative;
+    flex: 3 1 auto;
+    width: 100%;
+    margin-top: .8rem;
+    padding: 0 1.2rem;
+}

@@ -1,0 +1,106 @@
+@import "../variables.scss";
+
+#extension {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 2;
+  background-color: white;
+  pointer-events: auto;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+// ====================== Card =====================
+
+.card-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-gap: 1rem;
+  padding: 1rem;
+
+  // .router-link-exact-active {
+  //   transform: translateY(-0.4rem);
+  //   box-shadow: 0rem 0.6rem 0.8rem 0.1rem $secondary-shadow-color;
+  // }
+}
+
+.card-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 8rem;
+  overflow: hidden;
+  border: solid 0.04rem $border-color;
+  border-radius: 0.6rem;
+  transition: all 0.1s;
+  box-shadow: 0rem 0.3rem 0.6rem 0.06rem $secondary-shadow-color;
+
+  &:active {
+    transform: translateY(0.2rem);
+    box-shadow: 0rem 0.1rem 0.5rem -0.1rem $secondary-shadow-color;
+  }
+
+  @media screen and (min-width: 760px) {
+    height: 10rem;
+
+    &:hover {
+      transform: translateY(-0.4rem);
+      box-shadow: 0rem 0.6rem 0.8rem 0.1rem $secondary-shadow-color;
+    }
+
+    &:active {
+      transform: none;
+      box-shadow: 0rem 0.1rem 0.5rem -0.1rem $secondary-shadow-color;
+    }
+  }
+}
+
+.card-icon-box {
+  flex: 0 0 6rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  i {
+    margin: .8rem .8rem;
+    font-size: 3rem;
+    color: rgb(30, 179, 179);
+
+    @media screen and (min-width: 760px) {
+      font-size: 3rem;
+    }
+  }
+}
+
+.card-title-box {
+  position: relative;
+  width: 100%;
+  height: 2.5rem;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: $border-color;
+  padding: .2rem .8rem;
+  font-size: .8rem;
+
+  .title_ {
+    position: relative;
+    color: $secondary-color;
+  }
+
+  @media screen and (min-width: 760px) {
+    height: 4.5rem;
+    font-size: 1rem;
+  }
+}
