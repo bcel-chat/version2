@@ -35,6 +35,12 @@
                 </div>
             </div>
         </div>
+        <div class="fi-add-user-content" v-if="checkSaveLoading">
+            <div class="fi-inverse-background"></div>
+            <div class="fi-processing-container text-center">
+                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 150px;" alt="Processing">
+            </div>
+        </div>
         <fi_dialog :config="fi_config"/>
         <fi_approve_dialog :config="approve_config"/>
         <div class="row hide-on-print-mode">
@@ -236,6 +242,7 @@ export default {
   data(){
       return {
         showProducts: false,
+        checkSaveLoading: false,
         showChooseUser: false,
         chooseAll: false,
         selectedUser: [],
@@ -444,6 +451,7 @@ export default {
                     action: () => {
                         this.fi_config['show'] = false;
                         this.customer_info['recieve_users'] = this.selectedUser;
+                        this.checkSaveLoading = true;
                         if(this.customer_info['document_files'].length > 0){
                             const formData = new FormData();
                             for(var i = 0; i < this.customer_info['document_files'].length; i++){
@@ -462,7 +470,22 @@ export default {
                                 requestData['user'] = this.$store.getters['flexible_interest_module/user'];
                                 ds.rpc.make("/bcel/chat/api/flexible/interest/customer/requirement/insert", requestData,(error, result) => {
                                     this.approve_config['show'] = false;
-                                    if(result){
+                                    this.checkSaveLoading = false;
+                                    if(error){
+                                            this.fi_config = {
+                                                show: true,
+                                                title: 'Message',
+                                                message: "Server error while processing",
+                                                buttons: [
+                                                    {
+                                                        text: 'ຕົກລົງ',
+                                                        action: () => {
+                                                            this.fi_config['show'] = false;
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                    } else {
                                         if(result['success']){
                                             this.customer_info['referenceId'] = (result['reference_id'] != 'NO') ? result['reference_id'] : undefined;
                                             window.sessionStorage.setItem('requirement', JSON.stringify(this.customer_info));
@@ -497,24 +520,11 @@ export default {
                                                 ]
                                             }
                                         }
-                                    } else {
-                                        this.fi_config = {
-                                            show: true,
-                                            title: 'Error',
-                                            message: "ເກີດຂໍ້ຜິດພາດໃນຂະນະສົ່ງສົ່ງຂໍ້ມູນ",
-                                            buttons: [
-                                                {
-                                                    text: 'OK',
-                                                    action: () => {
-                                                        this.fi_config['show'] = false;
-                                                    }
-                                                }
-                                            ]
-                                        }
                                     }
                                 })
                             }).catch((error) => {
                                 this.approve_config['show'] = false;
+                                this.checkSaveLoading = false;
                                 this.fi_config = {
                                     show: true,
                                     title: 'Error',
@@ -536,7 +546,22 @@ export default {
                             requestData['user'] = this.$store.getters['flexible_interest_module/user'];
                             ds.rpc.make("/bcel/chat/api/flexible/interest/customer/requirement/insert", requestData,(error, result) => {
                                 this.approve_config['show'] = false;
-                                if(result){
+                                this.checkSaveLoading = false;
+                                if(error){
+                                        this.fi_config = {
+                                            show: true,
+                                            title: 'Message',
+                                            message: "Server error while processing",
+                                            buttons: [
+                                                {
+                                                    text: 'ຕົກລົງ',
+                                                    action: () => {
+                                                        this.fi_config['show'] = false;
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                } else {
                                     if(result['success']){
                                         this.customer_info['referenceId'] = (result['reference_id'] != 'NO') ? result['reference_id'] : undefined;
                                         window.sessionStorage.setItem('requirement', JSON.stringify(this.customer_info));
@@ -570,20 +595,6 @@ export default {
                                                 }
                                             ]
                                         }
-                                    }
-                                } else {
-                                    this.fi_config = {
-                                        show: true,
-                                        title: 'Error',
-                                        message: "ເກີດຂໍ້ຜິດພາດໃນຂະນະສົ່ງສົ່ງຂໍ້ມູນ",
-                                        buttons: [
-                                            {
-                                                text: 'OK',
-                                                action: () => {
-                                                    this.fi_config['show'] = false;
-                                                }
-                                            }
-                                        ]
                                     }
                                 }
                             })
@@ -684,6 +695,24 @@ export default {
 <style lang="scss" scoped>
 * {
     font-family: Phetsarath_OT;
+}
+.fi-inverse-background{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 10;
+    opacity: 0.6;
+}
+.fi-processing-container{
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 50%;
+  margin-top: -50px;
+  z-index: 10;
 }
 img{
     width: 100%;

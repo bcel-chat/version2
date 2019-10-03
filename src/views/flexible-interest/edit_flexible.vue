@@ -1,6 +1,12 @@
 <template>
     <div class="container">
         <fi_dialog :config="fi_config"/>
+        <div class="fi-add-user-content" v-if="checkSaveLoading">
+            <div class="fi-inverse-background"></div>
+            <div class="fi-processing-container text-center">
+                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 150px;" alt="Processing">
+            </div>
+        </div>
         <div v-if="showComment">
             <div class="fi-inverst-edit-background"></div>
             <div class="fi-edit-dialog">
@@ -288,6 +294,7 @@ export default {
       return {
         show: false,
         hover: false,
+        checkSaveLoading: false,
         showLoading: true,
         showProducts: false,
         showComment: false,
@@ -997,8 +1004,24 @@ export default {
         }
       },
     updateRequirement(data){
+        this.checkSaveLoading = true;
         ds.rpc.make("/bcel/chat/api/flexible/interest/customer/requirement/update", data,(error, result) => {
-            if(result){
+            this.checkSaveLoading = false;
+            if(error){
+                    this.fi_config = {
+                        show: true,
+                        title: 'Message',
+                        message: "Server error while processing",
+                        buttons: [
+                            {
+                                text: 'ຕົກລົງ',
+                                action: () => {
+                                    this.fi_config['show'] = false;
+                                }
+                            }
+                        ]
+                    }
+            } else {
                 if(this.new_files.length > 0){
                     this.getDocumentAttach();
                 }
@@ -1016,20 +1039,6 @@ export default {
                         }
                     ]
                 }
-            } else {
-                this.fi_config = {
-                    show: true,
-                    title: 'Update',
-                    message: 'ບັນທືກຂໍ້ມູນລົ້ມເຫຼວ',
-                    buttons: [
-                        {
-                            text: 'ຕົກລົງ',
-                            action: () => {
-                                this.fi_config['show'] = false;
-                            }
-                        }
-                    ]
-                }
             }
         });
     }
@@ -1041,6 +1050,24 @@ export default {
 <style lang="scss" scoped>
 * {
     font-family: Phetsarath_OT;
+}
+.fi-inverse-background{
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 10;
+    opacity: 0.6;
+}
+.fi-processing-container{
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 50%;
+  margin-top: -50px;
+  z-index: 10;
 }
 img.img-loader {
   width: 50px;
@@ -1086,7 +1113,7 @@ img.img-loader {
 .fi-inverst-edit-background {
   top: 0px;
   left: 0px;
-  z-index: 999999999999999999999999999999999999999999998;
+  z-index: 10;
   position: fixed;
   background: black;
   width: 100%;
@@ -1102,7 +1129,7 @@ img.img-loader {
     margin-left: -150px;
     position: fixed;
     color: rgb(165, 164, 164);
-    z-index: 999999999999999999999999999999999999999999999;
+    z-index: 10;
     background: white; //linear-gradient(to bottom right, rgba(243, 195, 189, 0.918) 10%, rgb(202, 86, 94) 200%);
     border: 1px lightgrey solid;
     -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;
