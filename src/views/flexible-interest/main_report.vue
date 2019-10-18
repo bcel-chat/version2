@@ -77,15 +77,15 @@ export default {
         }
         if (i == 1) {
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/report/approve/all'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/report/approve/all'
             });
         }   else if (i == 2) {
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/report/reject/all'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/report/reject/all'
             });
         } else {
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/report/pending/all'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/report/pending/all'
             })
         }
     }

@@ -1,6 +1,6 @@
 <template>
   <div id="file-panel">
-    <div class="container">
+    <div class="_container">
       <div class="head-space"></div>
       <div :class="['panel', active]">
         <div class="panel-card">
@@ -93,7 +93,7 @@ export default {
   z-index: 10;
   pointer-events: auto;
 }
-.container {
+._container {
   position: relative;
   width: 100%;
   height: 100%;

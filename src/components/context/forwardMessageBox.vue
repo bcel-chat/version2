@@ -1,6 +1,6 @@
 <template>
   <div id="bubble">
-    <div class="container">
+    <div class="_container">
       <div class="reply-box">
         <div class="reply-side">
           <div class="inside">

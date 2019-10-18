@@ -1,6 +1,6 @@
 <template>
   <div id="group-member">
-    <div class="container">
+    <div class="_container">
       <div class="header">
         <div class="header-box">
           <div class="back-button" role="button" @click="deleteGroup">
@@ -87,7 +87,7 @@
       </transition>
       <!-- End content -->
     </div>
-    <!-- End container -->
+    <!-- End _container -->
   </div>
 </template>
 

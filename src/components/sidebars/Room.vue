@@ -71,7 +71,7 @@
                   </span>
                 </div>
                 <!-- Endmsg-counter-box -->
-                <transition
+                <!-- <transition
                   enter-active-class="animated fadeInRight"
                   leave-active-class="animated fadeOutRight"
                 >
@@ -84,7 +84,7 @@
                   >
                     <i class="material-icons">keyboard_arrow_down</i>
                   </div>
-                </transition>
+                </transition>-->
               </div>
               <!-- End msg-box -->
             </div>
@@ -172,7 +172,7 @@ export default {
       "getParticipantRoom",
       "getUserRoom"
     ]),
-    ...mapActions("Group", ["getParticipantId"]),
+    ...mapActions("Group", ["getParticipantId", "setGroup"]),
     ...mapActions("Contact", ["getContact"]),
     ...mapActions("Context", ["setRoomArrow"]),
     checkTime(mydate) {

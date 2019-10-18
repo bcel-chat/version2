@@ -88,23 +88,23 @@ export default {
                     if(!stepAction[i]['active-after']){
                         if(i==0){
                             this.$router.push({
-                               path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+                               path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
                             });
                         } else if(i==1){
                             this.$router.push({
-                                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/product'
+                                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/product'
                             });
                         } else if(i==2){
                             this.$router.push({
-                                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/interest'
+                                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/interest'
                             });
                         } else if(i==3){
                             this.$router.push({
-                                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/document/attach'
+                                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/document/attach'
                             });
                         }  else if(i==4){
                             this.$router.push({
-                                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/interest/approve'
+                                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/interest/approve'
                             });
                         }
                         break;
@@ -113,25 +113,25 @@ export default {
             } else {
                 this.$root.$emit("resetDefault");
                 this.$router.push({
-                    path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+                    path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
                 })
             }
         } else if (i == 1) {
             this.$router.push({
-                 path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/request/history/pending'
+                 path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/request/history/pending'
             });
         } else if (i == 2) {
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/request/history/approved'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/request/history/approved'
             });
         }   else if (i == 3) {
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/request/history/rejected'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/request/history/rejected'
             });
         } else {
             this.$root.$emit("resetDefault");
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
             })
         }
     }
@@ -150,7 +150,6 @@ export default {
     color: rgb(250, 150, 0);
     font-weight: bold;
     font-family: Helvetica;
-    text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);
 }
 .REJECTED{
     color: #F34E4E;
@@ -188,10 +187,14 @@ div.max-flex>button:focus{
     margin-top: 30px;
 }
 
-@media only screen and (max-width: 800px) {
-
+@media only screen and (max-width: 1100px) {
     .fi-tab-title {
         font-size: 20px;
+    }
+}
+@media only screen and (max-width: 950px) {
+    .fi-tab-title {
+        font-size: 16px;
     }
 }
 @media only screen and (max-width: 700px) {

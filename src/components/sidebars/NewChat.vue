@@ -1,6 +1,6 @@
 <template>
   <div id="new-chat">
-    <div class="container">
+    <div class="_container">
       <div class="header">
         <div class="header-box">
           <div class="back-button" role="button" @click="showNewChat(false)">
@@ -79,7 +79,7 @@
       </transition-group>
       <!-- End content -->
     </div>
-    <!-- End container -->
+    <!-- End _container -->
   </div>
 </template>
 

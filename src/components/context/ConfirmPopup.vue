@@ -1,6 +1,6 @@
 <template>
   <div id="confirm">
-    <div class="container">
+    <div class="_container">
       <transition name="bounce">
         <div class="item-box" v-if="startUp">
           <div class="item-box-inside">
@@ -51,7 +51,7 @@ export default {
   left: 0;
   z-index: 120;
 }
-.container {
+._container {
   position: relative;
   width: 100%;
   height: 100%;

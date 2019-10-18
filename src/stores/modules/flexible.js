@@ -1,110 +1,103 @@
-if (window.sessionStorage.getItem('requirement')) {
-  var obj = JSON.parse(window.sessionStorage.getItem('requirement'));
-  obj['document_files'] = [];
-  window.sessionStorage.setItem('requirement', JSON.stringify(obj));
+import code from "@/helper/father.js";
+
+if (window.sessionStorage.getItem("requirement")) {
+  var obj = JSON.parse(window.sessionStorage.getItem("requirement"));
+  obj["document_files"] = [];
+  window.sessionStorage.setItem("requirement", JSON.stringify(obj));
 }
 const flexible_interest_module = {
   namespaced: true,
   state: {
     max_flex: 0,
-    comment_request: '',
-    comment_request_status: '',
-    bank_interest: '',
-    comment_edit: '',
-    comment_approve: '',
-    logined_user_id: window.sessionStorage.getItem('user') ? window.sessionStorage.getItem('user') : '',
+    comment_request: "",
+    comment_request_status: "",
+    bank_interest: "",
+    comment_edit: "",
+    comment_approve: "",
+    root_router: "",
+    permission: window.sessionStorage.getItem("permission")
+      ? code.from(window.sessionStorage.getItem("permission"))
+      : "",
+    logined_user_id: window.sessionStorage.getItem("user")
+      ? code.from(window.sessionStorage.getItem("user"))
+      : "",
     request_approve_detail: {},
-    customer_requirement: window.sessionStorage.getItem('requirement') ? JSON.parse(window.sessionStorage.getItem('requirement')) : {
-      bank_accounts: [{
-        acc_no: '',
-        desc: ''
-      }],
-      currency: {
-        currencyId: ''
-      },
-      customer_interest: "0",
-      deposit_amount: '',
-      documents: '',
-      document_files: [],
-      aclass: {
-        descriptionLao: ''
-      },
-      more_info: '',
-      name: '',
-      type: '',
-      tel: '',
-      customer_signature: '',
-      customer_photo: '',
-      earning_general_interest: 0,
-      earning_customer_interest: 0,
-      flexible_interest_id: '',
-      max_flexible: 0,
-      occupation: '',
-      staff_note: '',
-      deposit_age: {
-        typeId: ''
-      },
-      normal_interest: 0.0
-    },
-    progressActionActive: window.sessionStorage.getItem('actionProgress') ? JSON.parse(window.sessionStorage.getItem('actionProgress')) : [{}, {}, {}, {}, {}]
+    customer_requirement: window.sessionStorage.getItem("requirement")
+      ? JSON.parse(window.sessionStorage.getItem("requirement"))
+      : {
+          bank_accounts: [
+            {
+              acc_no: "",
+              desc: ""
+            }
+          ],
+          currency: {
+            currencyId: ""
+          },
+          customer_interest: "0",
+          deposit_amount: "",
+          documents: "",
+          document_files: [],
+          aclass: {
+            descriptionLao: ""
+          },
+          more_info: "",
+          name: "",
+          type: "",
+          tel: "",
+          customer_signature: "",
+          customer_photo: "",
+          earning_general_interest: 0,
+          earning_customer_interest: 0,
+          flexible_interest_id: "",
+          max_flexible: 0,
+          occupation: "",
+          staff_note: "",
+          deposit_age: {
+            typeId: ""
+          },
+          normal_interest: 0.0
+        },
+    progressActionActive: window.sessionStorage.getItem("actionProgress")
+      ? JSON.parse(window.sessionStorage.getItem("actionProgress"))
+      : [{}, {}, {}, {}, {}]
   },
   mutations: {
-    changeMaxFlexible(state, {
-      max
-    }) {
+    changeMaxFlexible(state, { max }) {
       state.max_flex = max;
     },
-    changeCommentApprove(state, {
-      comment
-    }) {
+    changeCommentApprove(state, { comment }) {
       state.comment_approve = comment;
     },
-    changeCommentEdit(state, {
-      comment
-    }) {
+    changeCommentEdit(state, { comment }) {
       state.comment_edit = comment;
     },
-    changeCommentRequest(state, {
-      comment
-    }) {
+    changeCommentRequest(state, { comment }) {
       state.comment_request = comment;
     },
-    changeCommentRequestStatus(state, {
-      status
-    }) {
+    changeCommentRequestStatus(state, { status }) {
       state.comment_request_status = status;
     },
-    changeBankInterest(state, {
-      interest
-    }) {
+    changeBankInterest(state, { interest }) {
       state.bank_interest = interest;
     },
-    addLoginUser(state, {
-      user
-    }) {
+    addLoginUser(state, { user }) {
       state.logined_user_id = user;
     },
-    addCustomerRequirement(state, {
-      info
-    }) {
+    addCustomerRequirement(state, { info }) {
       state.customer_requirement = info;
     },
-    addRequestApproveDetail(state, {
-      info
-    }) {
+    addRequestApproveDetail(state, { info }) {
       state.request_approve_detail = info;
     },
-    addProgressActionActive(state, {
-      index,
-      key,
-      val
-    }) {
+    addProgressActionActive(state, { index, key, val }) {
       state.progressActionActive[index][key] = val;
     },
-    clearProgressActionActive(state, {
-      val
-    }) {
+    clearProgressActionActive(state, { val }) {
       state.progressActionActive = val;
+    },
+    setPMS(state, { pms }) {
+      state.permission = pms;
     }
   },
   getters: {
@@ -117,47 +110,48 @@ const flexible_interest_module = {
     commentRequest: state => state.comment_request,
     commentRequestStatus: state => state.comment_request_status,
     bankInterest: state => state.bank_interest,
-    user: state => state.logined_user_id
+    user: state => state.logined_user_id,
+    root: state => state.root_router,
+    pms: state => state.pms
   },
   actions: {
     changeMaxFlexible(context) {
-      context.commit('changeMaxFlexible')
+      context.commit("changeMaxFlexible");
     },
     changeCommentApprove(context) {
-      context.commit('changeCommentApprove')
+      context.commit("changeCommentApprove");
     },
     changeCommentEdit(context) {
-      context.commit('changeCommentEdit')
+      context.commit("changeCommentEdit");
     },
     changeCommentRequest(context) {
-      context.commit('changeCommentRequest')
+      context.commit("changeCommentRequest");
     },
     changeCommentRequestStatus(context) {
-      context.commit('changeCommentRequestStatus')
+      context.commit("changeCommentRequestStatus");
     },
     changeBankInterest(context) {
-      context.commit('changeBankInterest')
+      context.commit("changeBankInterest");
     },
     addLoginUser(context) {
-      context.commit('addLoginUser')
+      context.commit("addLoginUser");
     },
     actionAddCustomerRequirement(context) {
-      context.commit('addCustomerRequirement')
+      context.commit("addCustomerRequirement");
     },
     addRequestApproveDetail(context) {
-      context.commit('addRequestApproveDetail')
+      context.commit("addRequestApproveDetail");
     },
-    addProgressActionActive({
-      commit
-    }) {
-      commit('addProgressActionActive')
+    addProgressActionActive({ commit }) {
+      commit("addProgressActionActive");
     },
-    clearProgressActionActive({
-      commit
-    }) {
-      commit('clearProgressActionActive')
+    clearProgressActionActive({ commit }) {
+      commit("clearProgressActionActive");
+    },
+    setPMS({ commit }) {
+      commit("setPMS");
     }
   }
-}
+};
 
-export default flexible_interest_module
+export default flexible_interest_module;

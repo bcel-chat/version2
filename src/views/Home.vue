@@ -13,8 +13,8 @@
         <forward-popup v-if="forwartPopup" key="2"></forward-popup>
         <confirm-popup v-if="confirm" key="3"></confirm-popup>
         <div :class="['app-inside', info ? 'three' : 'two', chatClick ? 'chat-room' : '']">
-          <div class="app-drawer">
-            <div :class="['part', mobileMode ? 'app-sidebar' : 'border app-sidebar-desktop']">
+          <div class="app-drawer" v-show="sideMenu">
+            <div :class="['part', mobileMode ? 'app-sidebar' : 'app-sidebar-desktop']">
               <span class="panel">
                 <transition-group
                   tag="div"
@@ -60,9 +60,18 @@
             <!-- End app-info -->
           </div>
           <!-- End app-drawer -->
-          <div :class="['part', !mobileMode ? 'border app-sidebar-desktop' : 'app-sidebar']">
-            <SideIndex @itemClicked="onItemClicked"></SideIndex>
-          </div>
+          <transition
+            enter-active-class="animated slideInLeft"
+            leave-active-class="animated slideOutLeft"
+          >
+            <div
+              :class="['part', !mobileMode ? 'app-sidebar-desktop' : 'app-sidebar']"
+              v-show="sideMenu"
+              style="animation-duration: .2s"
+            >
+              <SideIndex @itemClicked="onItemClicked"></SideIndex>
+            </div>
+          </transition>
           <transition-group
             tag="div"
             enter-active-class="animated slideInUp"
@@ -94,6 +103,9 @@
                     <transition enter-active-class="animated zoomIn">
                       <i class="material-icons" v-if="startUp" key="1">arrow_downward</i>
                     </transition>
+                  </div>
+                  <div class="burger" role="button" @click="showMenu" v-else>
+                    <i class="material-icons">menu_open</i>
                   </div>
                   <!-- End back-button -->
                   <span class="title">{{ moduleLink }}</span>
@@ -137,7 +149,7 @@ import ContextMenu from "@/components/context/Context.vue";
 
 import DropBox from "@/components/rooms/input-object/DropBox.vue";
 
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import MobileDetector from "@/mixins/MobileDetector.js";
 import ds from "@/helper/deepstream";
 import code from "@/helper/father";
@@ -164,11 +176,34 @@ export default {
   },
   data() {
     return {
+      sideMenu: true,
       startUp: false,
       styling: {
         animationDuration: ".2s"
       }
     };
+  },
+  watch: {
+    "$route.name"(oldPath, newPath) {
+      const userID = code.from(localStorage.getItem("miya"));
+      if (userID == this.user) {
+        if (oldPath == "flexible") {
+          if (this.permission == "true") {
+            this.$router.push({
+              path: this.root + "/flexible/leader/approve"
+            });
+          } else if (this.permission == "false") {
+            this.$router.push({
+              path: this.root + "/flexible/staff/progress/info"
+            });
+          } else if (this.permission == "report") {
+            this.$router.push({
+              path: this.root + "/flexible/report/pending/all"
+            });
+          }
+        }
+      }
+    }
   },
   mounted() {
     this.$nextTick(() => {
@@ -228,7 +263,9 @@ export default {
       "filePanel",
       "moduleLink"
     ]),
-    ...mapState("Group", ["roomID"])
+    ...mapState("Group", ["roomID"]),
+    ...mapState("flexible_interest_module", ["root_router", "permission"]),
+    ...mapGetters("flexible_interest_module", ["user", "root"])
   },
   methods: {
     ...mapActions("Identify", ["setMyID"]),
@@ -247,6 +284,10 @@ export default {
     clearLink() {
       this.$router.replace("/chat");
       this.setModuleLink("");
+    },
+    showMenu() {
+      if (this.sideMenu) this.sideMenu = false;
+      else this.sideMenu = true;
     }
   },
   beforeDestroy() {

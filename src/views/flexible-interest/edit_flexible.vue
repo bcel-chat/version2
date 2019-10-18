@@ -4,7 +4,9 @@
         <div class="fi-add-user-content" v-if="checkSaveLoading">
             <div class="fi-inverse-background"></div>
             <div class="fi-processing-container text-center">
-                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 150px;" alt="Processing">
+                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 60px; filter:brightness(50%);" alt="Processing">
+                <br>
+                <strong style="color: rgb(129, 35, 42);">Waiting</strong>
             </div>
         </div>
         <div v-if="showComment">
@@ -25,7 +27,7 @@
         </div>
         <div class="row hide-on-print-mode">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                <h2 :class="'BACKGROUND-'+customer_info['approveStatus']">ແກ້ໄຂລາຍການ</h2>
+                <h2 class="text-center " :class="'BACKGROUND-'+customer_info['approveStatus']">ແກ້ໄຂລາຍການ</h2>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left">
                 <div class="fi-edit-content" style="color: rgba(247, 82, 6, 0.959);">
@@ -347,15 +349,8 @@ export default {
         }
       }
   },
-  created() {
-      //console.log(this.customer_info);
-    ds.rpc.make('/bcel/chat/api/flexible/interest/info', { }, ( error, result ) => {
-        this.currencies = result['currencies'];
-        this.depositTypes = result['depositTypes'];
-    });
-  },
-  mounted(){
-    if(!this.customer_info['requirementId']){
+  watch: {
+    '$route'(to, from) {
         ds.rpc.make('/bcel/api/flexible/interest/customer/requirement/by/id', { requirementId:  atob(this.$route.params['id'])}, ( error, result ) => {
             if(result)
             {
@@ -378,33 +373,95 @@ export default {
                         });
                     }
                 } else {
-                    this.backRouter();
+                    this.$router.push({
+                        path:
+                        this.$store.getters['flexible_interest_module/root'] +
+                        "/flexible/customer/requirement/detail/" + this.$route.params['id']
+                    });
                 }
             } else {
-                this.backRouter();
-            }
-        });
-    } else {
-        this.customer_info['depositAmount'] = this.customer_info['depositAmount'].toLocaleString().replace(/,/g, '.');
-        if(this.checkTrueEditData()) {
-            for(var i=0; i<this.customer_info['bankAccounts'].length; i++) {
-                this.error_validation['bank_accounts'].push({
-                    acc_no: [],
-                    desc: []
+                this.$router.push({
+                    path:
+                    this.$store.getters['flexible_interest_module/root'] +
+                    "/flexible/customer/requirement/detail/" + this.$route.params['id']
                 });
             }
-            //console.log(this.customer_info)
-            this.getAClasses();
-        } else {
-            this.backRouter();
-        }
+        });
     }
+  },
+  created() {
+    ds.rpc.make('/bcel/chat/api/flexible/interest/info', { }, ( error, result ) => {
+        this.currencies = result['currencies'];
+        this.depositTypes = result['depositTypes'];
+    });
+  },
+  mounted(){
+    this.getCustomerDetail();
     this.getRelationData();
   },
   destroyed(){
+        this.$store.commit('flexible_interest_module/addRequestApproveDetail', { info: {} });
       window.sessionStorage.removeItem('edit_info');
   },
   methods: {
+      getCustomerDetail() {
+          if(!this.customer_info['requirementId']){
+            ds.rpc.make('/bcel/api/flexible/interest/customer/requirement/by/id', { requirementId:  atob(this.$route.params['id'])}, ( error, result ) => {
+                if(result)
+                {
+                    //console.log(result);
+                    this.customer_info = result;
+                    this.customer_info['depositAmount'] = this.customer_info['depositAmount'].toLocaleString().replace(/,/g, '.')
+                    if(this.checkTrueEditData()) {
+                        this.getAClasses();
+                        axios.get(address['serverIp'] + '/bcel/api/flexible/interest/normal/'+this.customer_info['accountClass']+'/'+this.customer_info['currencyCode']+'/'+this.customer_info['requirementId'])
+                        .then((res) => {
+                            this.customer_info['normalInterest'] = res['data']['data']['interest'];
+                        })
+                        .catch((error) =>  {
+                            this.customer_info['normalInterest'] = '0';
+                        })
+                        for(var i=0; i<this.customer_info['bankAccounts'].length; i++) {
+                            this.error_validation['bank_accounts'].push({
+                                acc_no: [],
+                                desc: []
+                            });
+                        }
+                    } else {
+                        this.$router.push({
+                            path:
+                            this.$store.getters['flexible_interest_module/root'] +
+                            "/flexible/customer/requirement/detail/" + this.$route.params['id']
+                        });
+                    }
+                } else {
+                    this.$router.push({
+                        path:
+                        this.$store.getters['flexible_interest_module/root'] +
+                        "/flexible/customer/requirement/detail/" + this.$route.params['id']
+                    });
+                }
+            });
+        } else {
+            this.customer_info['depositAmount'] = this.customer_info['depositAmount'].toLocaleString().replace(/,/g, '.');
+            if(this.checkTrueEditData()) {
+                for(var i=0; i<this.customer_info['bankAccounts'].length; i++) {
+                    this.error_validation['bank_accounts'].push({
+                        acc_no: [],
+                        desc: []
+                    });
+                }
+                //console.log(this.customer_info)
+                this.getAClasses();
+            } else {
+                this.$router.push({
+                    path:
+                    this.$store.getters['flexible_interest_module/root'] +
+                    "/flexible/customer/requirement/detail/" + this.$route.params['id']
+                });
+            }
+        }
+      },
       getFormatDate(date){
         var d = new Date(date);
         var day = d.getDate();
@@ -1058,7 +1115,7 @@ export default {
     width: 100%;
     height: 100%;
     background: black;
-    z-index: 10;
+    z-index: 100;
     opacity: 0.6;
 }
 .fi-processing-container{
@@ -1067,7 +1124,7 @@ export default {
   right: 0px;
   top: 50%;
   margin-top: -50px;
-  z-index: 10;
+  z-index: 100;
 }
 img.img-loader {
   width: 50px;
@@ -1113,7 +1170,7 @@ img.img-loader {
 .fi-inverst-edit-background {
   top: 0px;
   left: 0px;
-  z-index: 10;
+  z-index: 100;
   position: fixed;
   background: black;
   width: 100%;
@@ -1129,7 +1186,7 @@ img.img-loader {
     margin-left: -150px;
     position: fixed;
     color: rgb(165, 164, 164);
-    z-index: 10;
+    z-index: 100;
     background: white; //linear-gradient(to bottom right, rgba(243, 195, 189, 0.918) 10%, rgb(202, 86, 94) 200%);
     border: 1px lightgrey solid;
     -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;

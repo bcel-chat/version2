@@ -31,7 +31,7 @@
                 <hr style="margin-top: 0px;">
             </div>
             <div class="col-12" v-if="!checkData()">
-                <div class="fi-not-found"><Strong>ບໍມີຂໍ້ມູນ</Strong></div>
+                <div class="fi-not-found"><Strong>ບໍ່ພົບຂໍ້ມູນ</Strong></div>
             </div>
             <div class="col-12 col-sm-6 col-md-6 col-lg-4" v-for="(history, index) in customer_requirement_history" :key="index">
                 <div class="fi-card text-left" :class="'BACKGROUND-'+history['approveStatus']">
@@ -384,7 +384,7 @@ export default {
     },
     getCustomerRequirementDetail(history){
         this.$store.commit('flexible_interest_module/addRequestApproveDetail', { info: history });
-        this.$router.push({path: sessionStorage.getItem('flexible_root_router')+'/flexible/customer/requirement/detail/' + btoa(history['requirementId'])})
+        this.$router.push({path: this.$store.getters['flexible_interest_module/root']+'/flexible/customer/requirement/detail/' + btoa(history['requirementId'])})
     },
     checkData() {
         if(this.customer_requirement_history.length > 0) {
@@ -569,7 +569,7 @@ textarea:focus, textarea:valid{
     color: #A8890C;
     font-weight: bold;
     font-family: Helvetica;
-    text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 #A8890C, 0 4px 0 #A8890C;
+    /*text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 #A8890C, 0 4px 0 #A8890C;*/
 }
 .REJECTED{
     color: #F34E4E;
@@ -591,7 +591,7 @@ textarea:focus, textarea:valid{
 }
 
 .fi-not-found>strong{
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     margin-left: -50px;

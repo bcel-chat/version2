@@ -83,21 +83,58 @@
       </transition-group>
       <div class="tab">
         <div class="tab-box">
-          <template v-for="(item, index) in items">
-            <div
-              @click="activeTab(index)"
-              role="button"
-              :class="['tab-items', tabActive == index ? 'tab-active' : '']"
-              :key="index"
-            >
-              <div class="item" role="button">
-                <i class="material-icons">{{item.icon}}</i>
-                <span role="button">{{item.name}}</span>
-              </div>
-              <!-- End items -->
+          <div
+            @click="activeTab(0)"
+            role="button"
+            :class="['tab-items', tabActive == 0 ? 'tab-active' : '']"
+            :key="1"
+          >
+            <div class="item" role="button">
+              <i class="material-icons">chat_bubble</i>
+              <span role="button" class="item-text">Chats</span>
             </div>
-            <!-- End tab-items -->
-          </template>
+            <!-- End items -->
+          </div>
+          <div
+            @click="activeTab(1)"
+            role="button"
+            :class="['tab-items', tabActive == 1 ? 'tab-active' : '']"
+            :key="2"
+          >
+            <div class="item" role="button">
+              <i class="material-icons">contact_mail</i>
+              <span role="button" class="item-text">Contact</span>
+            </div>
+            <!-- End items -->
+          </div>
+          <div
+            @click="activeTab(2)"
+            role="button"
+            :class="['tab-items', tabActive == 2 ? 'tab-active' : '']"
+            :key="3"
+          >
+            <div class="item" role="button">
+              <i class="material-icons">extension</i>
+              <span role="button" class="item-text">Modules</span>
+            </div>
+            <!-- End items -->
+          </div>
+          <div
+            @click="activeTab(3)"
+            role="button"
+            :class="['tab-items', tabActive == 3 ? 'tab-active' : '']"
+            :key="4"
+          >
+            <div class="item" role="button">
+              <div class="number" v-if="notificationCount > 0">
+                <span>{{notificationCount}}</span>
+              </div>
+              <i class="material-icons">notification_important</i>
+              <span role="button" class="item-text">Notification</span>
+            </div>
+            <!-- End items -->
+          </div>
+          <!-- End tab-items -->
         </div>
         <!-- End tab-box -->
       </div>
@@ -132,7 +169,7 @@ export default {
       },
       items: [
         {
-          name: "Chat",
+          name: "Chats",
           icon: "chat_bubble"
         },
         {
@@ -175,9 +212,19 @@ export default {
       text: "",
       fn: ""
     });
+
+    const userList = JSON.parse(code.from(localStorage.getItem("thor")));
+
     ds.event.subscribe(`room/${this.myID}`, val => {
       this.getRoomContact(this.myID);
     });
+    ds.event.subscribe(`notification/${userList.user.toUpperCase()}`, val => {
+      this.getNotification(userList.user);
+      this.getNotificationCount(userList.user);
+    });
+
+    this.getNotification(userList.user);
+    this.getNotificationCount(userList.user);
   },
   computed: {
     ...mapState("Identify", ["myID"]),
@@ -189,6 +236,7 @@ export default {
     ]),
     ...mapState("Settings", ["profile"]),
     ...mapState("Contact", ["contact"]),
+    ...mapState("Notification", ["notificationCount"]),
     picURL() {
       return process.env.VUE_APP_PICTURE_PROFILE + this.myID + "/";
     }
@@ -203,6 +251,11 @@ export default {
     ]),
     ...mapActions("Contact", ["getContact"]),
     ...mapActions("Room", ["getRoom"]),
+    ...mapActions("Notification", [
+      "getNotification",
+      "setNotification",
+      "getNotificationCount"
+    ]),
     onItemClick(e) {
       this.$emit("itemClicked", e);
     },

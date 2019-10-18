@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import code from "@/helper/father.js";
 import ds from "@/helper/ds.js";
 export default {
   name: "flexible_main",
@@ -20,26 +19,25 @@ export default {
     return {};
   },
   beforeRouteEnter(to, from, next) {
-    sessionStorage.setItem("flexible_root_router", "");
     if (to["name"] == null) {
-      if (window.sessionStorage.getItem("permission") == "true") {
+      if (this.$store.getters['flexible_interest_module/pms'] == "true") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (window.sessionStorage.getItem("permission") == "false") {
+      } else if (this.$store.getters['flexible_interest_module/pms'] == "false") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
-      } else if (window.sessionStorage.getItem("permission") == "report") {
+      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -48,22 +46,22 @@ export default {
 
     if (to.matched.some(record => record.meta.permissionLeader)) {
       if (
-        window.sessionStorage.getItem("permission") == "false" &&
+        this.$store.getters['flexible_interest_module/pms'] == "false" &&
         !to.matched.some(record => record.meta.permissionStaff)
       ) {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
       } else if (
-        window.sessionStorage.getItem("permission") == "report" &&
+        this.$store.getters['flexible_interest_module/pms'] == "report" &&
         !to.matched.some(record => record.meta.permissionReport)
       ) {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -71,10 +69,10 @@ export default {
         next();
       }
     } else if (to.matched.some(record => record.meta.permissionReport)) {
-      if (window.sessionStorage.getItem("permission") == "false") {
+      if (this.$store.getters['flexible_interest_module/pms'] == "false") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
@@ -83,19 +81,19 @@ export default {
       }
     } else if (to.matched.some(record => record.meta.permissionStaff)) {
       if (
-        window.sessionStorage.getItem("permission") == "true" &&
+        this.$store.getters['flexible_interest_module/pms'] == "true" &&
         !to.matched.some(record => record.meta.permissionLeader)
       ) {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (window.sessionStorage.getItem("permission") == "report") {
+      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -107,26 +105,25 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-    sessionStorage.setItem("flexible_root_router", "");
     if (to["name"] == null) {
-      if (window.sessionStorage.getItem("permission") == "true") {
+      if (this.$store.getters['flexible_interest_module/pms'] == "true") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (window.sessionStorage.getItem("permission") == "false") {
+      } else if (this.$store.getters['flexible_interest_module/pms'] == "false") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
-      } else if (window.sessionStorage.getItem("permission") == "report") {
+      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -135,22 +132,22 @@ export default {
 
     if (to.matched.some(record => record.meta.permissionLeader)) {
       if (
-        window.sessionStorage.getItem("permission") == "false" &&
+        this.$store.getters['flexible_interest_module/pms'] == "false" &&
         !to.matched.some(record => record.meta.permissionStaff)
       ) {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
       } else if (
-        window.sessionStorage.getItem("permission") == "report" &&
+        this.$store.getters['flexible_interest_module/pms'] == "report" &&
         !to.matched.some(record => record.meta.permissionReport)
       ) {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -158,10 +155,10 @@ export default {
         next();
       }
     } else if (to.matched.some(record => record.meta.permissionReport)) {
-      if (window.sessionStorage.getItem("permission") == "false") {
+      if (this.$store.getters['flexible_interest_module/pms'] == "false") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
@@ -170,19 +167,19 @@ export default {
       }
     } else if (to.matched.some(record => record.meta.permissionStaff)) {
       if (
-        window.sessionStorage.getItem("permission") == "true" &&
+        this.$store.getters['flexible_interest_module/pms'] == "true" &&
         !to.matched.some(record => record.meta.permissionLeader)
       ) {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (window.sessionStorage.getItem("permission") == "report") {
+      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
         next({
           path:
-            sessionStorage.getItem("flexible_root_router") +
+            this.$store.getters['flexible_interest_module/root'] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -193,67 +190,14 @@ export default {
       next();
     }
   },
-  created() {
-    //console.log(this.$router)
-  },
   mounted() {
-    const userID = code.from(localStorage.getItem("miya"));
     this.$root.$on("resetDefault", () => {
       this.resetDefault();
     });
-    ds.rpc.make(
-      "/bcel/api/flexible/interest/current/user",
-      { userId: userID },
-      (error, result) => {
-        //console.log(error, result);
-        if (result) {
-          if (result["userId"]) {
-            this.$store.commit("flexible_interest_module/addLoginUser", {
-              user: result["userId"]
-            });
-            window.sessionStorage.setItem("user", result["userId"]);
-            if (result["permission"] == 1 || result["permission"] == 2) {
-              window.sessionStorage.setItem("permission", "true");
-              this.$router.push({
-                path:
-                  sessionStorage.getItem("flexible_root_router") +
-                  "/flexible/leader/approve"
-              });
-            } else if (result["permission"] == 3) {
-              window.sessionStorage.setItem("permission", "report");
-              this.$router.push({
-                path:
-                  sessionStorage.getItem("flexible_root_router") +
-                  "/flexible/report/pending/all"
-              });
-            } else if (result["permission"] == 0) {
-              window.sessionStorage.setItem("permission", "false");
-              this.$router.push({
-                path:
-                  sessionStorage.getItem("flexible_root_router") +
-                  "/flexible/staff/progress/info"
-              });
-            } else {
-              this.$root.$emit("resetDefault");
-              this.$router.back();
-            }
-          } else {
-            this.$root.$emit("resetDefault");
-            this.$router.back();
-          }
-        } else if (error) {
-          this.$root.$emit("resetDefault");
-          this.$router.back();
-        } else {
-          this.$root.$emit("resetDefault");
-          this.$router.back();
-        }
-      }
-    );
   },
   methods: {
     getPermission() {
-      return window.sessionStorage.getItem("permission") == "true";
+      return this.$store.getters['flexible_interest_module/pms'] == "true";
     },
     resetDefault() {
       window.sessionStorage.removeItem("actionProgress");
@@ -292,7 +236,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 * {
   font-family: Phetsarath_OT;
 }

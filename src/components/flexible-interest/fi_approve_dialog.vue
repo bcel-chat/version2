@@ -92,9 +92,9 @@
         <div class="fi-scroll-y">
           <div class="fi_report_approve_dialog">
             <div class="header">
-              <span class="fi-print" @click="printFlexibleInterest()">&#x1f5b6;</span>
-              <span class="closeIcon" @click="exitDialog()">x</span>
-              <h2><strong>ອະນຸມັດດອກເບ້ຍຍືດຫຍຸ່ນ</strong></h2>
+              <span class="fi-print" @click="printFlexibleInterest()"><i class="fa fa-print" aria-hidden="true"></i></span>
+              <span class="closeIcon" @click="exitDialog()"><i class="fa fa-times" aria-hidden="true"></i></span>
+              <h2 class="text-center"><strong>ອະນຸມັດດອກເບ້ຍຍືດຫຍຸ່ນ</strong></h2>
             </div>
             <div class="body">
               <div class="container">
@@ -335,7 +335,7 @@
                         <button class="fi-btn-next cancel spacing" type="button" @click="config['cancelEvt']"><i class="fa fa-trash"></i> ລ້າງ</button> 
                   </div>
                   <div class="col-6 text-right">
-                        <button class="fi-btn-next success" type="button" @click="requestApprove()">&#9993; ຂໍອະນຸມັດ</button>
+                        <button class="fi-btn-next success" type="button" @click="requestApprove()"><i class="fa fa-envelope-o" aria-hidden="true"></i> ຂໍອະນຸມັດ</button>
                   </div>
                 </div>
               </div>
@@ -565,7 +565,7 @@ button:focus{
 .inverst-background {
   top: 0px;
   left: 0px;
-  z-index: 10;
+  z-index: 100;
   position: fixed;
   background: black;
   width: 100%;
@@ -585,7 +585,7 @@ textarea:focus{
 }
 .fi-scroll-y{
   position: fixed;
-  z-index: 10;
+  z-index: 100;
   top: 10px;
   left: 15%;
   width: 70%;
@@ -657,7 +657,7 @@ textarea:focus{
       color: white;
       font-weight: bold;
       font-family: Helvetica;
-      text-shadow: 0 1px 0 rgb(250, 150, 0), 0 2px 0 rgb(250, 150, 0), 0 3px 0 rgb(250, 150, 0), 0 4px 0 white;
+      /*text-shadow: 0 1px 0 rgb(250, 150, 0), 0 2px 0 rgb(250, 150, 0), 0 3px 0 rgb(250, 150, 0), 0 4px 0 white;*/
     }
 }
 

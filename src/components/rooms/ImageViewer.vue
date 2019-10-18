@@ -1,6 +1,6 @@
 <template>
   <div id="image-viewer">
-    <div class="container">
+    <div class="_container">
       <transition enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
         <div
           class="top-bar"
@@ -66,7 +66,7 @@ export default {
   z-index: 200;
 }
 
-.container {
+._container {
   position: relative;
   display: flex;
   flex-direction: column;

@@ -105,31 +105,31 @@ export default {
             if (i == 0) {
               this.$router.push({
                 path:
-                  sessionStorage.getItem("flexible_root_router") +
+                  this.$store.getters['flexible_interest_module/root'] +
                   "/flexible/staff/progress/info"
               });
             } else if (i == 1) {
               this.$router.push({
                 path:
-                  sessionStorage.getItem("flexible_root_router") +
+                  this.$store.getters['flexible_interest_module/root'] +
                   "/flexible/staff/progress/product"
               });
             } else if (i == 2) {
               this.$router.push({
                 path:
-                  sessionStorage.getItem("flexible_root_router") +
+                  this.$store.getters['flexible_interest_module/root'] +
                   "/flexible/staff/progress/interest"
               });
             } else if (i == 3) {
               this.$router.push({
                 path:
-                  sessionStorage.getItem("flexible_root_router") +
+                  this.$store.getters['flexible_interest_module/root'] +
                   "/flexible/staff/progress/document/attach"
               });
             } else if (i == 4) {
               this.$router.push({
                 path:
-                  sessionStorage.getItem("flexible_root_router") +
+                  this.$store.getters['flexible_interest_module/root'] +
                   "/flexible/staff/progress/interest/approve"
               });
             }
@@ -188,6 +188,7 @@ export default {
               //console.log(error);
               this.showLoading = false;
             });
+
         } else {
           this.showLoading = false;
         }
@@ -196,7 +197,7 @@ export default {
       this.$root.$emit("resetDefault");
       this.$router.push({
         path:
-          sessionStorage.getItem("flexible_root_router") +
+          this.$store.getters['flexible_interest_module/root'] +
           "/flexible/staff/progress/info"
       });
     }
@@ -237,14 +238,14 @@ export default {
       );
       this.$router.push({
         path:
-          sessionStorage.getItem("flexible_root_router") +
+          this.$store.getters['flexible_interest_module/root'] +
           "/flexible/staff/progress/interest"
       });
     },
     backwardProgress() {
       this.$router.push({
         path:
-          sessionStorage.getItem("flexible_root_router") +
+          this.$store.getters['flexible_interest_module/root'] +
           "/flexible/staff/progress/info"
       });
     }

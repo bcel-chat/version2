@@ -76,9 +76,9 @@ export default {
         this.tabActive[i] = 'active';
         (i == 0) ? this.tabActive[1] = '': this.tabActive[0] = ''; 
         (i == 0) ? this.$router.push({
-            path: sessionStorage.getItem('flexible_root_router')+'/flexible/leader/approve'
+            path: this.$store.getters['flexible_interest_module/root']+'/flexible/leader/approve'
         }): this.$router.push({
-            path: sessionStorage.getItem('flexible_root_router')+'/flexible/leader/approve/history'
+            path: this.$store.getters['flexible_interest_module/root']+'/flexible/leader/approve/history'
         }); 
     }
   },
@@ -108,7 +108,6 @@ export default {
     color: rgb(250, 150, 0);
     font-weight: bold;
     font-family: Helvetica;
-    text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);
 }
 div.max-flex{
     position: absolute;

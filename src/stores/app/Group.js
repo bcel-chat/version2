@@ -1,6 +1,7 @@
 import ds from "@/helper/deepstream"
 import store from "../store"
 import axios from "axios"
+import code from "@/helper/father.js"
 
 import {
     groupBy
@@ -45,9 +46,17 @@ const group = {
         },
         getAdminStatus(state, payload) {
             state.adminStatus = payload
+        },
+        getRoomID(state, payload) {
+            state.roomID = payload
         }
     },
     actions: {
+        getRoomID({
+            commit
+        }, payload) {
+            commit("getRoomID", payload)
+        },
         getAdminStatus({
             commit
         }, payload) {
@@ -141,18 +150,53 @@ const group = {
             })
         },
         async setGroupPicture({
-            state
+            state,
+            commit
         }, payload) {
             let formData = new FormData();
             formData.append("file", payload);
             formData.append("uid", state.roomID);
             formData.append("rid", state.roomID);
             formData.append("_page", 2);
+            let uid = code.from(localStorage.getItem("roger"));
 
             axios.post(
                 `${process.env.VUE_APP_ACCESS_API}/profilepicture`,
                 formData
-            )
+            ).then(() => {
+                store.dispatch("Room/getParticipantRoom", {
+                    rid: state.roomID,
+                    uid: uid
+                })
+                store.dispatch("Room/getRoom", {
+                    id: uid,
+                    _page: 1,
+                    text: "",
+                    fn: ""
+                });
+            })
+        },
+        async setGroupPictureInfo({
+            state,
+            commit
+        }, payload) {
+            let formData = new FormData();
+            formData.append("file", payload);
+            formData.append("uid", state.roomID);
+            formData.append("rid", state.roomID);
+            formData.append("_page", 2);
+            let uid = code.from(localStorage.getItem("roger"));
+
+            axios.post(
+                `${process.env.VUE_APP_ACCESS_API}/profilepicture`,
+                formData
+            ).then(() => {
+                store.dispatch("Room/getParticipantRoom", {
+                    rid: state.roomID,
+                    uid: uid
+                })
+                commit("getRoomID", [])
+            })
         },
     }
 }

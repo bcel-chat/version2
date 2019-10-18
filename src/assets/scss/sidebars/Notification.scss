@@ -32,7 +32,7 @@
         font-size: 1rem;
         font-weight: 700;
         line-height: 100%;
-        margin-right: 1rem;
+        margin: .5rem 0;
         // border-bottom: solid 0.063rem rgba(136, 152, 170, .12);
     }
 }
@@ -40,28 +40,37 @@
 .item-inbox {
     position: relative;
     display: flex;
-    height: 4rem;
     min-width: 0;
     color: $secondary-color;
-    overflow: hidden;
+    // overflow: hidden;
+    padding: .5rem 0;
+    box-sizing: border-box;
+    border-bottom: solid .09rem white;
+}
+
+.active {
+    background-color: $border-color;
 }
 
 .mobile-enter>.item-inbox:active {
     background-color: rgba(239, 83, 83, .1);
 }
 
-.desktop-enter>.item-inbox:hover {
+.item-inbox:hover {
     background-color: rgba(239, 83, 83, .3);
 }
 
-.desktop-enter>.item-inbox:active {
-    background-color: rgba(239, 83, 83, .1);
+.desktop-enter {
+
+    .item-inbox:active {
+        background-color: rgba(239, 83, 83, .1);
+    }
 }
 
 .avatar-inbox-panel {
     flex: 0 0 auto;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     padding: 0 .8rem 0 2rem;
 }
 
@@ -88,7 +97,7 @@
 }
 
 .inbox-detail {
-    margin-right: .8rem;
+    margin-right: .5rem;
     flex-grow: 1;
     flex-basis: 0;
     min-width: 0;
@@ -129,15 +138,21 @@
 }
 
 .time-box {
+    position: relative;
     margin-top: .12rem;
     margin-left: .2rem;
     font-size: .750rem;
+    flex: 0 0 3.5rem;
+
+    .time {
+        float: right;
+    }
 }
 
 .msg-box {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
     align-self: stretch;
     margin-top: .3rem;
     width: 100%;
@@ -145,11 +160,13 @@
 }
 
 .msg {
-    flex-grow: 1;
+    flex: 1 1 auto;
     color: #707070;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    // text-overflow: ellipsis;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-right: .5rem;
 }
 
 .msg-counter-box {

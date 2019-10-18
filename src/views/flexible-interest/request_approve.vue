@@ -38,7 +38,9 @@
         <div class="fi-add-user-content" v-if="checkSaveLoading">
             <div class="fi-inverse-background"></div>
             <div class="fi-processing-container text-center">
-                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 150px;" alt="Processing">
+                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 60px; filter:brightness(50%);" alt="Processing">
+                <br>
+                <strong style="color: rgb(129, 35, 42);">Waiting</strong>
             </div>
         </div>
         <fi_dialog :config="fi_config"/>
@@ -290,23 +292,23 @@ export default {
           if(!stepAction[i]['active-after']){
             if(i==0){
                 this.$router.push({
-                    path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+                    path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
                 });
             } else if(i==1){
                 this.$router.push({
-                    path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/product'
+                    path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/product'
                 });
             } else if(i==2){
                 this.$router.push({
-                    path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/interest'
+                    path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/interest'
                 });
             } else if(i==3){
                 this.$router.push({
-                    path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/document/attach'
+                    path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/document/attach'
                 });
             }  else if(i==4){
                 this.$router.push({
-                    path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/interest/approve'
+                    path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/interest/approve'
                 });
             }
             break;
@@ -316,7 +318,7 @@ export default {
     } else {
         this.$root.$emit("resetDefault");
         this.$router.push({
-            path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+            path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
         })
     }
   },
@@ -336,7 +338,7 @@ export default {
     },
     backwardProgress(){
         this.$router.push({
-          path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/document/attach'
+          path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/document/attach'
         })
     },
     addOrRemoveUser(){
@@ -499,7 +501,7 @@ export default {
                                                         action: () => {
                                                             this.fi_config['show'] = false;
                                                             this.selectedUser = [];
-                                                            this.$router.push({path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'});
+                                                            this.$router.push({path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'});
                                                         }
                                                     }
                                                 ]
@@ -575,7 +577,7 @@ export default {
                                                     action: () => {
                                                         this.fi_config['show'] = false;
                                                         this.selectedUser = [];
-                                                        this.$router.push({path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'});
+                                                        this.$router.push({path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'});
                                                     }
                                                 }
                                             ]
@@ -635,7 +637,7 @@ export default {
                         action: () => {
                             this.$root.$emit("resetDefault");
                             this.$router.push({
-                                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+                                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
                             });
                             this.fi_config['show'] = false;
                         }
@@ -703,7 +705,7 @@ export default {
     width: 100%;
     height: 100%;
     background: black;
-    z-index: 10;
+    z-index: 100;
     opacity: 0.6;
 }
 .fi-processing-container{
@@ -712,7 +714,7 @@ export default {
   right: 0px;
   top: 50%;
   margin-top: -50px;
-  z-index: 10;
+  z-index: 100;
 }
 img{
     width: 100%;
@@ -770,7 +772,7 @@ img{
 .fi-inverst-edit-background {
   top: 0px;
   left: 0px;
-  z-index: 10;
+  z-index: 100;
   position: fixed;
   background: black;
   width: 100%;
@@ -785,7 +787,7 @@ img{
     margin-left: -150px;
     position: fixed;
     color: rgb(165, 164, 164);
-    z-index: 10;
+    z-index: 100;
     background: white; //linear-gradient(to bottom right, rgba(243, 195, 189, 0.918) 10%, rgb(202, 86, 94) 200%);
     border: 1px lightgrey solid;
     -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;

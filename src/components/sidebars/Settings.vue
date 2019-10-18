@@ -273,7 +273,12 @@ export default {
     }
   },
   methods: {
-    ...mapActions("AppData", ["showSideBar", "showCrop", "showInfo"]),
+    ...mapActions("AppData", [
+      "showSideBar",
+      "showCrop",
+      "showInfo",
+      "tabActive"
+    ]),
     ...mapActions("Settings", [
       "setProfilePicture",
       "setName",

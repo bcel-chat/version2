@@ -1,6 +1,6 @@
 <template>
   <div id="context-menu" :style="menuPosition" ref="menu">
-    <div class="container">
+    <div class="_containe">
       <div class="items">
         <div class="item" role="button" @click="demo">Delete chat</div>
         <div class="item" role="button">Exit this group</div>
@@ -110,7 +110,7 @@ export default {
   z-index: 200;
 }
 
-.container {
+._containe {
   position: relative;
   background-color: $info-color;
   border-radius: 0.1rem;

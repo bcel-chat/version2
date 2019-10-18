@@ -10,9 +10,10 @@
     z-index: 2;
     background-color: white;
     pointer-events: auto;
+    border-right: solid 0.063rem rgb(224, 232, 241);
 }
 
-.container {
+._container {
     position: relative;
     display: flex;
     flex-direction: column;

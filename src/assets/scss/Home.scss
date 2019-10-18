@@ -85,9 +85,9 @@
     width: 100%;
 }
 
-.app-sidebar-desktop.border {
-    border-right: solid 0.063rem rgb(224, 232, 241);
-}
+// .app-sidebar-desktop.border {
+//     border-right: solid 0.063rem rgb(224, 232, 241);
+// }
 
 .chat-room.app-sidebar {
     flex: 1 1 100%;
@@ -249,6 +249,14 @@
             animation-duration: .3s;
             transform: rotate(90deg)
         }
+    }
+
+    .burger {
+        color: $primary-color;
+        flex: 0 0 auto;
+        display: flex;
+        align-items: center;
+        width: 22px;
     }
 
     .title {

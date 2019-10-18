@@ -1,6 +1,6 @@
 <template>
   <div id="room-body" v-if="message" @dragover.prevent="setDropBox(true)">
-    <div class="container" @scroll="toScroll" ref="readScroll">
+    <div class="_container" @scroll="toScroll" ref="readScroll">
       <div class="room-inside">
         <div class="bb-space">
           <div class="room-logo" v-if="!message">

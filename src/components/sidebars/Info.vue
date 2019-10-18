@@ -1,6 +1,6 @@
 <template>
   <div id="info">
-    <div class="container">
+    <div class="_container">
       <div class="header">
         <div class="header-box">
           <div class="back-button" role="button" @click="showInfo(false)">
@@ -230,6 +230,9 @@ export default {
   beforeMount() {
     this.getParticipantInfo();
   },
+  mounted() {
+    this.getRoomID(this.participantRoom.rid);
+  },
   computed: {
     ...mapState("Identify", ["myID"]),
     ...mapState("AppData", ["mobileMode", "openCropInfo"]),
@@ -248,7 +251,7 @@ export default {
       "showCrop",
       "showAddParticipantPanel"
     ]),
-    ...mapActions("Group", ["groupPicture"]),
+    ...mapActions("Group", ["groupPicture", "getRoomID"]),
     ...mapActions("Context", ["setConfirm"]),
     ...mapActions("Room", ["updateGroupName", "getParticipantInfo"]),
     openCropSide(e) {

@@ -92,6 +92,10 @@
     justify-content: center;
     align-items: flex-start;
     overflow: hidden;
+
+    &:active {
+        background-color: $border-color
+    }
 }
 
 .user-box .user-name {

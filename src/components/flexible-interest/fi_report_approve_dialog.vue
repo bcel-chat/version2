@@ -123,9 +123,9 @@
           <div class="fi_report_approve_dialog">
             <div class="header">
               <span class="fi-resend" title="Resend" v-if="checkResend()" @click="resendRequest()">&#10150;</span>
-              <span class="fi-print" title="Print" @click="printFlexibleInterest()">&#x1f5b6;</span>
-              <span class="closeIcon" title="Exit" @click="exitDialog()">x</span>
-              <h2><strong>ອະນຸມັດດອກເບ້ຍຍືດຫຍຸ່ນ</strong></h2>
+              <span class="fi-print" title="Print" @click="printFlexibleInterest()"><i class="fa fa-print" aria-hidden="true"></i></span>
+              <span class="closeIcon" title="Exit" @click="exitDialog()"><i class="fa fa-times" aria-hidden="true"></i></span>
+              <h2 class="text-center"><strong>ອະນຸມັດດອກເບ້ຍຍືດຫຍຸ່ນ</strong></h2>
             </div>
             <div class="body">
               <div class="container">
@@ -687,7 +687,7 @@
                           <div class="col-12 text-right" v-if="disableLeaderApproveButton">
                               <!-- :class="!checkRequestApprove()?'spacing':''" -->
                               <button class="fi-btn edit" :class="!checkRequestApprove()?'spacing':''" type="button" @click="check_response_edit = !check_response_edit">&#9998; ແກ້ໄຂຄືນ</button>
-                              <button class="fi-btn spacing request" type="button" v-if="checkRequestApprove()" @click="check_request_approve = !check_request_approve">&#9993; ຂໍອະນຸມັດ</button> 
+                              <button class="fi-btn spacing request" type="button" v-if="checkRequestApprove()" @click="check_request_approve = !check_request_approve"><i class="fa fa-envelope-o" aria-hidden="true"></i> ຂໍອະນຸມັດ</button> 
                               <!-- <button class="fi-btn reject spacing" type="button" v-if="canApprove()" @click="check_reject = !check_reject">&#33; ປະຕິເສດ</button> -->
                                <!--  -->
                               <button class="fi-btn success" type="button" v-if="canApprove()" @click="check_approve = !check_approve">&#9745; ອະນຸມັດ</button>
@@ -798,6 +798,27 @@ export default {
         }
       },
       type: Object
+    }
+  },
+  watch: {
+    '$route'(to, from) {
+      ds.rpc.make('/bcel/api/flexible/interest/customer/requirement/by/id', { requirementId:  atob(this.$route.params['id'])}, ( error, result ) => {
+          if(result)
+          {
+              this.customer_info = result;
+              this.$root.$emit("reloadAllApprove");
+              this.getProductInfo();
+              axios.get(address['serverIp'] + '/bcel/api/flexible/interest/normal/'+this.customer_info['accountClass']+'/'+this.customer_info['currencyCode']+'/'+this.customer_info['requirementId'])
+              .then((res) => {
+                this.customer_info['normalInterest'] = res['data']['data']['interest'];
+                this.$forceUpdate();
+              })
+              .catch((error) =>  {
+                  
+              })
+              this.$forceUpdate();
+          }
+      });
     }
   },
   created(){
@@ -1500,7 +1521,7 @@ table.tb-small td.col-last{
     color: rgb(250, 150, 0);
     font-weight: bold;
     font-family: Helvetica;
-    text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);
+    /*text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);*/
 }
 .EDIT{
   color: rgba(247, 82, 6, 0.959);
@@ -1601,7 +1622,7 @@ button:focus{
 .inverst-background {
   top: 0px;
   left: 0px;
-  z-index: 10;
+  z-index: 100;
   position: fixed;
   background: black;
   width: 100%;
@@ -1621,7 +1642,7 @@ textarea:focus{
 }
 .fi-scroll-y{
   position: fixed;
-  z-index: 10;
+  z-index: 100;
   top: 10px;
   left: 15%;
   width: 70%;
@@ -1683,7 +1704,7 @@ textarea:focus{
       color: white;
       font-weight: bold;
       font-family: Helvetica;
-      text-shadow: 0 1px 0 rgb(250, 150, 0), 0 2px 0 rgb(250, 150, 0), 0 3px 0 rgb(250, 150, 0), 0 4px 0 white;
+      /*text-shadow: 0 1px 0 rgb(250, 150, 0), 0 2px 0 rgb(250, 150, 0), 0 3px 0 rgb(250, 150, 0), 0 4px 0 white;*/
     }
     input.fi-bank-input-interest {
       width: 100%;

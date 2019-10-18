@@ -139,7 +139,7 @@ export default {
     color: #FB8C00;
     font-weight: bold;
     font-family: Helvetica;
-    text-shadow: 0 1px 0 white, 0 2px 0 white;
+    /*text-shadow: 0 1px 0 white, 0 2px 0 white;*/
 }
 .REJECTED{
     color: red;

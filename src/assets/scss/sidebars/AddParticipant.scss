@@ -9,10 +9,11 @@
     overflow: hidden;
     z-index: 3;
     background-color: white;
+    border-right: solid 0.063rem rgb(224, 232, 241);
     pointer-events: auto;
 }
 
-.container {
+._container {
     position: relative;
     display: flex;
     flex-direction: column;

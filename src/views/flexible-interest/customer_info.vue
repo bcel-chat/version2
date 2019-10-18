@@ -360,8 +360,7 @@ img{
     margin-bottom: 0px;
 }
 .fi-account-title{
-    font-size: 21px;
-    margin-top: -26px;
+    font-size: 20px;
     padding-left: 10px;
     margin-bottom: 5px;
 }
@@ -616,56 +615,18 @@ select:invalid {
 ::-ms-input-placeholder { /* Microsoft Edge */
  color: #D3D3D3;
 }
-@media only screen and (max-width: 1500px) {
+@media only screen and (max-width: 1700px) {
     strong.no{
         position: absolute;
         left: 4%;
         top: 12px;
         color: white;
-        font-size: 50px;
+        font-size: 48px;
     }
     div.error-message {
         position: absolute;
         left: 12%;
-        top: 80px;
-    }
-    strong.title {
-        position: absolute;
-        left: 13%;
-        top: 16px;
-        color: white;
-        font-size: 40px;
-    }
-    span.arrow1{
-        position: absolute;
-        left: 40%;
-        color: white;
-        font-size: 80px;
-        margin-top: -18px;
-    }
-    span.arrow2{
-        position: absolute;
-        left: 41.5%;
-        color: white;
-        font-size: 60px;
-        margin-top: -2px;
-    }
-    textarea{
-        font-size: 30px;
-    }
-    input.fi-input, select, span.show{
-        top: 18px;
-        font-size: 35px;
-        width: 54%;
-    }
-}
-@media only screen and (max-width: 1400px) {
-  strong.no{
-        position: absolute;
-        left: 4.5%;
-        top: 14px;
-        color: white;
-        font-size: 45px;
+        top: 75px;
     }
     strong.title {
         position: absolute;
@@ -686,7 +647,7 @@ select:invalid {
         left: 41.5%;
         color: white;
         font-size: 55px;
-        margin-top: -1px;
+        margin-top: -2px;
     }
     textarea{
         font-size: 30px;
@@ -696,7 +657,95 @@ select:invalid {
         font-size: 32px;
         width: 54%;
     }
-    
+}
+@media only screen and (max-width: 1500px) {
+    strong.no{
+        position: absolute;
+        left: 4%;
+        top: 12px;
+        color: white;
+        font-size: 43px;
+    }
+    div.error-message {
+        position: absolute;
+        left: 12%;
+        top: 70px;
+    }
+    strong.title {
+        position: absolute;
+        left: 13%;
+        top: 16px;
+        color: white;
+        font-size: 33px;
+    }
+    span.arrow1{
+        position: absolute;
+        left: 40%;
+        color: white;
+        font-size: 73px;
+        margin-top: -18px;
+    }
+    span.arrow2{
+        position: absolute;
+        left: 41.5%;
+        color: white;
+        font-size: 53px;
+        margin-top: -2px;
+    }
+    textarea{
+        font-size: 26px;
+    }
+    input.fi-input, select, span.show{
+        top: 16px;
+        font-size: 30px;
+        width: 54%;
+    }
+    strong.fi-title{
+        font-size: 35px;
+    }
+}
+@media only screen and (max-width: 1400px) {
+  strong.no{
+        position: absolute;
+        left: 4.5%;
+        top: 14px;
+        color: white;
+        font-size: 36px;
+    }
+    div.error-message {
+        position: absolute;
+        left: 12%;
+        top: 60px;
+    }
+    strong.title {
+        position: absolute;
+        left: 13%;
+        top: 16px;
+        color: white;
+        font-size: 30px;
+    }
+    span.arrow1{
+        position: absolute;
+        left: 40%;
+        color: white;
+        font-size: 68px;
+        margin-top: -18px;
+    }
+    span.arrow2{
+        position: absolute;
+        left: 41.5%;
+        color: white;
+        font-size: 49px;
+        margin-top: -1px;
+    }
+    textarea{
+        font-size: 30px;
+    }
+    input.fi-input, select, span.show{
+        top: 16px;
+        font-size: 28px;
+        width: 54%;
+    }
     strong.fi-title{
         font-size: 35px;
     }
@@ -710,35 +759,40 @@ select:invalid {
         left: 4.5%;
         top: 14px;
         color: white;
-        font-size: 45px;
+        font-size: 36px;
+    }
+    div.error-message {
+        position: absolute;
+        left: 12%;
+        top: 55px;
     }
     strong.title {
         position: absolute;
         left: 13%;
         top: 14px;
         color: white;
-        font-size: 35px;
+        font-size: 28px;
     }
     span.arrow1{
         position: absolute;
-        left: 40%;
+        left: 39.8%;
         color: white;
-        font-size: 75px;
+        font-size: 66px;
         margin-top: -20px;
     }
     span.arrow2{
         position: absolute;
         left: 41.5%;
         color: white;
-        font-size: 55px;
+        font-size: 46px;
         margin-top: -3px;
     }
     textarea{
         font-size: 28px;
     }
     input.fi-input, select, span.show{
-        top: 16px;
-        font-size: 30px;
+        top: 12px;
+        font-size: 26px;
         width: 54%;
     }
 }
@@ -751,40 +805,40 @@ select:invalid {
         left: 4.5%;
         top: 14px;
         color: white;
-        font-size: 40px;
+        font-size: 30px;
     }
     div.error-message {
         position: absolute;
         left: 12%;
-        top: 65px;
+        top: 50px;
     }
     strong.title {
         position: absolute;
         left: 13%;
         top: 14px;
         color: white;
-        font-size: 32px;
+        font-size: 26px;
     }
     span.arrow1{
         position: absolute;
-        left: 40%;
+        left: 39.8%;
         color: white;
-        font-size: 65px;
+        font-size: 60px;
         margin-top: -16px;
     }
     span.arrow2{
         position: absolute;
         left: 41.5%;
         color: white;
-        font-size: 45px;
+        font-size: 38px;
         margin-top: 1px;
     }
     textarea{
         font-size: 25px;
     }
     input.fi-input, select, span.show{
-        top: 16px;
-        font-size: 27px;
+        top: 12px;
+        font-size: 24px;
         width: 54%;
     }
     /* Style the indicator (dot/circle) */
@@ -819,35 +873,40 @@ select:invalid {
         left: 4.5%;
         top: 14px;
         color: white;
-        font-size: 35px;
+        font-size: 26px;
+    }
+    div.error-message {
+        position: absolute;
+        left: 12%;
+        top: 46px;
     }
     strong.title {
         position: absolute;
         left: 13%;
         top: 14px;
         color: white;
-        font-size: 30px;
+        font-size: 23px;
     }
     span.arrow1{
         position: absolute;
-        left: 40%;
+        left: 39.8%;
         color: white;
-        font-size: 65px;
+        font-size: 58px;
         margin-top: -16px;
     }
     span.arrow2{
         position: absolute;
         left: 41.5%;
         color: white;
-        font-size: 45px;
+        font-size: 36px;
         margin-top: 1px;
     }
     textarea{
         font-size: 22px;
     }
     input.fi-input, select, span.show{
-        top: 16px;
-        font-size: 25px;
+        top: 12px;
+        font-size: 22px;
         width: 54%;
     }
     strong.fi-title{
@@ -870,41 +929,41 @@ select:invalid {
         left: 5%;
         top: 10px;
         color: white;
-        font-size: 30px;
+        font-size: 28px;
     }
     div.error-message {
         position: absolute;
         left: 12%;
-        top: 48px;
+        top: 40px;
     }
     strong.title {
         position: absolute;
         left: 13%;
         top: 12px;
         color: white;
-        font-size: 24px;
+        font-size: 20px;
     }
     span.arrow1{
         position: absolute;
         left: 40%;
         color: white;
-        font-size: 52px;
+        font-size: 46px;
         margin-top: -10px;
     }
     span.arrow2{
         position: absolute;
         left: 41.5%;
         color: white;
-        font-size: 37px;
+        font-size: 31px;
         margin-top: 2px;
     }
     textarea{
-        font-size: 22px;
+        font-size: 18px;
     }
     input.fi-input, select, span.show{
-        top: 12px;
+        top: 10px;
         width: 53%;
-        font-size: 24px;
+        font-size: 20px;
     }
     .interest-title{
         font-size: 2.5rem;
@@ -918,6 +977,80 @@ select:invalid {
         top: 2px;
         height: 16px;
         width: 16px;
+    }
+    .fi-container .fi-checkmark:after {
+        top: 4px;
+        left: 4px;
+        width: 8px;
+        height: 8px;
+    }
+    strong.fi-title{
+        font-size: 24px;
+    }
+    span.fi-radio-text{
+        font-size: 18px;
+    }
+    .fi-account1{
+        margin-top: -15px;
+    }
+}
+@media only screen and (max-width: 850px) {
+.text-editor{
+        border-radius: 15px 0px 0px 0px;
+    }
+  strong.no{
+        position: absolute;
+        left: 5%;
+        top: 10px;
+        color: white;
+        font-size: 25px;
+    }
+    div.error-message {
+        position: absolute;
+        left: 12%;
+        top: 36px;
+    }
+    strong.title {
+        position: absolute;
+        left: 13%;
+        top: 12px;
+        color: white;
+        font-size: 17px;
+    }
+    span.arrow1{
+        position: absolute;
+        left: 39.8%;
+        color: white;
+        font-size: 42px;
+        margin-top: -10px;
+    }
+    span.arrow2{
+        position: absolute;
+        left: 41.5%;
+        color: white;
+        font-size: 27px;
+        margin-top: 2px;
+    }
+    textarea{
+        font-size: 17px;
+    }
+    input.fi-input, select, span.show{
+        top: 10px;
+        width: 53%;
+        font-size: 17px;
+    }
+    .interest-title{
+        font-size: 2.5rem;
+    }
+
+    .fi-container{
+        padding-left: 18px;
+    }
+    /* Style the indicator (dot/circle) */
+    .fi-checkmark {
+        top: 2px;
+        height: 16px;
+        width: 18px;
     }
     .fi-container .fi-checkmark:after {
         top: 4px;

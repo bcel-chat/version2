@@ -1,6 +1,6 @@
 <template>
   <div id="cropper">
-    <div class="container">
+    <div class="_container">
       <div class="picture-zone">
         <img :src="img" id="croppr" ref="croppr" />
       </div>
@@ -39,7 +39,11 @@ export default {
   },
   methods: {
     ...mapActions("AppData", ["showCrop"]),
-    ...mapActions("Group", ["groupPicture", "setGroupPicture"]),
+    ...mapActions("Group", [
+      "groupPicture",
+      "setGroupPicture",
+      "setGroupPictureInfo"
+    ]),
     ...mapActions("Settings", [
       "setProfilePicture",
       "ProfilePicture",
@@ -85,6 +89,9 @@ export default {
                   this.groupPicture(URL.createObjectURL(blob));
                 } else if (this.page == 2) {
                   this.setProfilePicture(file);
+                } else if (this.page == 3) {
+                  this.setGroupPictureInfo(file);
+                  this.groupPicture(URL.createObjectURL(blob));
                 }
               });
           };
@@ -116,7 +123,7 @@ export default {
   background-color: black;
   pointer-events: auto;
 }
-.container {
+._container {
   position: relative;
   display: flex;
   flex-direction: column;

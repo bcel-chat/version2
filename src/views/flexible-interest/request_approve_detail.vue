@@ -36,14 +36,16 @@
         <div class="fi-add-user-content" v-if="checkSaveLoading">
             <div class="fi-inverse-background"></div>
             <div class="fi-processing-container text-center">
-                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 150px;" alt="Processing">
+                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 60px; filter:brightness(50%);" alt="Processing">
+                <br>
+                <strong style="color: rgb(129, 35, 42);">Waiting</strong>
             </div>
         </div>
         <fi_dialog :config="fi_config"/>
         <fi_report_approve_dialog :config="config"/>
         <div class="row hide-on-print-mode">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                <h2 :class="'BACKGROUND-'+customer_info['approveStatus']">ລາຍລະອຽດ</h2>
+                <h2 class="text-center " :class="'BACKGROUND-'+customer_info['approveStatus']">ລາຍລະອຽດ</h2>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left">
                 <div class="fi-card">
@@ -334,12 +336,8 @@ export default {
         }
       }
   },
-  created() {
-      //console.log(this.customer_info)
-  },
-  mounted(){
-    this.getSendToUserList();
-    if(!this.customer_info['requirementId']){
+  watch: {
+    '$route'(to, from) {
         ds.rpc.make('/bcel/api/flexible/interest/customer/requirement/by/id', { requirementId:  atob(this.$route.params['id'])}, ( error, result ) => {
             if(result)
             {
@@ -356,7 +354,7 @@ export default {
                     }
                 });
                 */
-               //console.log(this.customer_info)
+            //console.log(this.customer_info)
                 this.getProducts();
                 axios.get(address['serverIp'] + '/bcel/api/flexible/interest/normal/'+this.customer_info['accountClass']+'/'+this.customer_info['currencyCode']+'/'+this.customer_info['requirementId'])
                     .then((res) => {
@@ -371,9 +369,13 @@ export default {
                 this.backRouter();
             }
         });
-    } else {
-        this.getProducts();
     }
+  },
+  created() {
+  },
+  mounted(){
+    this.getSendToUserList();
+    this.getCustomerDetail();
     ds.rpc.make('/bcel/api/flexible/interest/customer/requirement/document/attach', { requirementId:  atob(this.$route.params['id'])}, ( error, result ) => {
         if(result){
             this.document_files = result;
@@ -381,9 +383,47 @@ export default {
     });
   },
   destroyed(){
+      this.$store.commit('flexible_interest_module/addRequestApproveDetail', { info: {} });
       window.sessionStorage.removeItem('history');
   },
   methods: {
+    getCustomerDetail() {
+        if(!this.customer_info['requirementId']){
+            ds.rpc.make('/bcel/api/flexible/interest/customer/requirement/by/id', { requirementId:  atob(this.$route.params['id'])}, ( error, result ) => {
+                if(result)
+                {
+                    this.customer_info = result;
+                    /*ds.rpc.make('/bcel/api/flexible/interest/general', { currencyCode:  this.customer_info['currencyCode'], acClass: this.customer_info['accountClass']}, ( err, res ) => {
+                        if(error){
+                            this.customer_info['normalInterest'] = '0';
+                        } else{
+                            if(result){
+                                this.customer_info['normalInterest'] = res['interest'];
+                            } else {
+                                this.customer_info['normalInterest'] = '0';
+                            }
+                        }
+                    });
+                    */
+                //console.log(this.customer_info)
+                    this.getProducts();
+                    axios.get(address['serverIp'] + '/bcel/api/flexible/interest/normal/'+this.customer_info['accountClass']+'/'+this.customer_info['currencyCode']+'/'+this.customer_info['requirementId'])
+                        .then((res) => {
+                            this.customer_info['normalInterest'] = res['data']['data']['interest'];
+                            this.$forceUpdate();
+                        })
+                        .catch((error) =>  {
+                            this.customer_info['normalInterest'] = '0';
+                        })
+                    this.$forceUpdate();
+                } else {
+                    this.backRouter();
+                }
+            });
+        } else {
+            this.getProducts();
+        }
+    },
     getSendToUserList(){
         ds.rpc.make('/bcel/api/flexible/interest/recieve/users', { userId: this.$store.getters['flexible_interest_module/user']}, ( error, result ) => {
             if(result)
@@ -598,6 +638,7 @@ export default {
                                 this.checkSaveLoading = true;
                                 ds.rpc.make('/bcel/chat/api/flexible/interest/create/response/edit/notification', {user: this.$store.getters['flexible_interest_module/user'], requirementId:  this.customer_info['requirementId'], comment: comment}, ( error, result ) => {
                                     this.checkSaveLoading = false;
+                                    console.log(error, result)
                                     if(error){
                                         this.fi_config = {
                                             show: true,
@@ -739,6 +780,7 @@ export default {
                                     comment: comment,
                                     approveInterest: approve_interest?approve_interest:0
                                 }, ( error, result ) => {
+                                    console.log(error, result)
                                     this.checkSaveLoading = false;
                                     if(error){
                                         this.fi_config = {
@@ -841,7 +883,7 @@ export default {
     width: 100%;
     height: 100%;
     background: black;
-    z-index: 10;
+    z-index: 100;
     opacity: 0.6;
 }
 .fi-processing-container{
@@ -850,7 +892,7 @@ export default {
   right: 0px;
   top: 50%;
   margin-top: -50px;
-  z-index: 10;
+  z-index: 100;
 }
 img.img-loader-out {
   width: 50px;
@@ -873,7 +915,7 @@ strong, th, td {
     color: rgb(250, 150, 0);
     font-weight: bold;
     font-family: Helvetica;
-    text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);
+    /*text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);*/
 }
 .REJECTED{
     color: red;
@@ -982,7 +1024,7 @@ th.fi-title {
 .fi-inverst-edit-background {
   top: 0px;
   left: 0px;
-  z-index: 10;
+  z-index: 100;
   position: fixed;
   background: black;
   width: 100%;
@@ -997,7 +1039,7 @@ th.fi-title {
     margin-left: -150px;
     position: fixed;
     color: rgb(165, 164, 164);
-    z-index: 10;
+    z-index: 100;
     background: white; //linear-gradient(to bottom right, rgba(243, 195, 189, 0.918) 10%, rgb(202, 86, 94) 200%);
     border: 1px lightgrey solid;
     -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;

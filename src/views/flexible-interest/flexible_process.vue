@@ -143,16 +143,27 @@ export default {
 .stepper-progressbar li.stepper-active-after + li:after{
     background-color:#C72B2C; 
 }
+@media only screen and (max-width: 1500px) {
+    .stepper-progressbar li{
+        font-size: 23px;
+    }
+}
+
+@media only screen and (max-width: 1350px) {
+    .stepper-progressbar li{
+        font-size: 20px;
+    }
+}
 
 @media only screen and (max-width: 1250px) {
     .stepper-progressbar li{
-        font-size: 22px;
+        font-size: 18px;
     }
 }
 
 @media only screen and (max-width: 1120px) {
     .stepper-progressbar li{
-        font-size: 20px;
+        font-size: 16px;
     }
     .stepper-progressbar li:before {
     /*CSS for creating steper block before the li item*/
@@ -171,7 +182,7 @@ export default {
         width: 100%;
     }
     .stepper-progressbar li{
-        font-size: 18px;
+        font-size: 14px;
     }
     .stepper {
         left: -3.5%;
@@ -180,13 +191,16 @@ export default {
         font-size: 22px;
     }
 }
-@media only screen and (max-width: 890px) {
-    
+@media only screen and (max-width: 860px) {
+    #big-divice{
+        display: none;
+    }
+    #small-divice{
+        display: block;
+        left: -5%;
+    }
 }
 @media only screen and (max-width: 767px) {
-  .stepper-progressbar li{
-        font-size: 14px;
-    }
     .stepper-progressbar li:before {
     /*CSS for creating steper block before the li item*/
         height:30px;
@@ -202,9 +216,6 @@ export default {
     }
 }
 @media only screen and (max-width: 620px) {
-  .stepper-progressbar li{
-        font-size: 12px;
-    }
     .fi-tab-title {
         font-size: 18px;
     }

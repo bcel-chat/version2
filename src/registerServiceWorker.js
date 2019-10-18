@@ -11,8 +11,8 @@ import store from "./stores/store"
 // if (process.env.NODE_ENV === 'production') {
 register(`${process.env.BASE_URL}service-worker.js`, {
   ready() {
-    if (Notification.permission != 'granted')
-      Notification.requestPermission()
+    // if (Notification.permission != 'granted')
+    //   Notification.requestPermission()
   },
   registered() {
     // ds.event.subscribe(`notification`, data => {

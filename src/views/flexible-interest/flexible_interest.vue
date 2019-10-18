@@ -56,8 +56,8 @@
             <div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
                 <div id="fomular_panel">
                     <div id="fomular">
-                        <h5><strong>ວິທີຄິດໄລ່ດອກເບ້ຍ</strong></h5>
-                        <h5><strong class="fomular">IA = DA x FI x (DY/360)</strong></h5>
+                        <h5 class="text-left"><strong>ວິທີຄິດໄລ່ດອກເບ້ຍ</strong></h5>
+                        <h6 class="text-left"><strong class="fomular">IA = DA x FI x (DY/360)</strong></h6>
                         <hr style="margin: 5px;">
                         <div class="text-left">
                             <h5><strong>ຄວາມໝາຍ</strong></h5>
@@ -103,7 +103,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        <h5><strong class="fomular">IA = DA x FI x (DY/360)</strong></h5>
+                        <h6 class="text-left"><strong class="fomular">IA = DA x FI x (DY/360)</strong></h6>
                             <h5><strong>IA = {{(customer_info['currency']['currencyCode'] == 'USD')?customer_info['currency']['currencyUnit']:''}}{{getEarningPerYear()}}{{(customer_info['currency']['currencyCode'] != 'USD')?customer_info['currency']['currencyUnit']:''}}</strong></h5>
                         </div>
                     </div>
@@ -311,7 +311,7 @@ import '@/assets/flexible_interest/fonts/phetsarath_font.css'
 import axios from 'axios';
 import address from '@/helper/server_address.js'
 import fi_dialog from '@/components/flexible-interest/fi_dialog.vue'
-import { WebCam } from "vue-web-cam";
+import { WebCam } from "vue-cam-vision";
 
 import Vue from 'vue';
 import VueSignaturePad from 'vue-signature-pad';
@@ -402,23 +402,23 @@ export default {
             if(!stepAction[i]['active-after']){
                 if(i==0){
                     this.$router.push({
-                        path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+                        path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
                     });
                 } else if(i==1){
                     this.$router.push({
-                        path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/product'
+                        path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/product'
                     });
                 } else if(i==2){
                     this.$router.push({
-                        path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/interest'
+                        path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/interest'
                     });
                 } else if(i==3){
                     this.$router.push({
-                        path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/document/attach'
+                        path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/document/attach'
                     });
                 }  else if(i==4){
                     this.$router.push({
-                        path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/interest/approve'
+                        path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/interest/approve'
                     });
                 }
                 break;
@@ -435,7 +435,7 @@ export default {
         } else {
             this.$root.$emit("resetDefault");
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/info'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/info'
             })
         }
     },
@@ -788,8 +788,8 @@ export default {
             this.img = null;
             this.onStop();
       },
-      takePhoto(){
-        this.img = this.$refs.webcam.capture();
+      async takePhoto(){
+        this.img = await this.$refs.webcam.capture();
         this.onStop();
         this.showPersonalConfirm = false;
         this.usePhoto = false;
@@ -842,7 +842,7 @@ export default {
             this.$store.commit('flexible_interest_module/addProgressActionActive', { index: 3, key:'active', val: 'stepper-active' });
             window.sessionStorage.setItem('actionProgress', JSON.stringify(this.$store.getters['flexible_interest_module/action_active']));
             this.$router.push({
-                path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/document/attach'
+                path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/document/attach'
             });
           } else {
               this.validateCustomerDepositAmount();
@@ -854,7 +854,7 @@ export default {
       },
     backwardProgress(){
         this.$router.push({
-          path: sessionStorage.getItem('flexible_root_router')+'/flexible/staff/progress/product'
+          path: this.$store.getters['flexible_interest_module/root']+'/flexible/staff/progress/product'
         })
     }
   }
@@ -944,7 +944,7 @@ div.fi-exceeded{
 .fi-inverst-signature-background {
   top: 0px;
   left: 0px;
-  z-index: 10;
+  z-index: 100;
   position: fixed;
   background: black;
   width: 100%;
@@ -965,7 +965,7 @@ div.fi-exceeded{
     left: 50%;
     margin-left: -150px;
     color: rgb(165, 164, 164);
-    z-index: 10;
+    z-index: 100;
     background: white; //linear-gradient(to bottom right, rgba(243, 195, 189, 0.918) 10%, rgb(202, 86, 94) 200%);
     border: 1px lightgrey solid;
     -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;
@@ -1071,35 +1071,35 @@ strong.no{
     left: 5%;
     top: 10%;
     color: white;
-    font-size: 40px;
+    font-size: 35px;
 }
 strong.title {
     position: absolute;
     left: 12%;
-    top: 14%;
+    top: 10%;
     color: white;
-    font-size: 30px;
+    font-size: 28px;
 }
 span.arrow1{
     position: absolute;
     left: 55%;
     color: white;
     font-size: 60px;
-    margin-top: -14px;
+    margin-top: -20px;
 }
 span.arrow2{
     position: absolute;
     left: 56.5%;
     color: white;
     font-size: 45px;
-    margin-top: -1px;
+    margin-top: -7px;
 }
 
 input.fi-input, select, span.show, div.fi-dropdown-panel{
     position: absolute;
     color: white;
     right: 18px;
-    top: 15px;
+    top: 10px;
     width: 38%;
     background: transparent;
     border: none;
@@ -1207,37 +1207,76 @@ select:invalid {
 ::-ms-input-placeholder { /* Microsoft Edge */
  color: #D3D3D3;
 }
-@media only screen and (max-width: 1500px) {
-  strong.no{
+@media only screen and (max-width: 1660px) {
+    strong.no{
         position: absolute;
         left: 5%;
         top: 16%;
         color: white;
-        font-size: 30px;
+        font-size: 26px;
     }
     strong.title {
         position: absolute;
         left: 13%;
-        top: 15%;
+        top: 9%;
         color: white;
-        font-size: 27px;
+        font-size: 26px;
     }
     span.arrow1{
         position: absolute;
         left: 55%;
         color: white;
         font-size: 55px;
-        margin-top: -11px;
+        margin-top: -18px;
     }
     span.arrow2{
         position: absolute;
         left: 56.5%;
         color: white;
         font-size: 40px;
-        margin-top: 0px;
+        margin-top: -6px;
     }
     input.fi-input, div.fi-dropdown-panel, select, span.show{
-        top: 13px;
+        top: 8px;
+    }
+    input.fi-input, div.fi-dropdown-panel>input, select, span.show{
+        font-size: 22px;
+    }
+    div#fomular{
+        margin-top: -180px;
+    }
+}
+@media only screen and (max-width: 1500px) {
+  strong.no{
+        position: absolute;
+        left: 5%;
+        top: 16%;
+        color: white;
+        font-size: 24px;
+    }
+    strong.title {
+        position: absolute;
+        left: 13%;
+        top: 10%;
+        color: white;
+        font-size: 22px;
+    }
+    span.arrow1{
+        position: absolute;
+        left: 55%;
+        color: white;
+        font-size: 55px;
+        margin-top: -21px;
+    }
+    span.arrow2{
+        position: absolute;
+        left: 56.5%;
+        color: white;
+        font-size: 40px;
+        margin-top: -10px;
+    }
+    input.fi-input, div.fi-dropdown-panel, select, span.show{
+        top: 4px;
     }
     input.fi-input, div.fi-dropdown-panel>input, select, span.show{
         font-size: 22px;
@@ -1246,34 +1285,34 @@ select:invalid {
 @media only screen and (max-width: 1400px) {
   strong.no{
         position: absolute;
-        left: 5%;
+        left: 5.5%;
         top: 16%;
         color: white;
-        font-size: 30px;
+        font-size: 22px;
     }
     strong.title {
         position: absolute;
         left: 13%;
-        top: 15%;
+        top: 8%;
         color: white;
-        font-size: 25px;
+        font-size: 22px;
     }
     span.arrow1{
         position: absolute;
         left: 55%;
         color: white;
-        font-size: 55px;
-        margin-top: -12px;
+        font-size: 52px;
+        margin-top: -20px;
     }
     span.arrow2{
         position: absolute;
         left: 56.5%;
         color: white;
-        font-size: 40px;
-        margin-top: -1px;
+        font-size: 38px;
+        margin-top: -10px;
     }
     input.fi-input, div.fi-dropdown-panel, select, span.show{
-        top: 13px;
+        top: 5px;
     }
     input.fi-input, div.fi-dropdown-panel>input, select, span.show{
         font-size: 20px;
@@ -1288,7 +1327,7 @@ select:invalid {
         top: 50px;
     }
     div#fomular{
-        margin-top: -200px;
+        margin-top: -170px;
     }
     h5{
         font-size: 18px;
@@ -1297,40 +1336,40 @@ select:invalid {
         font-size: 14px;
     }
 }
-@media only screen and (max-width: 1300px) {
+@media only screen and (max-width: 1320px) {
   strong.no{
         position: absolute;
-        left: 5%;
+        left: 5.5%;
         top: 16%;
         color: white;
-        font-size: 27px;
+        font-size: 22px;
     }
     strong.title {
         position: absolute;
         left: 13%;
-        top: 15%;
+        top: 7%;
         color: white;
-        font-size: 22px;
+        font-size: 20px;
     }
     span.arrow1{
         position: absolute;
         left: 55%;
         color: white;
         font-size: 50px;
-        margin-top: -12px;
+        margin-top: -20px;
     }
     span.arrow2{
         position: absolute;
         left: 56.5%;
         color: white;
         font-size: 35.5px;
-        margin-top: -1px;
+        margin-top: -9px;
     }
     input.fi-input, select, span.show{
-        top: 13px;
+        top: 5px;
     }
     div.fi-dropdown-panel{
-        top: 9px;
+        top: 2px;
     }
     input.fi-input, div.fi-dropdown-panel>input, select, span.show{
         font-size: 18px;
@@ -1344,22 +1383,22 @@ select:invalid {
         top: 45px;
     }
     div#fomular{
-        margin-top: -190px;
+        margin-top: -155px;
     }
     h5{
         font-size: 16px;
     }
     h6 {
-        font-size: 14px;
+        font-size: 12px;
     }
 }
 @media only screen and (max-width: 1200px) {
   strong.no{
         position: absolute;
-        left: 5%;
-        top: 16%;
+        left: 5.5%;
+        top: 14%;
         color: white;
-        font-size: 27px;
+        font-size: 22px;
     }
     div.error-message {
         position: absolute;
@@ -1369,29 +1408,29 @@ select:invalid {
     strong.title {
         position: absolute;
         left: 13%;
-        top: 15%;
+        top: 9%;
         color: white;
-        font-size: 22px;
+        font-size: 18px;
     }
     span.arrow1{
         position: absolute;
-        left: 55%;
+        left: 54%;
         color: white;
-        font-size: 50px;
-        margin-top: -13px;
+        font-size: 46px;
+        margin-top: -18px;
     }
     span.arrow2{
         position: absolute;
-        left: 56.7%;
+        left: 55.7%;
         color: white;
-        font-size: 35px;
-        margin-top: -1px;
+        font-size: 33px;
+        margin-top: -8px;
     }
     input.fi-input, select, span.show{
-        top: 11px;
+        top: 3px;
     }
     div.fi-dropdown-panel{
-        top: 8px;
+        top: 0px;
     }
     input.fi-input, div.fi-dropdown-panel>input, select, span.show{
         font-size: 18px;
@@ -1405,51 +1444,51 @@ select:invalid {
         top: 42px;
     }
     div#fomular{
-        margin-top: -180px;
+        margin-top: -140px;
     }
     h5{
-        font-size: 14px;
+        font-size: 13px;
     }
     h6 {
-        font-size: 12px;
+        font-size: 11px;
     }
 }
 
 @media only screen and (max-width: 1120px) {
   strong.no{
         position: absolute;
-        left: 5.5%;
+        left: 6%;
         top: 17%;
         color: white;
-        font-size: 22px;
+        font-size: 18px;
     }
     strong.title {
         position: absolute;
         left: 13%;
-        top: 15%;
+        top: 10%;
         color: white;
-        font-size: 20px;
+        font-size: 16px;
     }
     span.arrow1{
         position: absolute;
-        left: 55%;
+        left: 54%;
         color: white;
-        font-size: 45px;
-        margin-top: -10px;
+        font-size: 34px;
+        margin-top: -12px;
     }
     span.arrow2{
         position: absolute;
-        left: 56.7%;
+        left: 55.5%;
         color: white;
-        font-size: 30px;
-        margin-top: 1px;
+        font-size: 28px;
+        margin-top: -6px;
     }
     
     input.fi-input, select, span.show{
-        top: 11px;
+        top: 3px;
     }
     div.fi-dropdown-panel{
-        top: 7px;
+        top: -2px;
     }
     input.fi-input, div.fi-dropdown-panel>input, select, span.show{
         font-size: 17px;
@@ -1463,13 +1502,14 @@ select:invalid {
         top: 38px;
     }
     div#fomular{
-        margin-top: -170px;
+        margin-top: -130px;
     }
+    
     h5{
-        font-size: 13px;
+        font-size: 12px;
     }
     h6 {
-        font-size: 11px;
+        font-size: 10px;
     }
 }
 
@@ -1477,9 +1517,9 @@ select:invalid {
   strong.no{
         position: absolute;
         left: 5%;
-        top: 19%;
+        top: 13%;
         color: white;
-        font-size: 30px;
+        font-size: 26px;
     }
     div.error-message {
         position: absolute;
@@ -1488,31 +1528,31 @@ select:invalid {
     }
     strong.title {
         position: absolute;
-        left: 13%;
-        top: 15%;
+        left: 12%;
+        top: 8%;
         color: white;
-        font-size: 26px;
+        font-size: 22px;
     }
     span.arrow1{
         position: absolute;
         left: 53%;
         color: white;
-        font-size: 55px;
+        font-size: 44px;
         margin-top: -12px;
     }
     span.arrow2{
         position: absolute;
         left: 54.5%;
         color: white;
-        font-size: 40px;
+        font-size: 29px;
         margin-top: 0px;
     }
     input.fi-input, div.fi-dropdown-panel, select, span.show{
-        top: 12px;
+        top: 6px;
         width: 41%;
     }
     input.fi-input, div.fi-dropdown-panel>input, select, span.show{
-        font-size: 22px;
+        font-size: 20px;
     }
     select>option, ul.fi-dropdown>li {
         font-size: 18px;
@@ -1543,39 +1583,39 @@ select:invalid {
 @media only screen and (max-width: 890px) {
   strong.no{
         position: absolute;
-        left: 5%;
-        top: 19%;
+        left: 5.5%;
+        top: 13%;
         color: white;
-        font-size: 25px;
+        font-size: 20px;
     }
     strong.title {
         position: absolute;
         left: 13%;
-        top: 15%;
+        top: 9%;
         color: white;
-        font-size: 25px;
+        font-size: 18px;
     }
     span.arrow1{
         position: absolute;
-        left: 53%;
+        left: 52.5%;
         color: white;
-        font-size: 50px;
-        margin-top: -12px;
+        font-size: 45px;
+        margin-top: -16px;
     }
     span.arrow2{
         position: absolute;
-        left: 54.5%;
+        left: 54%;
         color: white;
-        font-size: 35px;
-        margin-top: 0px;
+        font-size: 29px;
+        margin-top: -4px;
     }
     
     input.fi-input, div.fi-dropdown-panel, select, span.show{
-        top: 10px;
+        top: 5px;
         width: 40%;
     }
     input.fi-input, div.fi-dropdown-panel>input, select, span.show{
-        font-size: 20px;
+        font-size: 18px;
     }
     select>option, ul.fi-dropdown>li {
         font-size: 16px;

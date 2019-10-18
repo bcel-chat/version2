@@ -1,10 +1,10 @@
 <template>
   <div id="extension">
-    <div class="container">
+    <div class="_container">
       <div class="card-content">
         <template v-for="(item, index) in menuItems">
           <router-link
-            :to="!moduleLink && permissionCheck(item) ? item.path : ''"
+            :to="permissionCheck(item) ? item.path : ''"
             class="card-box"
             :key="index"
             role="button"
@@ -24,7 +24,7 @@
       </div>
       <!-- End card-content -->
     </div>
-    <!-- End container -->
+    <!-- End _container -->
   </div>
 </template>
 
