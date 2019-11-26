@@ -1,6 +1,6 @@
 <template>
   <div id="forward-popup">
-    <div class="container">
+    <div class="_container">
       <transition name="bounce">
         <div class="panel" v-if="startUp">
           <div class="header">

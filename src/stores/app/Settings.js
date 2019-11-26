@@ -1,67 +1,83 @@
-import ds from "@/helper/deepstream.js"
-import code from "@/helper/father.js"
-import axios from "axios"
+import ds from "@/helper/deepstream.js";
+import code from "@/helper/father.js";
+import axios from "axios";
+import store from "../store";
 
 const settings = {
   namespaced: true,
   state: {
     profile: {
-      picture: '',
-      name: '',
-      about: ''
-    }
+      picture: "",
+      name: "",
+      about: ""
+    },
+    sResult: "",
+    menuItems: null
   },
   mutations: {
     setProfile(state, payload) {
-      state.profile.picture = payload.picture
-      state.profile.name = payload.displayname
-      state.profile.about = payload.desc
+      state.profile.picture = payload.picture;
+      state.profile.name = payload.displayname;
+      state.profile.about = payload.desc;
     },
     setProfilePicture(state, payload) {
       state.profile.picture = payload;
+    },
+    searchUser(state, payload) {
+      state.sResult = payload[0];
+    },
+    getMenuItem(state, payload) {
+      state.menuItems = payload;
     }
   },
   actions: {
-    getProfile({
-      commit
-    }, payload) {
-      ds.rpc.make('getProfile', {
-        id: payload,
-      }, (err, data) => {
-        if (!err) {
-          commit("setProfile", data[0])
-        } else
-          console.log(err);
-      })
+    getProfile({ commit }, payload) {
+      ds.rpc.make(
+        "getProfile",
+        {
+          id: payload
+        },
+        (err, data) => {
+          if (!err) {
+            commit("setProfile", data[0]);
+          } else console.log(err);
+        }
+      );
     },
     setName(context, payload) {
-      let uid = code.from(localStorage.getItem("roger"))
-      ds.rpc.make('setNameAbout', {
-        id: uid,
-        text: payload,
-        _page: 1
-      }, (err, data) => {
-        if (!err) {
-          context.dispatch("getProfile", uid)
-        } else
-          console.log(err);
-      })
+      let uid = code.from(localStorage.getItem("roger"));
+      ds.rpc.make(
+        "setNameAbout",
+        {
+          id: uid,
+          text: payload,
+          _page: 1
+        },
+        (err, data) => {
+          if (!err) {
+            context.dispatch("getProfile", uid);
+          } else console.log(err);
+        }
+      );
     },
     setAbout(context, payload) {
-      let uid = code.from(localStorage.getItem("roger"))
-      ds.rpc.make('setNameAbout', {
-        id: uid,
-        text: payload,
-        _page: 2
-      }, (err, data) => {
-        if (!err) {
-          context.dispatch("getProfile", uid)
-        } else
-          console.log(err);
-      })
+      let uid = code.from(localStorage.getItem("roger"));
+      ds.rpc.make(
+        "setNameAbout",
+        {
+          id: uid,
+          text: payload,
+          _page: 2
+        },
+        (err, data) => {
+          if (!err) {
+            context.dispatch("getProfile", uid);
+          } else console.log(err);
+        }
+      );
     },
     async setProfilePicture(context, payload) {
-      let uid = code.from(localStorage.getItem("roger"))
+      let uid = code.from(localStorage.getItem("roger"));
 
       let formData = new FormData();
       formData.append("file", payload);
@@ -72,9 +88,36 @@ const settings = {
       const res = await axios.post(
         `${process.env.VUE_APP_ACCESS_API}/profilepicture`,
         formData
-      )
-      context.dispatch("getProfile", res.data)
+      );
 
+      if (res.data) {
+        context.dispatch("getProfile", res.data);
+        store.dispatch("AppData/showCrop", { show: false, page: 0 });
+      }
+    },
+    async searchUser({ commit, dispatch, state }, payload) {
+      ds.rpc.make("settingSearchUser", payload, (err, data) => {
+        if (!err) {
+          commit("searchUser", data);
+          if (state.sResult) dispatch("getMenuItem", state.sResult.uid);
+        }
+      });
+    },
+    async getMenuItem({ commit }, payload) {
+      ds.rpc.make(
+        "getMenuItem",
+        {
+          user: payload
+        },
+        (err, data) => {
+          if (!err) commit("getMenuItem", data);
+        }
+      );
+    },
+    async menuPermission({ dispatch }, payload) {
+      ds.rpc.make("updateMenuPermission", payload, (err, data) => {
+        if (!err) dispatch("getMenuItem", payload.uid);
+      });
     }
   }
 };

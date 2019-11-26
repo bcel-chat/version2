@@ -560,7 +560,7 @@ button:focus{
 .fi-inverst-edit-background {
   top: 0px;
   left: 0px;
-  z-index: 999999999999999999999999999999999999999999998;
+  z-index: 100;
   position: fixed;
   background: black;
   width: 100%;
@@ -575,7 +575,7 @@ button:focus{
     margin-left: -150px;
     position: fixed;
     color: rgb(165, 164, 164);
-    z-index: 999999999999999999999999999999999999999999999;
+    z-index: 100;
     background: white; //linear-gradient(to bottom right, rgba(243, 195, 189, 0.918) 10%, rgb(202, 86, 94) 200%);
     border: 1px lightgrey solid;
     -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;

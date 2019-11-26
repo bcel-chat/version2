@@ -1,20 +1,20 @@
 <template>
   <div id="info">
+    <div class="header-box">
+      <div class="back-button" role="button" @click="showInfo(false)">
+        <transition enter-active-class="animated zoomIn">
+          <i
+            class="material-icons"
+            v-if="startUp"
+            key="1"
+          >{{ mobileMode ? 'arrow_downward' : 'close'}}</i>
+        </transition>
+      </div>
+      <!-- End back-button -->
+      <span class="title">{{ roomType == 1 ? 'Contact Info' : 'Group Info'}}</span>
+    </div>
     <div class="_container">
       <div class="header">
-        <div class="header-box">
-          <div class="back-button" role="button" @click="showInfo(false)">
-            <transition enter-active-class="animated zoomIn">
-              <i
-                class="material-icons"
-                v-if="startUp"
-                key="1"
-              >{{ mobileMode ? 'arrow_downward' : 'close'}}</i>
-            </transition>
-          </div>
-          <!-- End back-button -->
-          <span class="title">{{ roomType == 1 ? 'Contact Info' : 'Group Info'}}</span>
-        </div>
         <!-- End header-box -->
         <div class="profile-box">
           <div class="picture-box" role="button">
@@ -64,6 +64,7 @@
                     id="file"
                     class="file"
                     key="3"
+                    v-if="roomType == 2"
                     @change="openCropSide"
                   />
                 </transition-group>
@@ -140,7 +141,7 @@
             </div>
           </div>
         </div>
-        <div v-if="roomType == 2">
+        <div class="content-box" v-if="roomType == 2">
           <div class="participant-title">
             <span class="num">{{ participantInfo.length }}</span>
             <span class="p-title">Participants</span>
@@ -195,11 +196,13 @@
 </template>
 
 <script>
+import Context from "@/components/context/Context.vue";
 import InfoParticipant from "@/components/sidebars/InfoParticipant.vue";
 import Cropper from "@/components/sidebars/subcomponents/Cropper.vue";
 import { mapState, mapActions } from "vuex";
 export default {
   components: {
+    Context,
     Cropper,
     InfoParticipant
   },
@@ -243,7 +246,8 @@ export default {
       "participantRoom",
       "participantInfo"
     ]),
-    ...mapState("Group", ["adminStatus"])
+    ...mapState("Group", ["adminStatus"]),
+    ...mapState("Context", ["roomArrow"])
   },
   methods: {
     ...mapActions("AppData", [

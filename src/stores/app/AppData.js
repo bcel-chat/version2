@@ -20,21 +20,30 @@ const AppData = {
     moduleLink: "",
     searchToggle: false,
     imageViewer: false,
-    txtSearch: ''
+    txtSearch: "",
+    mainside: true,
+    menuPermission: false
   },
   mutations: {
+    setMenuPermission(state, payload) {
+      state.menuPermission = payload;
+    },
+    setMainside(state, payload) {
+      if (state.mainside == true) state.mainside = false;
+      else if (state.mainside == false) state.mainside = true;
+    },
     setTabActive(state, payload) {
-      state.tabActive = payload
+      state.tabActive = payload;
     },
     onChatClick(state, payload) {
       if (!payload.module) {
         state.moduleLink = "";
-        router.replace("/");
       } else {
         state.moduleLink = payload.module;
       }
 
       state.chatClick = payload.cnt;
+      state.info = false;
     },
     roomArrow(state, payload) {
       state.roomArrow = payload;
@@ -68,13 +77,11 @@ const AppData = {
       state.GroupSubject = payload;
     },
     showCrop(state, payload) {
-      if (payload.page == 1)
-        state.openCrop = payload.show;
-      else if (payload.page == 2)
-        state.openCropInfo = payload.show
+      if (payload.page == 1) state.openCrop = payload.show;
+      else if (payload.page == 2) state.openCropInfo = payload.show;
       else {
-        state.openCrop = false
-        state.openCropInfo = false
+        state.openCrop = false;
+        state.openCropInfo = false;
       }
     },
     showFilePanel(state, payload) {
@@ -86,101 +93,73 @@ const AppData = {
       state.moduleLink = payload;
     },
     setTxtSearch(state, payload) {
-      state.txtSearch = payload
+      state.txtSearch = payload;
     },
     setSearchToggle(state, payload) {
-      state.searchToggle = payload
+      state.searchToggle = payload;
     },
     setImageViewer(state, payload) {
-      state.imageViewer = payload
+      state.imageViewer = payload;
     }
   },
   actions: {
-    setTabActive({
-      commit
-    }, payload) {
-      commit("setTabActive", payload)
+    setMenuPermission({ commit }, payload) {
+      commit("setMenuPermission", payload);
     },
-    onChatClick({
-      commit
-    }, payload) {
+    setMainside({ commit }, payload) {
+      commit("setMainside", payload);
+    },
+    setTabActive({ commit }, payload) {
+      commit("setTabActive", payload);
+    },
+    onChatClick({ commit }, payload) {
       commit("onChatClick", payload);
     },
-    deviceCheck({
-      commit
-    }, payload) {
+    deviceCheck({ commit }, payload) {
       commit("deviceCheck", payload);
     },
-    showSideBar({
-      commit
-    }, payload) {
+    showSideBar({ commit }, payload) {
       commit("showSideBar", payload);
     },
-    showAddParticipant({
-      commit
-    }, payload) {
+    showAddParticipant({ commit }, payload) {
       commit("showAddParticipant", payload);
     },
-    showInfo({
-      commit
-    }, payload) {
+    showInfo({ commit }, payload) {
       commit("showInfo", payload);
     },
-    showAddParticipantPanel({
-      commit
-    }, payload) {
+    showAddParticipantPanel({ commit }, payload) {
       commit("showAddParticipantPanel", payload);
     },
-    showNewChat({
-      commit
-    }, payload) {
+    showNewChat({ commit }, payload) {
       commit("showNewChat", payload);
     },
-    showGroupSubject({
-      commit
-    }, payload) {
+    showGroupSubject({ commit }, payload) {
       commit("showGroupSubject", payload);
     },
-    groupCreated({
-      commit
-    }, payload) {
+    groupCreated({ commit }, payload) {
       commit("groupCreated", payload);
     },
-    roomArrow({
-      commit
-    }, payload) {
+    roomArrow({ commit }, payload) {
       commit("roomArrow", payload);
     },
-    showCrop({
-      commit
-    }, payload) {
+    showCrop({ commit }, payload) {
       commit("showCrop", payload);
     },
-    showFilePanel({
-      commit
-    }, payload) {
+    showFilePanel({ commit }, payload) {
       commit("showFilePanel", payload);
     },
-    setModuleLink({
-      commit
-    }, payload) {
+    setModuleLink({ commit }, payload) {
       commit("setModuleLink", payload);
     },
-    setTxtSearch({
-      commit
-    }, payload) {
+    setTxtSearch({ commit }, payload) {
       commit("setTxtSearch", payload);
     },
-    setSearchToggle({
-      commit
-    }, payload) {
-      commit("setSearchToggle", payload)
+    setSearchToggle({ commit }, payload) {
+      commit("setSearchToggle", payload);
     },
-    setImageViewer({
-      commit
-    }, payload) {
-      commit("setImageViewer", payload)
-    },
+    setImageViewer({ commit }, payload) {
+      commit("setImageViewer", payload);
+    }
   }
 };
 

@@ -123,15 +123,15 @@
           <div class="fi_report_approve_dialog">
             <div class="header">
               <span class="fi-resend" title="Resend" v-if="checkResend()" @click="resendRequest()">&#10150;</span>
-              <span class="fi-print" title="Print" @click="printFlexibleInterest()"><i class="fa fa-print" aria-hidden="true"></i></span>
-              <span class="closeIcon" title="Exit" @click="exitDialog()"><i class="fa fa-times" aria-hidden="true"></i></span>
+              <span class="fi-print" title="Print" @click="printFlexibleInterest()"><i class="fas fa-print"></i></i></span>
+              <span class="closeIcon" title="Exit" @click="exitDialog()"><i class="far fa-times-circle"></i></i></span>
               <h2 class="text-center"><strong>ອະນຸມັດດອກເບ້ຍຍືດຫຍຸ່ນ</strong></h2>
             </div>
             <div class="body">
               <div class="container">
                 <div class="row">
                   <div class="col-12 col-sm-12 col-md-12" id="table_small">
-                    <div class="row">
+                    <div class="row _border">
                       <div class="col-12">
                         <table class="tb-small">
                           <tbody>
@@ -307,7 +307,7 @@
                                       </label>
                                     </label>
                                     <label class="text-left">
-                                      <label class="fi-container">
+                                      <label class="fi-container dis-app">
                                           <span class="fi-radio-text">ບໍ່ເຫັນດີ</span>
                                           <input type="radio" name="radio" value="no" v-model="comment_request_status" @change="validateCommentRequestStatus">
                                           <span class="fi-checkmark"></span>
@@ -329,7 +329,7 @@
                                     <input type="radio" name="radio" :value="customer_info['bankInterest']" v-model="approve_interest" @change="validateApproveInterest">
                                     <span class="fi-checkmark"></span>
                                   </label>
-                                  <label class="fi-container">
+                                  <label class="fi-container dis-app">
                                     <span class="fi-radio-text">ບໍ່ໃຫ້</span>
                                     <input type="radio" name="radio" :value="0" v-model="approve_interest" @change="validateApproveInterest">
                                     <span class="fi-checkmark"></span>
@@ -1239,9 +1239,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-* {
-    font-family: Phetsarath_OT;
+@import "@/assets/scss/variables.scss";
+._border {
+  border: solid 1px #cccccc;
+  border-radius: 0.5rem;
 }
+// * {
+//     font-family: Phetsarath_OT;
+// }
 .fi-margin-bottom-0{
   margin-bottom: 0%;
 }
@@ -1336,18 +1341,18 @@ div.fi-status{
   left: 0;
   height: 18px;
   width:18px;
-  background-color: #DC4D39;
+  background-color: $fi-primary;
   border-radius: 50%;
 }
 
 /* On mouse-over, add a grey background color */
 .fi-container:hover input[type="radio"] ~ .fi-checkmark {
-  background-color: rgb(245, 97, 97);
+  background-color:  $fi-hover;
 }
 
 /* When the radio button is checked, add a blue background */
 .fi-container input[type="radio"]:checked ~ .fi-checkmark {
-  background-color: #DC4D39;
+  background-color:  $fi-primary;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
@@ -1369,7 +1374,7 @@ div.fi-status{
 	width: 10px;
 	height: 10px;
 	border-radius: 50%;
-	background: rgb(211, 211, 211);
+	background: white;
 }
 /* Custom radio button */
 
@@ -1461,7 +1466,7 @@ table.tb-small, table.tb-small tr{
 }
 table.tb-small{
   width: 100%; 
-  background:  linear-gradient(to bottom right, rgb(243, 182, 174) 10%, rgba(233, 111, 95, 0.918) 100%);
+  background-color: white;
   margin-bottom: 10px;
   border-radius: 10px;
 }
@@ -1492,18 +1497,6 @@ table.tb-small td.col-last{
 }
 .success:hover{
     background: rgb(20, 104, 14);
-}
-.edit {
-  background: rgba(187, 163, 152, 0.959);
-}
-.edit:hover{
-  background: rgba(145, 136, 132, 0.959);
-}
-.request {
-  background: #A8890C;;
-}
-.request:hover {
-  background: rgb(143, 116, 11);;
 }
 .cancel {
   background: red;
@@ -1551,23 +1544,69 @@ span.signature, p.signature {
     border-bottom: 1px dotted #000;
 }
 span.new-signature {
-  border-bottom: 2px dotted #C72B2C;
+  border-bottom: 2px dotted $fi-primary;
 }
 .spacing{
   margin-right: 10px;
   margin-left: 10px;
 }
+
 .fi-print {
   position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   top: 5px;
-  right: 30px;
-  color: blue;
+  right: 35px;
+  color: white;
+  font-size: 0.8rem;
   font-weight: bold;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.3rem;
+  background-color: $fi-primary;
+  &:hover {
+    background-color: $fi-hover;
+  }
+  @media screen and (min-width: 760px) {
+    font-size: 1rem;
+    width: 2rem;
+    height: 2rem;
+    right: 45px;
+  }
 }
-.fi-print:hover {
-  color: #C72B2C;
+.REJECTED {
+  color: #f34e4e;
 }
+.APPROVED {
+  color: #20a816;
+}
+.closeIcon {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  top: 5px;
+  right: 8px;
+  color: white;
+  font-weight: bold;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.3rem;
+  background-color: $primary-color;
+  &:hover {
+    background-color: #e96f6f;
+  }
+  @media screen and (min-width: 760px) {
+    font-size: 1rem;
+    width: 2rem;
+    height: 2rem;
+    right: 10px;
+  }
+}
+
 .fi-resend {
   position: absolute;
   cursor: pointer;
@@ -1579,17 +1618,7 @@ span.new-signature {
 .fi-resend:hover {
   color: #C72B2C;
 }
-.closeIcon{
-  position: absolute;
-  cursor: pointer;
-  top: 3px;
-  right: 10px;
-  color: red;
-  font-weight: bold;
-}
-.closeIcon:hover{
-  color: #C72B2C;
-}
+
 .request {
     background: #FB8C00;
 }
@@ -1616,6 +1645,20 @@ span.new-signature {
     font-size: 1.2rem;
 }
 
+.request{
+   background-color: $fi-primary;
+    &:hover{
+      background-color: $fi-hover;
+    }
+}
+
+.edit {
+  background-color: #96831c;
+  &:hover{
+    background-color: #bda93a
+  }
+}
+
 button:focus{
     outline: none;
 }
@@ -1635,7 +1678,7 @@ textarea{
     border: none;
     padding-left: 5px;
     padding-right: 5px;
-    border-bottom: 2px dotted #C72B2C;
+    border-bottom: 2px dotted $secondary-color;
 }
 textarea:focus{
     outline: none;
@@ -1701,7 +1744,7 @@ textarea:focus{
       display: block;
     }
     .PENDING{
-      color: white;
+      color: #fa9600;
       font-weight: bold;
       font-family: Helvetica;
       /*text-shadow: 0 1px 0 rgb(250, 150, 0), 0 2px 0 rgb(250, 150, 0), 0 3px 0 rgb(250, 150, 0), 0 4px 0 white;*/

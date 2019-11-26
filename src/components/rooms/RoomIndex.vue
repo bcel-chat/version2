@@ -5,7 +5,7 @@
         <RoomHead></RoomHead>
       </div>
       <div id="body">
-        <RoomBody v-if="roomBody"></RoomBody>
+        <RoomBody></RoomBody>
       </div>
       <div id="footer">
         <RoomFooter></RoomFooter>
@@ -18,7 +18,7 @@
 import RoomHead from "@/components/rooms/RoomHeader.vue";
 import RoomBody from "@/components/rooms/RoomBody.vue";
 import RoomFooter from "@/components/rooms/RoomFooter.vue";
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   components: {
@@ -29,6 +29,17 @@ export default {
   computed: {
     ...mapState("Room", ["userRoom", "roomBody"]),
     ...mapState("Chat", ["message"])
+  },
+  methods: {
+    ...mapActions("AppData", ["onChatClick", "setModuleLink"]),
+    ...mapActions("Room", ["setRoomActive"])
+  },
+  beforeDestroy() {
+    this.onChatClick({ cnt: false, module: "" });
+    this.setRoomActive({
+      status: false,
+      rid: ""
+    });
   }
 };
 </script>

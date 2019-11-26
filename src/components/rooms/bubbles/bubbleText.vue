@@ -2,8 +2,9 @@
   <div id="bubble" :class="[checkTime(index, msg.time) != null ? 'new' : '']">
     <div
       :class="['bubble-container', msg.uid == myID ? 'out' : 'in']"
-      @mouseover="menu = true"
+      @mouseover="mobileMode ? menu = false : menu = true"
       @mouseleave="menu = false"
+      ref="touchMenu"
     >
       <div class="menu" v-if="menu">
         <div
@@ -41,8 +42,6 @@
         </div>
         <div
           :class="['msg-box', checkTime(index, msg.time) == null && !senderCheck(index, msg.uid) ? 'hide' : '', msg.uid == myID ? 'out' : 'in',]"
-          @mousedown="func(msg.cid)"
-          @mouseup="revert"
         >
           <div class="msg-inside">
             <span class="msg">{{ msg.msg }}</span>
@@ -56,10 +55,8 @@
 <script>
 import code from "@/helper/father.js";
 import { mapState, mapActions } from "vuex";
-import LongPress from "@/mixins/LongPress.js";
 
 export default {
-  mixins: [LongPress],
   props: ["msg", "index"],
   data() {
     return {
@@ -77,6 +74,38 @@ export default {
         rid: this.$props.msg.rid
       });
     }
+
+    let timer;
+    let touchStart = () => {
+      timer = setTimeout(() => {
+        this.setBubblePopup(true);
+        this.setPopupData(this.msg);
+      }, 250);
+    };
+
+    this.$refs.touchMenu.addEventListener(
+      "touchstart",
+      () => {
+        touchStart();
+      },
+      false
+    );
+
+    this.$refs.touchMenu.addEventListener(
+      "touchend",
+      () => {
+        if (timer) clearTimeout(timer);
+      },
+      false
+    );
+
+    this.$refs.touchMenu.addEventListener(
+      "touchmove",
+      () => {
+        if (timer) clearTimeout(timer);
+      },
+      false
+    );
   },
   computed: {
     ...mapState("Identify", ["myID"]),

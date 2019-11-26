@@ -6,7 +6,14 @@
       :class="['content-group', mobileMode ? 'mobile-enter' : 'desktop-enter']"
     >
       <template v-for="(it, index) in participantInfo">
-        <div :key="index" class="item-inbox" ref="itemInbox" role="button">
+        <div
+          :key="index"
+          class="item-inbox"
+          ref="itemInbox"
+          role="button"
+          @mouseover="refID = it.uid"
+          @mouseleave="roomArrow ? refID = it.uid : refID = ''"
+        >
           <div class="avatar-inbox-panel">
             <div class="avatar-inbox">
               <img v-if="it.picture" :src="`${picURL}/${it.uid}/${it.picture}`" class="avatar" />
@@ -23,10 +30,24 @@
             </div>
           </div>
           <!-- inbox-detail -->
-          <div class="send-box" v-if="admin(it)">
-            <div class="send">
+          <div class="send-box">
+            <div class="send" v-if="admin(it)">
               <span>Admin</span>
             </div>
+            <transition
+              enter-active-class="animated fadeInRight"
+              leave-active-class="animated fadeOutRight"
+            >
+              <div
+                class="arrow-box"
+                v-if="refID == it.uid && !mobileMode && it.uid != myID || roomArrow && refID == it.uid && !mobileMode"
+                @click.stop="arrowData(it, $event)"
+                ref="arrow"
+                style="animation-duration: .2s"
+              >
+                <i class="material-icons">keyboard_arrow_down</i>
+              </div>
+            </transition>
           </div>
         </div>
         <!-- End item-inbox -->
@@ -43,12 +64,18 @@ import ds from "@/helper/deepstream";
 export default {
   data() {
     return {
+      refID: "",
       picURL: process.env.VUE_APP_PICTURE_PROFILE,
       colors: randomColor({
         luminosity: "dark",
         hue: "random"
       })
     };
+  },
+  match: {
+    roomArrow(val) {
+      if (!val) this.refID = "";
+    }
   },
   mounted() {
     this.getContact({
@@ -61,6 +88,7 @@ export default {
   computed: {
     ...mapState("Identify", ["myID"]),
     ...mapState("AppData", ["mobileMode"]),
+    ...mapState("Context", ["roomArrow"]),
     ...mapState("Room", ["roomStatus", "participantInfo"]),
     ...mapState("Context", ["txtSearch", "contact", "msgBox", "popupData"])
   },
@@ -81,6 +109,7 @@ export default {
       "setReplyBoxToggle"
     ]),
     ...mapActions("Group", ["getAdminStatus"]),
+    ...mapActions("Context", ["setRoomArrow", "setAdminData"]),
     sendMsg(val) {
       this.setReplyBoxToggle({ toggle: false, cid: this.popupData.cid });
       this.setRoomID(val.rid);
@@ -102,6 +131,10 @@ export default {
 
         return true;
       } else return false;
+    },
+    arrowData(val, $event) {
+      // this.setAdminData()
+      this.setRoomArrow({ event: $event, val: val });
     }
   }
 };

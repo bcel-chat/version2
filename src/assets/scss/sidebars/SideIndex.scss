@@ -42,7 +42,7 @@
     justify-content: flex-start;
     align-items: center;
     box-sizing: border-box;
-    padding: .4rem .8rem;
+    padding: .3rem .8rem;
 }
 
 .avatar-box {
@@ -140,7 +140,8 @@
     height: 100%;
     top: 0;
     left: 0;
-    background-color: #f8eaea;
+    background-color: $info-color;
+    border-bottom: solid 1px $border-color;
 }
 
 .search-icon-box {

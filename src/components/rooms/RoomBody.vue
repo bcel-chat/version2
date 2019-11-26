@@ -1,15 +1,15 @@
 <template>
-  <div id="room-body" v-if="message" @dragover.prevent="setDropBox(true)">
-    <div class="_container" @scroll="toScroll" ref="readScroll">
+  <div id="room-body" @dragover.prevent="setDropBox(true)">
+    <div class="_container" ref="readScroll" @scroll="toScroll">
       <div class="room-inside">
         <div class="bb-space">
           <div class="room-logo" v-if="!message">
-            <img class="logo" src="@/assets/img/logo_2.png" />
+            <img class="logo" draggable="false" src="@/assets/img/logo_2.png" />
           </div>
         </div>
-        <div class="bubble-wrapper">
+        <div class="bubble-wrapper" v-if="message">
           <template v-for="(msg, index) in message">
-            <div :key="index">
+            <div :key="index" :style="[ mobileMode ? 'user-select: none' : '']">
               <bubble-date v-if="checkTime(index, msg.time) != null" :msg="msg.time"></bubble-date>
               <bubble-new-group v-if="msg.type == 2" :msg="msg"></bubble-new-group>
               <BubbleText v-else-if="msg.type == 1" :msg="msg" :index="index"></BubbleText>
@@ -20,6 +20,13 @@
         </div>
       </div>
     </div>
+    <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+      <div class="to-bottom" v-if="toBottomDisplay">
+        <div class="circle" @click="goBottom" role="button">
+          <i class="material-icons">double_arrow</i>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -49,58 +56,44 @@ export default {
       roomList: "",
       record: null,
       timeOut1: null,
-      timeOut2: null
+      timeOut2: null,
+      toBottomDisplay: false
     };
   },
   watch: {
-    message(val) {
-      if (val) {
-        let div = this.$refs.readScroll;
-        if (div) {
-          let sT = div.scrollTop;
-          let sH = div.scrollHeight;
-
-          if (val.page == 1) {
-            div.scrollTop = sH + 100;
-          } else {
-            if (val[val.length - 1].uid != this.myID && sT >= sH - 500)
-              div.scrollTop = sH + 100;
-            else if (val[val.length - 1].uid == this.myID)
-              div.scrollTop = sH + 100;
-          }
-        }
-      }
-    }
-    // scroller(val) {
-    //   let div = this.$refs.readScroll;
-    //   if (div) {
-    //     let sT = div.scrollTop;
-    //     let sH = div.scrollHeight;
-    //     if (val.page == 1) {
-    //       div.scrollTop = sH + 100;
-    //     } else {
-    //       if (val.uid != this.myID && sT >= sH - 500) div.scrollTop = sH + 100;
-    //       else if (val.uid == this.myID) div.scrollTop = sH + 100;
-    //     }
-    //   }
-    // }
+    $route(to, from) {
+      ds.event.unsubscribe(`chatroom/${from.params.id}`);
+    },
+    message(val) {}
   },
   beforeMount() {
     clearTimeout(this.timeOut1);
     clearTimeout(this.timeOut2);
-    this.roomList = this.roomListData;
+    // this.roomList = this.roomListData;
   },
   mounted() {
-    this.getData(this.roomListData);
+    //this.getData(this.roomListData);
     this.record = ds.record.getRecord(`chat`);
+    if (this.mobileMode)
+      document.addEventListener("contextmenu", e => e.preventDefault());
+
+    setTimeout(() => {
+      this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
+    }, 200);
+
+    this.$refs.readScroll.addEventListener("scroll", e => {
+      // console.log(this.$refs.readScroll.scrollTop);
+      // console.log(e);
+    });
   },
   beforeDestroy() {
-    ds.event.unsubscribe(`chatroom/${this.roomList.rid}`);
-    ds.event.unsubscribe(`scroller/${this.roomList.rid}`);
-    this.record.unsubscribe(`typing/${this.roomList.rid}`);
-    this.record.unsubscribe(`online/${this.roomList.uid}`);
+    // ds.event.unsubscribe(`chatroom/${this.roomList.rid}`);
+    // ds.event.unsubscribe(`scroller/${this.roomList.rid}`);
+    // this.record.unsubscribe(`typing/${this.roomList.rid}`);
+    // this.record.unsubscribe(`online/${this.roomList.uid}`);
   },
   computed: {
+    ...mapState("AppData", ["mobileMode"]),
     ...mapState("Identify", ["myID"]),
     ...mapState("Chat", ["message", "roomID", "scroller"]),
     ...mapState("Room", ["countReadMsg", "roomListData"])
@@ -151,6 +144,11 @@ export default {
       return i;
     },
     toScroll(e) {
+      let height = e.target.scrollHeight - e.target.clientHeight;
+
+      if (e.target.scrollTop < height - 50) this.toBottomDisplay = true;
+      else this.toBottomDisplay = false;
+
       // if (e.target.scrollTop == 0) {
       //   this.reloadMessage({
       //     uid: this.myID,
@@ -159,8 +157,8 @@ export default {
       //   });
       // }
     },
-    drag(e) {
-      // console.log(e);
+    goBottom() {
+      this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
     }
   }
 };

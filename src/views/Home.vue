@@ -66,7 +66,7 @@
           >
             <div
               :class="['part', !mobileMode ? 'app-sidebar-desktop' : 'app-sidebar']"
-              v-show="sideMenu"
+              v-show="mainside"
               style="animation-duration: .2s"
             >
               <SideIndex @itemClicked="onItemClicked"></SideIndex>
@@ -79,43 +79,7 @@
             :class="['part', mobileMode ? 'app-content' : 'app-content-desktop']"
           >
             <Welcome v-if="!chatClick && !mobileMode" key="1" style="animation-duration: 0s"></Welcome>
-            <RoomIndex
-              v-else-if="chatClick && !moduleLink"
-              key="2"
-              style="animation-duration: 0.1s"
-            ></RoomIndex>
-
-            <!-- <RoomMain v-else-if="chatClick" key="2" style="animation-duration: 0.1s"></RoomMain> -->
-            <div
-              id="module-box"
-              v-else-if="chatClick && moduleLink"
-              key="3"
-              style="animation-duration: 0.1s"
-            >
-              <div class="header">
-                <div class="header-box">
-                  <div
-                    class="back-button"
-                    role="button"
-                    @click="onChatClick({cnt: false, module: ''})"
-                    v-if="mobileMode"
-                  >
-                    <transition enter-active-class="animated zoomIn">
-                      <i class="material-icons" v-if="startUp" key="1">arrow_downward</i>
-                    </transition>
-                  </div>
-                  <div class="burger" role="button" @click="showMenu" v-else>
-                    <i class="material-icons">menu_open</i>
-                  </div>
-                  <!-- End back-button -->
-                  <span class="title">{{ moduleLink }}</span>
-                </div>
-                <!-- End header-box -->
-              </div>
-              <div class="modules">
-                <router-view />
-              </div>
-            </div>
+            <router-view key="2" style="animation-duration: 0.1s"></router-view>
             <drop-box key="4" v-if="dropBox" style="animation-duration: 0s"></drop-box>
           </transition-group>
           <!-- <div :class="['part', mobileMode ? 'app-content' : 'app-content-desktop']">
@@ -135,13 +99,14 @@ import SideIndex from "@/components/sidebars/SideIndex.vue";
 import RoomIndex from "@/components/rooms/RoomIndex.vue";
 import Info from "@/components/sidebars/Info.vue";
 import AddParticipantPanel from "@/components/sidebars/AddParticipantPanel.vue";
-import Settings from "@/components/sidebars/Settings.vue";
+import Settings from "@/components/sidebars/settings/Settings.vue";
 import NewChat from "@/components/sidebars/NewChat.vue";
 import AddParticipant from "@/components/sidebars/AddParticipant.vue";
 import GroupSubject from "@/components/sidebars/GroupSubject.vue";
 import FilePanel from "@/components/rooms/FilePanel.vue";
 import Welcome from "@/views/Welcome.vue";
 import ConfirmPopup from "@/components/context/ConfirmPopup.vue";
+import Drawers from "@/views/home/Drawer.vue";
 
 import BubblePopup from "@/components/context/bubblePopup.vue";
 import ForwardPopup from "@/components/context/forwardPopup.vue";
@@ -150,15 +115,14 @@ import ContextMenu from "@/components/context/Context.vue";
 import DropBox from "@/components/rooms/input-object/DropBox.vue";
 
 import { mapState, mapActions, mapGetters } from "vuex";
-import MobileDetector from "@/mixins/MobileDetector.js";
 import ds from "@/helper/deepstream";
 import code from "@/helper/father";
 
 export default {
-  mixins: [MobileDetector],
   components: {
     ImageViewer,
     Welcome,
+    Drawers,
     SideIndex,
     RoomIndex,
     Settings,
@@ -229,7 +193,10 @@ export default {
       });
     }, 500);
 
-    window.onbeforeunload = () => {
+    window.onbeforeunload = e => {
+      if (this.mobileMode) {
+        e.preventDefault();
+      }
       if (this.addParticipant || this.GroupSubject) {
         this.deleteGroup();
       }
@@ -261,7 +228,8 @@ export default {
       "addParticipantPanel",
       "newChat",
       "filePanel",
-      "moduleLink"
+      "moduleLink",
+      "mainside"
     ]),
     ...mapState("Group", ["roomID"]),
     ...mapState("flexible_interest_module", ["root_router", "permission"]),

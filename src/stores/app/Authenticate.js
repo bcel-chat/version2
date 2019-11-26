@@ -6,6 +6,8 @@ import store from "@/stores/store.js";
 import * as firebase from "firebase";
 import * as device from "device-uuid";
 
+import { debounce } from "lodash";
+
 const firebaseConfig = {
   apiKey: "AIzaSyChPx8QKJSwSVHCjzWRLBqXfPg3kJKLKfo",
   authDomain: "chat-bcel.firebaseapp.com",
@@ -32,15 +34,7 @@ if ("serviceWorker" in navigator) {
     .register("sw/firebase-messaging-sw.js")
     .then(function(reg) {
       messaging.useServiceWorker(reg);
-      reg.pushManager.getSubscription().then(function(sub) {
-        if (sub === null) {
-          // Update UI to ask user to register for Push
-          console.log("Not subscribed to push service!");
-        } else {
-          // We have a subscription, update the database
-          console.log("Subscription object: ", sub);
-        }
-      });
+      reg.pushManager.getSubscription().then(() => {});
     })
     .catch(function(err) {
       console.log("Service Worker registration failed: ", err);
@@ -54,8 +48,6 @@ const resquestPermission = user => {
       messaging
         .getToken()
         .then(token => {
-          console.log("Token", token);
-
           const device_id = new device.DeviceUUID().get();
           ds.rpc.make(
             "/bcel/dashboard/flexible/interest/save/user/notification/token",
@@ -64,7 +56,7 @@ const resquestPermission = user => {
               diviceId: device_id,
               token: token
             },
-            (err, data) => {}
+            () => {}
           );
         })
         .catch(err => {
@@ -128,19 +120,19 @@ const permissionCheck = user => {
           store.commit("flexible_interest_module/addLoginUser", {
             user: result["userId"]
           });
-          window.sessionStorage.setItem("user", code.to(result["userId"]));
+          window.localStorage.setItem("user", code.to(result["userId"]));
           if (result["permission"] == 1 || result["permission"] == 2) {
-            window.sessionStorage.setItem("permission", code.to("true"));
+            window.localStorage.setItem("permission", code.to("true"));
             store.commit("flexible_interest_module/setPMS", {
               pms: "true"
             });
           } else if (result["permission"] == 3) {
-            window.sessionStorage.setItem("permission", code.to("report"));
+            window.localStorage.setItem("permission", code.to("report"));
             store.commit("flexible_interest_module/setPMS", {
               pms: "report"
             });
           } else if (result["permission"] == 0) {
-            window.sessionStorage.setItem("permission", code.to("false"));
+            window.localStorage.setItem("permission", code.to("false"));
             store.commit("flexible_interest_module/setPMS", {
               pms: "false"
             });
@@ -156,7 +148,9 @@ const authentication = {
   namespaced: true,
   state: {
     authData: null,
-    authStatus: true
+    authStatus: true,
+    userRole: null,
+    connectClose: null
   },
   mutations: {
     setAuthData(state, payload) {
@@ -166,17 +160,29 @@ const authentication = {
         permissionCheck(payload.data[0].uname);
         localStorage.setItem("freya", code.to(payload.data[0].uname));
         localStorage.setItem("badang", code.to(payload.data[0].wlc_id));
+        state.setConnectClose = false;
         router.push("/");
       }
-      setTimeout(() => {
+
+      let timeOut = debounce(() => {
         state.authStatus = true;
       }, 5000);
+
+      timeOut();
+    },
+    setUserRole(state, payload) {
+      state.userRole = payload;
+    },
+    setConnectClose(state, payload) {
+      state.connectClose = payload;
     }
   },
   actions: {
     setAuthData({ commit }, payload) {
       ds.login(payload, (success, data) => {
         if (success) {
+          commit("setUserRole", data[0].role);
+          // localStorage.setItem("your_name", code.to(data[0].role));
           localStorage.setItem("thor", code.to(JSON.stringify(payload)));
           localStorage.setItem("roger", code.to(data[0].uid));
           store.commit("Settings/setProfile", {
@@ -184,11 +190,19 @@ const authentication = {
             displayname: data[0].displayname,
             desc: data[0].description
           });
+          commit("setAuthData", {
+            data: data,
+            status: success
+          });
+        } else {
+          commit("setAuthData", {
+            data: data,
+            status: success
+          });
         }
-        commit("setAuthData", {
-          data: data,
-          status: success
-        });
+      });
+      ds.on("error", () => {
+        commit("setConnectClose", true);
       });
     },
     signout({ commit }) {
@@ -200,7 +214,7 @@ const authentication = {
       ds.close();
       router.push("/signin");
       store.dispatch("AppData/setTabActive", 0);
-      sessionStorage.clear();
+      localStorage.clear();
     }
   }
 };

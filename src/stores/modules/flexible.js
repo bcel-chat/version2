@@ -14,12 +14,12 @@ const flexible_interest_module = {
     bank_interest: "",
     comment_edit: "",
     comment_approve: "",
-    root_router: "",
-    permission: window.sessionStorage.getItem("permission")
-      ? code.from(window.sessionStorage.getItem("permission"))
+    root_router: "/modules",
+    permission: window.localStorage.getItem("permission")
+      ? code.from(window.localStorage.getItem("permission"))
       : "",
-    logined_user_id: window.sessionStorage.getItem("user")
-      ? code.from(window.sessionStorage.getItem("user"))
+    logined_user_id: window.localStorage.getItem("user")
+      ? code.from(window.localStorage.getItem("user"))
       : "",
     request_approve_detail: {},
     customer_requirement: window.sessionStorage.getItem("requirement")

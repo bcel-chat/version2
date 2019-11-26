@@ -53,17 +53,17 @@
 }
 
 .mobile-enter>.item-inbox:active {
-    background-color: rgba(239, 83, 83, .1);
+    background-color: $primary-hover;
 }
 
 .item-inbox:hover {
-    background-color: rgba(239, 83, 83, .3);
+    background-color: $primary-hover;
 }
 
 .desktop-enter {
 
     .item-inbox:active {
-        background-color: rgba(239, 83, 83, .1);
+        background-color: $primary-enter;
     }
 }
 

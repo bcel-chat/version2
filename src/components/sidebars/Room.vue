@@ -8,12 +8,13 @@
         :class="['content-group', mobileMode ? 'mobile-enter' : 'desktop-enter']"
       >
         <template v-for="item in room">
-          <div
+          <router-link
+            :to="`/rooms/${item.rid}`"
             :key="item.rid"
             :class="['item-inbox', roomActive.status && roomActive.rid == item.rid ? 'roomActive' : '']"
             role="button"
             ref="itemInbox"
-            @click="chat(item.myid, item.rid, item.rtype)"
+            @click.native="chat(item.myid, item.rid, item.rtype), roomID = item.rid"
             @mouseover="refID = item.rid"
             @mouseleave="roomArrow ? refID = item.rid : refID = ''"
           >
@@ -89,7 +90,7 @@
               <!-- End msg-box -->
             </div>
             <!-- End inbox-detail -->
-          </div>
+          </router-link>
           <!-- End item-inbox -->
         </template>
       </transition-group>
@@ -109,6 +110,7 @@ export default {
       refID: "",
       moment: this.$moment,
       record: null,
+      roomID: null,
       picURL: process.env.VUE_APP_PICTURE_PROFILE
     };
   },
@@ -141,6 +143,7 @@ export default {
         });
     }
   },
+
   mounted() {
     this.record = ds.record.getRecord(`chat`);
   },
@@ -159,7 +162,14 @@ export default {
   },
   methods: {
     ...mapActions("AppData", ["onChatClick", "showInfo"]),
-    ...mapActions("Chat", ["getMessage", "setScroller"]),
+    ...mapActions("Chat", [
+      "getMessage",
+      "setScroller",
+      "getUserRoom",
+      "setRoomID",
+      "setRoomType",
+      "reloadMessage"
+    ]),
     ...mapActions("Room", [
       "setRoom",
       "getRoom",
@@ -170,7 +180,9 @@ export default {
       "setRoomBody",
       "setRoomListData",
       "getParticipantRoom",
-      "getUserRoom"
+      "getUserRoom",
+      "roomListData",
+      "getCountReadMsg"
     ]),
     ...mapActions("Group", ["getParticipantId", "setGroup"]),
     ...mapActions("Contact", ["getContact"]),
@@ -189,44 +201,39 @@ export default {
       });
     },
     chat(uid, rid, rtype) {
-      clearTimeout(this.roomTimeOut);
-      this.showInfo(false);
-      this.setRoomBody(false);
-      this.setRoomListData({ uid: uid, rid: rid, rtype: rtype });
-      this.getParticipantRoom({ uid: this.myID, rid: rid });
-      this.getParticipantId({ uid: this.myID, rid: rid });
-      this.getUserRoom({ uid: uid });
-
-      ds.event.subscribe(`chatroom/${rid}`, data => {
-        this.getMessage(rid);
-      });
-
-      this.record.subscribe(`typing/${rid}`, this.getTyping, true);
-
-      this.record.subscribe(`online/${uid}`, this.getOnline, true);
-
-      this.onChatClick({ cnt: true, module: "" });
       this.setRoomActive({
         status: true,
         rid: rid
       });
 
-      this.roomTimeOut = setTimeout(() => {
-        this.setRoomBody(true);
-        setTimeout(() => {
-          this.setScroller({
-            rid: rid,
-            uid: this.myID,
-            page: 1
-          });
-        }, 500);
-      }, 200);
+      this.onChatClick({ cnt: true, module: "" });
+
+      this.showInfo(false);
+      this.setRoomListData({ uid: uid, rid: rid, rtype: rtype });
+      this.getParticipantRoom({ uid: this.myID, rid: rid });
+      this.getParticipantId({ uid: this.myID, rid: rid });
+      this.getUserRoom({ uid: uid });
+
+      this.getCountReadMsg({ uid: this.myID, rid: rid });
+      this.setRoomType(rtype);
+      this.setRoomID(rid);
+      this.roomCheck({ uid: uid, rid: rid, rtype: rtype });
+      this.getMessage(rid);
+
+      ds.event.subscribe(`chatroom/${rid}`, data => {
+        if (data) if (data == this.roomID) this.getMessage(rid);
+      });
+
+      this.record.subscribe(`typing/${rid}`, this.getTyping, true);
+      this.record.subscribe(`online/${uid}`, this.getOnline, true);
     },
     getOnline(data) {
       if (data) if (data.user != this.myID) this.setIsOnline(data);
     },
     getTyping(data) {
-      if (data) if (data.sender != this.myID) this.setIsTyping(data.type);
+      if (data)
+        if (data.sender != this.myID && data.roomID == this.roomID)
+          this.setIsTyping(data.type);
     },
     getFirstname(name) {
       if (name) return name.split(" ")[0];

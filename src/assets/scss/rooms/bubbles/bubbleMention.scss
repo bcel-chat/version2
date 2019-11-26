@@ -166,7 +166,7 @@
             word-wrap: break-word;
 
             .msg {
-                font-size: 0.875rem;
+                font-size: 14px;
                 line-height: .5rem;
             }
         }
@@ -182,7 +182,7 @@
 
     .reply-box {
         .reply-side {
-            color: rgba(0, 0, 0, .8);
+            color: $msg-color;
 
             .inside {
                 position: relative;

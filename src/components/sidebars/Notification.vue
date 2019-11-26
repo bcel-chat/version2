@@ -15,7 +15,7 @@
             <transition-group enter-active-class="animated zoomIn">
               <template v-for="it in item">
                 <router-link
-                  :to="it.path"
+                  :to="'/modules'+it.path"
                   :key="it.not_id"
                   :class="['item-inbox', it.active == 0 ? 'active' : '']"
                   role="button"

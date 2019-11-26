@@ -36,16 +36,20 @@
         <div class="fi-add-user-content" v-if="checkSaveLoading">
             <div class="fi-inverse-background"></div>
             <div class="fi-processing-container text-center">
-                <img src="@/assets/flexible_interest/images/ic-processing.gif" style="width: 60px; filter:brightness(50%);" alt="Processing">
-                <br>
-                <strong style="color: rgb(129, 35, 42);">Waiting</strong>
+                <SpinnerLoader :color="'#3287c4'" />
+                <span style="color: #3287c4; margin-top: 1.5rem;">Please wait...</span>
             </div>
         </div>
         <fi_dialog :config="fi_config"/>
         <fi_report_approve_dialog :config="config"/>
         <div class="row hide-on-print-mode">
             <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                <h2 class="text-center " :class="'BACKGROUND-'+customer_info['approveStatus']">ລາຍລະອຽດ</h2>
+                <!-- <h2 class="text-center " :class="'BACKGROUND-'+customer_info['approveStatus']">ລາຍລະອຽດ</!-->
+                 <div class="text-left fi-status">
+                        <h3><strong>ສະຖານະອະນຸມັດ: </strong> <strong :class="(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']">{{(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']}}</strong></h3>
+                        <small v-if="(customer_info['approveStatus'] == 'APPROVED') || (customer_info['approveStatus'] == 'SUCCESS') || (customer_info['approveStatus'] == 'REJECTED') || (customer_info['approveStatus'] == 'REJECTED_50')" :class="(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']">ໂດຍ: {{customer_info['approveUserName']}}</small>
+                        <small  v-else-if="(customer_info['approveStatus'] == 'CANCEL')" :class="customer_info['approveStatus']">ໂດຍ: {{customer_info['createUserName']}}</small>
+                    </div>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left">
                 <div class="fi-card">
@@ -212,11 +216,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <h3><strong>ສະຖານະອະນຸມັດ: </strong> <strong :class="(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']">{{(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']}}</strong></h3>
-                        <small v-if="(customer_info['approveStatus'] == 'APPROVED') || (customer_info['approveStatus'] == 'SUCCESS') || (customer_info['approveStatus'] == 'REJECTED') || (customer_info['approveStatus'] == 'REJECTED_50')" :class="(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']">ໂດຍ: {{customer_info['approveUserName']}}</small>
-                        <small  v-else-if="(customer_info['approveStatus'] == 'CANCEL')" :class="customer_info['approveStatus']">ໂດຍ: {{customer_info['createUserName']}}</small>
-                    </div>
                 </div>
                 <div class="fi-card">
                     <strong class="fi-topic fi-expand" @click="showProducts = !showProducts">&#9660; ຜະລິດຕະພັນທີ່ລູກຄ້າໃຊ້ບໍລິການຢູ່ ທຄຕລ</strong>
@@ -277,9 +276,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import '@/assets/flexible_interest/fonts/phetsarath_font.css'
 import fi_dialog from '@/components/flexible-interest/fi_dialog.vue'
 import fi_report_approve_dialog from '@/components/flexible-interest/fi_report_approve_dialog.vue'
+
+import { SpinnerLoader } from "vue-spinners-css";
+
 export default {
   name: 'document_attach',
   components: {
+    SpinnerLoader,
     fi_dialog,
     fi_report_approve_dialog
   },
@@ -557,7 +560,7 @@ export default {
                 for(var j = 0; j < products.length; j++){
                     var result = products[j]['list_html'];
                     products[j]['list_html'] = result
-                        .replace(/img\//g,'/img/')
+                        .replace(/img\//g,'/chat/img/')
                         .replace(/<\/h2>/g,'</h2>\n')
                         .replace(/body \{/g,'.kjdkfjd {')
                         .replace(/label/g,'.mndmf')
@@ -873,21 +876,32 @@ export default {
 
 
 <style lang="scss" scoped>
+@import "@/assets/scss/variables.scss";
 * {
     font-family: Phetsarath_OT;
 }
-.fi-inverse-background{
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background: black;
-    z-index: 100;
-    opacity: 0.6;
+
+.fi-status{
+    padding: 0;
+    @media screen and (min-width: 760px) {
+        padding: .5rem 1rem;
+    }
 }
-.fi-processing-container{
+.fi-inverse-background {
   position: fixed;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(250, 250, 250, 0.8);
+  z-index: 100;
+}
+.fi-processing-container {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   left: 0px;
   right: 0px;
   top: 50%;
@@ -927,7 +941,7 @@ strong, th, td {
     color: rgb(33, 145, 33);
 }
 .CANCEL {
-    color: #C72B2C;
+    color: $fi-primary;
 }
 .REJECTED_50 {
     color: rgb(240, 240, 15);
@@ -990,9 +1004,9 @@ th.fi-title {
 .fi-btn-next{
     margin-top: 5px;
     margin-bottom: 10px;
-    background: #C72B2C;
+    background: $fi-primary;
     color: white;
-    border: 1px #C72B2C solid;
+    border: 1px $fi-primary solid;
     border-radius: 3px;
     width: 8rem;
     font-size: 1.2rem;
@@ -1004,19 +1018,19 @@ th.fi-title {
     display: none;
 }
 .fi-btn-next:hover{
-    background: #A42C35;
+    background: $fi-hover;
 }
 .fi-btn-cancel {
     background: white; 
-    border: 1px #C72B2C solid;
+    border: 1px $fi-primary solid;
     border-radius: 3px;
     width: 8rem;
     font-size: 1.2rem;
-    color: #C72B2C; 
+    color: $fi-primary; 
 }
 .fi-btn-cancel:hover{
-    color: #A42C35;
-    border: 2px #A42C35 solid;
+    color: $fi-hover;
+    border: 2px $fi-hover solid;
 }
 
 
@@ -1042,9 +1056,9 @@ th.fi-title {
     z-index: 100;
     background: white; //linear-gradient(to bottom right, rgba(243, 195, 189, 0.918) 10%, rgb(202, 86, 94) 200%);
     border: 1px lightgrey solid;
-    -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;
-        -moz-box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;
-            box-shadow: 0.5px 0.5px 0.5px 0.5px #C72B2C;
+    -webkit-box-shadow: 0.5px 0.5px 0.5px 0.5px $fi-primary;
+        -moz-box-shadow: 0.5px 0.5px 0.5px 0.5px $fi-primary;
+            box-shadow: 0.5px 0.5px 0.5px 0.5px $fi-primary;
     padding: 5px;
     width: 300px;
     min-height: 120px;
@@ -1166,7 +1180,7 @@ ul.fi-dropdown>li:hover, ul.fi-dropdown>li:active{
 }
 
 .fi-checkbox-container input:checked ~ .fi-hover {
-  background-color: #C72B2C;
+  background-color: $fi-primary;
 }
 
 .fi-checkbox-mark:after {
@@ -1202,16 +1216,15 @@ ul.fi-dropdown>li:hover, ul.fi-dropdown>li:active{
   background: #888; 
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #A42C35; 
+  background: $fi-hover; 
 }
 
 .fi-card{
     padding: 1rem;
-    border: 1px lightgrey solid;
-    -webkit-box-shadow: -2px 3px 14px -7px rgba(0,0,0,0.52);
-    -moz-box-shadow: -2px 3px 14px -7px rgba(0,0,0,0.52);
-    box-shadow: -2px 3px 14px -7px rgba(0,0,0,0.52);
-    -webkit-transition: box-shadow 0.5s;  /*For Safari 3.1 to 6.0 */
+    margin: .5rem 0;
+    border-radius: .5rem;
+    border: 1px #e7e6e6 solid;
+    box-shadow: -2px 3px 14px -7px rgba(0,0,0,0.3);
     transition: box-shadow 0.5s;
     background: white;
 }
@@ -1242,7 +1255,7 @@ ul.fi-dropdown>li:hover, ul.fi-dropdown>li:active{
 }
 input[type="file"]{
     font-size: 12px;
-    color: #C72B2C;
+    color: $fi-primary;
 }
 
 @media only screen and (max-width: 767px) {

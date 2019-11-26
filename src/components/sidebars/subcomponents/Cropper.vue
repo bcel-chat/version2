@@ -11,7 +11,11 @@
         </div>
       </div>
     </div>
-    <img src alt srcset />
+    <!-- <img src alt srcset /> -->
+    <div class="loading" v-if="load">
+      <HalfCircleSpinner :animation-duration="800" :size="100" :color="'#ef3434'" />
+      <div class="load-text">Please wait...</div>
+    </div>
   </div>
 </template>
 
@@ -19,10 +23,17 @@
 import Croppr from "croppr";
 import "croppr/dist/croppr.css";
 import { mapActions } from "vuex";
+
+import { HalfCircleSpinner } from "epic-spinners";
+
 export default {
   props: ["img", "imgValue", "page", "filename"],
+  components: {
+    HalfCircleSpinner
+  },
   data() {
     return {
+      load: false,
       picture: null,
       cropper: null,
       pictureCallback: null
@@ -35,7 +46,7 @@ export default {
         minSize: [50, 50, "px"],
         aspectRatio: 1
       });
-    }, 100);
+    }, 150);
   },
   methods: {
     ...mapActions("AppData", ["showCrop"]),
@@ -50,23 +61,41 @@ export default {
       "uploadFile"
     ]),
     getCrop() {
+      this.load = true;
       const y = this.cropper.getValue().y;
       const x = this.cropper.getValue().x;
       const width = this.cropper.getValue().width;
       const height = this.cropper.getValue().height;
 
-      var input = this.$props.imgValue;
+      var input = this.imgValue;
 
       if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = event => {
           var img = new Image();
+          img.src = event.target.result;
           img.onload = () => {
             var oc = document.createElement("canvas"),
               octx = oc.getContext("2d");
             oc.width = img.width;
             oc.height = img.height;
             octx.drawImage(img, 0, 0);
+
+            // var oc = document.createElement("canvas"),
+            //   octx = oc.getContext("2d");
+            // oc.width = img.width;
+            // oc.height = img.height;
+            // octx.drawImage(img, 0, 0);
+            // while (oc.width * 0.5 > 500) {
+            //   oc.width *= 0.5;
+            //   oc.height *= 0.5;
+            //   octx.drawImage(oc, 0, 0, oc.width, oc.height);
+            // }
+            // oc.width = 500;
+            // oc.height = (oc.width * img.height) / img.width;
+
+            // octx.drawImage(img, 0, 0, oc.width, oc.height);
+
             var imageData = octx.getImageData(x, y, width, height);
 
             var canvas1 = document.createElement("canvas");
@@ -79,26 +108,29 @@ export default {
             ctx1.putImageData(imageData, 0, 0);
 
             const base64 = canvas1.toDataURL();
-            let bl;
             fetch(base64)
               .then(res => res.blob())
               .then(blob => {
-                const file = new File([blob], this.$props.filename);
+                const file = new File([blob], this.filename);
                 if (this.page == 1) {
+                  // for group
                   this.setGroupPicture(file);
                   this.groupPicture(URL.createObjectURL(blob));
                 } else if (this.page == 2) {
+                  // for person
+                  console.log(URL.createObjectURL(blob));
+
                   this.setProfilePicture(file);
                 } else if (this.page == 3) {
+                  // for group info
                   this.setGroupPictureInfo(file);
                   this.groupPicture(URL.createObjectURL(blob));
                 }
               });
           };
-          img.src = event.target.result;
         };
         reader.readAsDataURL(input.files[0]);
-        this.showCrop({ show: false, page: 0 });
+        // this.showCrop({ show: false, page: 0 });
       }
       this.$emit("btnClearDone", null);
     },
@@ -106,6 +138,9 @@ export default {
       this.showCrop({ show: false, page: 0 });
       this.$emit("btnClear", null);
     }
+  },
+  beforeDestroy() {
+    this.load = false;
   }
 };
 </script>
@@ -158,6 +193,23 @@ export default {
         color: $secondary-color;
       }
     }
+  }
+}
+
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 10;
+  .load-text {
+    margin-top: 2rem;
   }
 }
 </style>

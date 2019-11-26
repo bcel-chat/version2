@@ -2,8 +2,23 @@
   <div id="context-menu" :style="menuPosition" ref="menu">
     <div class="_containe">
       <div class="items">
-        <div class="item" role="button" @click="demo">Delete chat</div>
-        <div class="item" role="button">Exit this group</div>
+        <div
+          class="item"
+          role="button"
+          v-if="roomArrow.val.admin == 0"
+          @click="setAdmin({uid: roomArrow.val.uid, rid: roomArrow.val.rid, assign: myID, _page: 1})"
+        >Make group admin</div>
+        <div
+          class="item"
+          role="button"
+          v-else-if="roomArrow.val.admin == 1 && roomArrow.val.uid != myID"
+          @click="setAdmin({uid: roomArrow.val.uid, rid: roomArrow.val.rid, assign: myID, _page: 2})"
+        >Dismiss as admin</div>
+        <div
+          class="item"
+          role="button"
+          @click="setAdmin({uid: roomArrow.val.uid, rid: roomArrow.val.rid, assign: myID, _page: 3})"
+        >Remove</div>
       </div>
     </div>
   </div>
@@ -25,10 +40,11 @@ export default {
     document.addEventListener("mousedown", this.checkOnClick);
   },
   computed: {
+    ...mapState("Identify", ["myID"]),
     ...mapState("Context", ["roomArrow"])
   },
   methods: {
-    ...mapActions("Context", ["setRoomArrow"]),
+    ...mapActions("Context", ["setRoomArrow", "setAdmin"]),
     checkOnClick(e) {
       if (e.target.className == "item")
         setTimeout(() => {
@@ -63,7 +79,7 @@ export default {
 
       let windowWidth, windowHeight, top, left;
 
-      clickCoords = this.getPosition(this.roomArrow);
+      clickCoords = this.getPosition(this.roomArrow.event);
       clickCoordsX = clickCoords.x;
       clickCoordsY = clickCoords.y;
       menuWidth = this.$refs.menu.offsetWidth + 4;
@@ -88,9 +104,6 @@ export default {
         top: `${top}px`,
         left: `${left}px`
       };
-    },
-    demo(e) {
-      console.log(5555);
     }
   },
   beforeDestroy() {

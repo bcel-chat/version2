@@ -56,12 +56,12 @@ export default {
       visibility: "visible",
       reply: false,
       record: null,
+      recordMsg: null,
       clearType: ""
     };
   },
   mounted() {
     this.record = ds.record.getRecord(`chat`);
-
     this.clearType = debounce(this.clearTyping, 500);
     document.addEventListener("click", e => this.filePanelListen(e));
     window.addEventListener("resize", () => {
@@ -149,6 +149,7 @@ export default {
       this.record.set(`typing/${this.roomID}`, {
         receive: this.userRoom.uid,
         sender: this.myID,
+        roomID: this.roomID,
         type: `typing...`
       });
       this.clearType();
@@ -157,6 +158,7 @@ export default {
       this.record.set(`typing/${this.roomID}`, {
         receive: this.userRoom.uid,
         sender: this.myID,
+        roomID: this.roomID,
         type: ``
       });
     },
@@ -221,8 +223,17 @@ export default {
       this.setFileBoxToggle(false);
     },
     reloadData() {
+      let id = Math.random()
+        .toString(6)
+        .substr(2, 4);
+
       ds.event.emit(`room/${this.userRoom.uid}`, this.roomID);
       ds.event.emit(`chatroom/${this.roomID}`, this.roomID);
+
+      ds.record
+        .getRecord(`message`)
+        .set(`chatroom/${this.roomID}`, { rid: this.roomID, mid: id });
+
       this.setTabActive(0);
       this.notify();
       this.clear();

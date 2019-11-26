@@ -13,11 +13,12 @@ const context = {
     toEdit: false,
     confirm: false,
     roomArrow: "",
-    dropBox: false
+    dropBox: false,
+    setAdmin: ""
   },
   mutations: {
     setDropBox(state, payload) {
-      state.dropBox = payload
+      state.dropBox = payload;
     },
     setBubblePopup(state, payload) {
       state.bubblePopup = payload;
@@ -41,102 +42,81 @@ const context = {
       state.forwardBoxData = payload;
     },
     setToEdit(state, payload) {
-      state.toEdit = payload
+      state.toEdit = payload;
     },
     setConfirm(state, payload) {
-      state.confirm = payload
+      state.confirm = payload;
     },
     setRoomArrow(state, payload) {
-      state.roomArrow = payload
+      state.roomArrow = payload;
+    },
+    setAdmin(state, payload) {
+      state.setAdmin = payload;
     }
   },
   actions: {
-    setDropBox({
-      commit
-    }, payload) {
-      commit("setDropBox", payload)
+    setAdmin({ commit }, payload) {
+      ds.rpc.make("setGroupAdmin", payload, (err, data) => {
+        store.dispatch("Room/getParticipantInfo", "");
+      });
     },
-    setRoomArrow({
-      commit
-    }, payload) {
-      commit("setRoomArrow", payload)
+    setDropBox({ commit }, payload) {
+      commit("setDropBox", payload);
     },
-    setBubblePopup({
-      commit
-    }, payload) {
+    setRoomArrow({ commit }, payload) {
+      commit("setRoomArrow", payload);
+    },
+    setBubblePopup({ commit }, payload) {
       commit("setBubblePopup", payload);
     },
-    setForwardPopup({
-      commit
-    }, payload) {
+    setForwardPopup({ commit }, payload) {
       commit("setForwardPopup", payload);
     },
-    setPopupData({
-      commit
-    }, payload) {
+    setPopupData({ commit }, payload) {
       commit("setPopupData", payload);
     },
-    setTxtSearch({
-      commit
-    }, payload) {
+    setTxtSearch({ commit }, payload) {
       commit("setTxtSearch", payload);
     },
-    getContact({
-      commit
-    }, payload) {
+    getContact({ commit }, payload) {
       ds.rpc.make("getForwardContact", payload, (err, data) => {
         if (!err) commit("getContact", data);
         else console.log(err);
       });
     },
-    contactSearch({
-      commit
-    }, payload) {
+    contactSearch({ commit }, payload) {
       commit("getContact", payload);
     },
-    setContact({
-      commit
-    }, payload) {
+    setContact({ commit }, payload) {
       ds.rpc.make("setContact", payload, (err, data) => {
         store.dispatch("Room/roomCheck", payload.chatwith);
       });
     },
-    setMsgBox({
-      commit
-    }, payload) {
+    setMsgBox({ commit }, payload) {
       commit("setMsgBox", payload);
     },
-    setToEdit({
-      commit
-    }, payload) {
-      commit("setToEdit", payload)
+    setToEdit({ commit }, payload) {
+      commit("setToEdit", payload);
     },
-    setConfirm({
-      commit
-    }, payload) {
-      commit("setConfirm", payload)
+    setConfirm({ commit }, payload) {
+      commit("setConfirm", payload);
     },
-    getForwardBoxData({
-      commit
-    }, payload) {
+    getForwardBoxData({ commit }, payload) {
       ds.rpc.make("getReplyBoxData", payload, (err, data) => {
         if (!err) {
           commit("getForwardBoxData", data[0]);
         }
       });
     },
-    editMessage({
-      commit
-    }, payload) {
+    editMessage({ commit }, payload) {
       ds.rpc.make("editMessage", payload, (err, data) => {
-        commit("setToEdit", false)
-      })
+        commit("setToEdit", false);
+      });
     },
-    deleteMessage({
-      state
-    }, payload) {
+    deleteMessage({ state }, payload) {
       ds.rpc.make(
-        "deleteMessage", {
+        "deleteMessage",
+        {
           cid: state.popupData.cid,
           rid: state.popupData.rid
         },

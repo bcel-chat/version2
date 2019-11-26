@@ -13,7 +13,14 @@
             </div>
             <!-- End alpha-box -->
             <template v-for="it in item">
-              <div :key="it.id" class="item-inbox" role="button" ref="itemInbox" @click="chat(it)">
+              <router-link
+                :to="`/rooms/${it.rid}`"
+                :key="it.id"
+                class="item-inbox"
+                role="button"
+                ref="itemInbox"
+                @click.native="chat(it)"
+              >
                 <div class="avatar-inbox-panel">
                   <div class="avatar-inbox">
                     <img
@@ -37,7 +44,7 @@
                   </div>
                 </div>
                 <!-- inbox-detail -->
-              </div>
+              </router-link>
               <!-- End item-inbox -->
             </template>
           </div>
@@ -92,7 +99,7 @@ export default {
   },
   computed: {
     ...mapState("Identify", ["myID"]),
-    ...mapState("AppData", ["mobileMode", "txtSearch"]),
+    ...mapState("AppData", ["mobileMode", "txtSearch", "newChat"]),
     ...mapState("Contact", "contact"),
     ...mapState("Room", ["roomStatus"]),
     ...mapGetters("Contact", ["_contact"])
@@ -123,12 +130,11 @@ export default {
       ds.event.subscribe(`chatroom/${val.rid}`, data => {
         this.getMessage(val.rid);
       });
-
-      // this.setRoomType(1);
-      // this.setRoomID(val.rid);
-      // this.roomCheck({ uid: val.user_id, rid: val.rid, rtype: val.rtype });
+      this.setRoomType(1);
+      this.setRoomID(val.rid);
+      this.roomCheck({ uid: val.user_id, rid: val.rid, rtype: val.rtype });
       this.getUserRoom({ uid: val.user_id });
-      // this.getMessage(val.rid);
+      this.getMessage(val.rid);
       this.onChatClick({ cnt: true, module: "" });
 
       if (this.mobileMode) this.showNewChat(false);

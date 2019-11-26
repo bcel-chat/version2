@@ -4,7 +4,7 @@
       <div class="card-content">
         <template v-for="(item, index) in menuItems">
           <router-link
-            :to="permissionCheck(item) ? item.path : ''"
+            :to="item.user ? '/modules' + item.path : ''"
             class="card-box"
             :key="index"
             role="button"
@@ -25,16 +25,28 @@
       <!-- End card-content -->
     </div>
     <!-- End _container -->
+    <transition enter-active-class="animated slideInUp" leave-active-class="animated fadeOut">
+      <toast v-if="toastStart" style="animation-duration: .2s">
+        <span slot="body">No permission</span>
+      </toast>
+    </transition>
   </div>
 </template>
 
 <script>
+import toast from "@/components/sidebars/subcomponents/Toast.vue";
 import randomColor from "randomcolor";
 import { mapActions, mapState } from "vuex";
 import code from "@/helper/father.js";
+import { debounce } from "lodash";
 export default {
+  components: {
+    toast
+  },
   data() {
     return {
+      toastStart: false,
+      showToast: "",
       items: [
         {
           title: "Flexible Interest",
@@ -75,7 +87,12 @@ export default {
   },
   beforeMount() {
     this.userID = code.from(localStorage.getItem("miya"));
-    this.getMenuItem(code.from(localStorage.getItem("freya")));
+    this.getMenuItem(code.from(localStorage.getItem("roger")));
+  },
+  mounted() {
+    this.showToast = debounce(() => {
+      this.toastStart = false;
+    }, 3000);
   },
   computed: {
     ...mapState("AppData", ["moduleLink"]),
@@ -85,27 +102,26 @@ export default {
     ...mapActions("AppData", ["onChatClick", "setModuleLink"]),
     ...mapActions("Menu", ["getMenuItem"]),
     permissionCheck(item) {
-      if (item.permission) {
+      if (item.permission == 1 && this.userID != null) {
         if (item.user.toUpperCase() == this.userID.toUpperCase()) {
           return true;
         } else {
           return false;
         }
-      } else if (!item.permission) {
+      } else if (item.permission == 0) {
         return true;
       } else {
         return false;
       }
     },
     permissionCheckOnclick(item) {
-      if (item.permission) {
-        if (item.user.toUpperCase() == this.userID.toUpperCase()) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
+      if (item.user) {
         return true;
+      } else {
+        this.toastStart = true;
+        this.showToast();
+        this.$router.push("/");
+        return false;
       }
     }
   }

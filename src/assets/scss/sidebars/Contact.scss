@@ -51,19 +51,19 @@
 
 .mobile-enter>.list-group {
     .item-inbox:active {
-        background-color: rgba(239, 83, 83, .1);
+        background-color: $primary-active;
     }
 }
 
 .desktop-enter>.list-group {
     .item-inbox:hover {
-        background-color: rgba(239, 83, 83, .1);
+        background-color: $primary-hover;
     }
 }
 
 .desktop-enter>.list-group {
     .item-inbox:active {
-        background-color: rgba(239, 83, 83, .2);
+        background-color: $primary-enter;
     }
 }
 

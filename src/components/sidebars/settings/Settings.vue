@@ -160,6 +160,7 @@
                           title="Edit about"
                         >edit</i>
                       </div>
+
                       <!-- End ico-box -->
                     </transition-group>
                   </div>
@@ -168,6 +169,13 @@
                 <!-- _control _edit-able -->
               </div>
               <!-- End control-box -->
+              <div
+                class="menu-config"
+                v-if="startUp && userRole == 'admin'"
+                key="3"
+                role="button"
+                @click="setMenuPermission(true)"
+              >Menu Permission</div>
             </transition-group>
             <!-- End control-inside -->
           </div>
@@ -211,16 +219,29 @@
         @imageCroped="getImage"
       ></Cropper>
     </transition>
+    <transition-group
+      enter-active-class="animated slideInUp"
+      leave-active-class="animated slideOutDown"
+    >
+      <MenuPermission
+        v-if="menuPermission"
+        key="1"
+        style="animation-duration: .2s; animation-delay: .2s;"
+      ></MenuPermission>
+    </transition-group>
   </div>
 </template>
 
 <script>
+import MenuPermission from "@/components/sidebars/settings/MenuPermission.vue";
+
 import Cropper from "@/components/sidebars/subcomponents/Cropper.vue";
 import EditPanel from "@/components/sidebars/subcomponents/EditPanel.vue";
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 
 export default {
   components: {
+    MenuPermission,
     Cropper,
     EditPanel
   },
@@ -265,8 +286,9 @@ export default {
     this.about = this.profile.about;
   },
   computed: {
+    ...mapState("Auth", ["userRole"]),
     ...mapState("Identify", ["myID"]),
-    ...mapState("AppData", ["mobileMode", "openCrop"]),
+    ...mapState("AppData", ["mobileMode", "openCrop", "menuPermission"]),
     ...mapState("Settings", ["profile"]),
     picURL() {
       return process.env.VUE_APP_PICTURE_PROFILE + this.myID + "/";
@@ -277,7 +299,8 @@ export default {
       "showSideBar",
       "showCrop",
       "showInfo",
-      "tabActive"
+      "tabActive",
+      "setMenuPermission"
     ]),
     ...mapActions("Settings", [
       "setProfilePicture",
@@ -363,12 +386,60 @@ export default {
       if (this.$refs.scl.scrollTop >= 58) this.nav = true;
       else this.nav = false;
     },
-    openCropSide(e) {
-      let blob = new Blob([e.target.files[0]], { type: "image/png" });
-      this.picture = URL.createObjectURL(blob);
-      this.pictureValue = e.target;
-      this.filename = e.target.files[0].name;
+    openCropSide(input) {
+      let blob_ = new Blob([input.target.files[0]], { type: "image/png" });
+      this.picture = URL.createObjectURL(blob_);
+      this.pictureValue = input.target;
+      this.filename = input.target.files[0].name;
       this.showCrop({ show: true, page: 1 });
+
+      return;
+      const width = 250;
+      var reader = new FileReader();
+      reader.onload = event => {
+        var img = new Image();
+        var filePath = input.target.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.ico|\.svg)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+          return;
+        }
+        img.src = event.target.result;
+        img.onload = () => {
+          if (img.width > width) {
+            var oc = document.createElement("canvas"),
+              octx = oc.getContext("2d");
+            oc.width = img.width;
+            oc.height = img.height;
+            //octx.drawImage(img, 0, 0);
+            // while (oc.width * 0.5 > width) {
+            //   oc.width *= 0.5;
+            //   oc.height *= 0.5;
+            //   octx.drawImage(oc, 0, 0, oc.width, oc.height);
+            // }
+            oc.width = width;
+            oc.height = (oc.width * img.height) / img.width;
+            octx.drawImage(img, 0, 0, oc.width, oc.height);
+            fetch(oc.toDataURL())
+              .then(res => res.blob())
+              .then(blob => {
+                this.picture = URL.createObjectURL(blob);
+                this.pictureValue = input.target;
+                this.filename = input.target.files[0].name;
+                this.showCrop({ show: true, page: 1 });
+              });
+          } else {
+            fetch(img.src)
+              .then(res => res.blob())
+              .then(blob => {
+                this.picture = URL.createObjectURL(blob);
+                this.pictureValue = input.target;
+                this.filename = input.target.files[0].name;
+                this.showCrop({ show: true, page: 1 });
+              });
+          }
+        };
+      };
+      reader.readAsDataURL(input.target.files[0]);
     },
     clearFile(e) {
       this.$refs.profile.value = e;
@@ -392,6 +463,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/scss/sidebars/Settings.scss";
+@import "@/assets/scss/sidebars/settings/Settings.scss";
 </style>
 

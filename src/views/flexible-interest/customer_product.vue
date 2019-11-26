@@ -45,11 +45,7 @@
           </div>
           <div class="fi-box" v-else>
             <div class="fi-loading text-center">
-              <img
-                class="img-loader-out"
-                src="@/assets/flexible_interest/images/loader.gif"
-                alt="Loader"
-              />
+              <SpinnerLoader :color="'#3287c4'" />
             </div>
           </div>
         </div>
@@ -74,6 +70,7 @@
 </template>
 
 <script>
+import { SpinnerLoader } from "vue-spinners-css";
 import ds from "@/helper/ds.js";
 import address from "@/helper/server_address.js";
 import axios from "axios";
@@ -82,6 +79,9 @@ import "@/assets/flexible_interest/fonts/phetsarath_font.css";
 import { constants } from "crypto";
 export default {
   name: "customer_product",
+  components: {
+    SpinnerLoader
+  },
   data() {
     return {
       showLoading: true,
@@ -105,31 +105,31 @@ export default {
             if (i == 0) {
               this.$router.push({
                 path:
-                  this.$store.getters['flexible_interest_module/root'] +
+                  this.$store.getters["flexible_interest_module/root"] +
                   "/flexible/staff/progress/info"
               });
             } else if (i == 1) {
               this.$router.push({
                 path:
-                  this.$store.getters['flexible_interest_module/root'] +
+                  this.$store.getters["flexible_interest_module/root"] +
                   "/flexible/staff/progress/product"
               });
             } else if (i == 2) {
               this.$router.push({
                 path:
-                  this.$store.getters['flexible_interest_module/root'] +
+                  this.$store.getters["flexible_interest_module/root"] +
                   "/flexible/staff/progress/interest"
               });
             } else if (i == 3) {
               this.$router.push({
                 path:
-                  this.$store.getters['flexible_interest_module/root'] +
+                  this.$store.getters["flexible_interest_module/root"] +
                   "/flexible/staff/progress/document/attach"
               });
             } else if (i == 4) {
               this.$router.push({
                 path:
-                  this.$store.getters['flexible_interest_module/root'] +
+                  this.$store.getters["flexible_interest_module/root"] +
                   "/flexible/staff/progress/interest/approve"
               });
             }
@@ -188,7 +188,6 @@ export default {
               //console.log(error);
               this.showLoading = false;
             });
-
         } else {
           this.showLoading = false;
         }
@@ -197,7 +196,7 @@ export default {
       this.$root.$emit("resetDefault");
       this.$router.push({
         path:
-          this.$store.getters['flexible_interest_module/root'] +
+          this.$store.getters["flexible_interest_module/root"] +
           "/flexible/staff/progress/info"
       });
     }
@@ -238,14 +237,14 @@ export default {
       );
       this.$router.push({
         path:
-          this.$store.getters['flexible_interest_module/root'] +
+          this.$store.getters["flexible_interest_module/root"] +
           "/flexible/staff/progress/interest"
       });
     },
     backwardProgress() {
       this.$router.push({
         path:
-          this.$store.getters['flexible_interest_module/root'] +
+          this.$store.getters["flexible_interest_module/root"] +
           "/flexible/staff/progress/info"
       });
     }
@@ -254,9 +253,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  font-family: Phetsarath_OT;
-}
+@import "@/assets/scss/variables.scss";
+// * {
+//   font-family: Phetsarath_OT;
+// }
 
 img.img-loader {
   width: 50px;
@@ -285,21 +285,21 @@ img.img-loader-out {
 }
 .fi-btn-next {
   margin-bottom: 10px;
-  background: #c72b2c;
+  background: $fi-primary;
   color: white;
-  border: 1px #c72b2c solid;
+  border: 1px $fi-primary solid;
   border-radius: 3px;
   width: 8rem;
   font-size: 1.2rem;
-}
-.fi-btn-next:hover {
-  background: #a42c35;
+  &:hover {
+    background: $fi-hover;
+  }
 }
 .fi-card {
   border: 1px lightgrey solid;
-  -webkit-box-shadow: 0.1px 0.1px 0.1px 0.1px #c72b2c;
-  -moz-box-shadow: 0.1px 0.1px 0.1px 0.1px #c72b2c;
-  box-shadow: 0.1px 0.1px 0.1px 0.1px #c72b2c;
+  -webkit-box-shadow: 0.1px 0.1px 0.1px 0.1px $fi-primary;
+  -moz-box-shadow: 0.1px 0.1px 0.1px 0.1px $fi-primary;
+  box-shadow: 0.1px 0.1px 0.1px 0.1px $fi-primary;
   padding: 1rem;
   -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
   transition: box-shadow 0.5s;
@@ -308,9 +308,9 @@ img.img-loader-out {
 }
 .fi-card:hover {
   border: 1px lightgrey solid;
-  -webkit-box-shadow: 0.5px 0.1px 0.5px 0.5px #c72b2c;
-  -moz-box-shadow: 0.5px 0.5px 0.5px 0.5px #c72b2c;
-  box-shadow: 0.5px 0.5px 0.5px 0.5px #c72b2c;
+  -webkit-box-shadow: 0.5px 0.1px 0.5px 0.5px $fi-primary;
+  -moz-box-shadow: 0.5px 0.5px 0.5px 0.5px $fi-primary;
+  box-shadow: 0.5px 0.5px 0.5px 0.5px $fi-primary;
   padding: 1rem;
 }
 .fi-box {
@@ -406,7 +406,7 @@ select#deposit option {
 }
 select#interest option {
   margin: 40px;
-  background: #c72b2c;
+  background: $fi-primary;
   color: #fff;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
 }
@@ -840,6 +840,13 @@ select:invalid {
   .fi-account-title {
     font-size: 25px;
   }
+}
+
+.fi-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
 }
 
 @media only screen and (max-width: 400px) {

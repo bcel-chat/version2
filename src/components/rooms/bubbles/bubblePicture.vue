@@ -2,8 +2,9 @@
   <div id="bubble" :class="[checkTime(index, msg.time) != null ? 'new' : '']">
     <div
       :class="['bubble-container', msg.uid == myID ? 'out' : 'in']"
-      @mouseover="menu = true"
+      @mouseover="mobileMode ? menu = false : menu = true"
       @mouseleave="menu = false"
+      ref="touchMenu"
     >
       <div class="menu" v-if="menu">
         <div
@@ -45,8 +46,6 @@
         </div>
         <div
           :class="['msg-box', checkTime(index, msg.time) == null && !senderCheck(index, msg.uid) ? 'hide' : '', msg.uid == myID ? 'out' : 'in',]"
-          @mousedown="func(msg.cid)"
-          @mouseup="revert"
         >
           <div class="reply-box">
             <div class="reply-side">
@@ -113,6 +112,31 @@ export default {
     if (this.$props.msg.uid != this.myID) {
       this.setReadMessage({ uid: this.myID, cid: this.$props.msg.cid });
     }
+  },
+  mounted() {
+    let timer;
+    let touchStart = () => {
+      timer = setTimeout(() => {
+        this.setBubblePopup(true);
+        this.setPopupData(this.msg);
+      }, 250);
+    };
+
+    this.$refs.touchMenu.addEventListener(
+      "touchstart",
+      () => {
+        touchStart();
+      },
+      false
+    );
+
+    this.$refs.touchMenu.addEventListener(
+      "touchend",
+      () => {
+        if (timer) clearTimeout(timer);
+      },
+      false
+    );
   },
   computed: {
     ...mapState("Identify", ["myID"]),

@@ -1,10 +1,5 @@
 <template>
-  <!-- <div class="test"> -->
   <div>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
     <div class="fi-content">
       <router-view />
     </div>
@@ -13,6 +8,7 @@
 
 <script>
 import ds from "@/helper/ds.js";
+import store from "@/stores/store.js";
 export default {
   name: "flexible_main",
   data() {
@@ -20,24 +16,24 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     if (to["name"] == null) {
-      if (this.$store.getters['flexible_interest_module/pms'] == "true") {
+      if (store.getters["flexible_interest_module/pms"] == "true") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (this.$store.getters['flexible_interest_module/pms'] == "false") {
+      } else if (store.getters["flexible_interest_module/pms"] == "false") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
-      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
+      } else if (store.getters["flexible_interest_module/pms"] == "report") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -46,22 +42,22 @@ export default {
 
     if (to.matched.some(record => record.meta.permissionLeader)) {
       if (
-        this.$store.getters['flexible_interest_module/pms'] == "false" &&
+        store.getters["flexible_interest_module/pms"] == "false" &&
         !to.matched.some(record => record.meta.permissionStaff)
       ) {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
       } else if (
-        this.$store.getters['flexible_interest_module/pms'] == "report" &&
+        store.getters["flexible_interest_module/pms"] == "report" &&
         !to.matched.some(record => record.meta.permissionReport)
       ) {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -69,10 +65,10 @@ export default {
         next();
       }
     } else if (to.matched.some(record => record.meta.permissionReport)) {
-      if (this.$store.getters['flexible_interest_module/pms'] == "false") {
+      if (store.getters["flexible_interest_module/pms"] == "false") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
@@ -81,19 +77,19 @@ export default {
       }
     } else if (to.matched.some(record => record.meta.permissionStaff)) {
       if (
-        this.$store.getters['flexible_interest_module/pms'] == "true" &&
+        store.getters["flexible_interest_module/pms"] == "true" &&
         !to.matched.some(record => record.meta.permissionLeader)
       ) {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
+      } else if (store.getters["flexible_interest_module/pms"] == "report") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -106,24 +102,24 @@ export default {
   },
   beforeRouteUpdate(to, from, next) {
     if (to["name"] == null) {
-      if (this.$store.getters['flexible_interest_module/pms'] == "true") {
+      if (store.getters["flexible_interest_module/pms"] == "true") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (this.$store.getters['flexible_interest_module/pms'] == "false") {
+      } else if (store.getters["flexible_interest_module/pms"] == "false") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
-      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
+      } else if (store.getters["flexible_interest_module/pms"] == "report") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -132,22 +128,22 @@ export default {
 
     if (to.matched.some(record => record.meta.permissionLeader)) {
       if (
-        this.$store.getters['flexible_interest_module/pms'] == "false" &&
+        store.getters["flexible_interest_module/pms"] == "false" &&
         !to.matched.some(record => record.meta.permissionStaff)
       ) {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
       } else if (
-        this.$store.getters['flexible_interest_module/pms'] == "report" &&
+        store.getters["flexible_interest_module/pms"] == "report" &&
         !to.matched.some(record => record.meta.permissionReport)
       ) {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -155,10 +151,10 @@ export default {
         next();
       }
     } else if (to.matched.some(record => record.meta.permissionReport)) {
-      if (this.$store.getters['flexible_interest_module/pms'] == "false") {
+      if (store.getters["flexible_interest_module/pms"] == "false") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/staff/progress/info",
           params: { nextUrl: to.fullPath }
         });
@@ -167,19 +163,19 @@ export default {
       }
     } else if (to.matched.some(record => record.meta.permissionStaff)) {
       if (
-        this.$store.getters['flexible_interest_module/pms'] == "true" &&
+        store.getters["flexible_interest_module/pms"] == "true" &&
         !to.matched.some(record => record.meta.permissionLeader)
       ) {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/leader/approve",
           params: { nextUrl: to.fullPath }
         });
-      } else if (this.$store.getters['flexible_interest_module/pms'] == "report") {
+      } else if (store.getters["flexible_interest_module/pms"] == "report") {
         next({
           path:
-            this.$store.getters['flexible_interest_module/root'] +
+            store.getters["flexible_interest_module/root"] +
             "/flexible/report/pending/all",
           params: { nextUrl: to.fullPath }
         });
@@ -196,9 +192,6 @@ export default {
     });
   },
   methods: {
-    getPermission() {
-      return this.$store.getters['flexible_interest_module/pms'] == "true";
-    },
     resetDefault() {
       window.sessionStorage.removeItem("actionProgress");
       window.sessionStorage.removeItem("requirement");
@@ -236,10 +229,10 @@ export default {
 };
 </script>
 
-<style lang="scss">
-* {
-  font-family: Phetsarath_OT;
-}
+<style lang="scss" scoped>
+// * {
+//   font-family: Phetsarath_OT;
+// }
 div.products > div > :not(div) {
   display: none;
 }

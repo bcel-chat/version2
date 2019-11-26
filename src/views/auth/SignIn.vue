@@ -11,23 +11,33 @@
               <span class="ball b4" key="4" v-if="startUp"></span>
               <span class="ball b5" key="5" v-if="startUp"></span>
             </transition-group>
+          </div>
+          <div class="ball-slite sright"></div>
+        </div>
+        <div :class="['log-item-inside', mobileMode ? 'log-mobile' : 'log-desktop']">
+          <div class="splite _left" v-if="!mobileMode">
             <transition enter-active-class="animated fadeIn">
               <div class="text-box" v-if="startUp">
                 <div class="title">BCEL Chat</div>
                 <span class="subtitle">IT Center</span>
               </div>
             </transition>
-          </div>
-          <div class="ball-slite sright"></div>
-        </div>
-        <div :class="['log-item-inside', mobileMode ? 'log-mobile' : 'log-desktop']">
-          <div class="splite _left" v-if="!mobileMode">
             <div class="sign-bg-box">
               <img src alt srcset="@/assets/img/signin-bg.jpg" class="bg" draggable="false" />
             </div>
           </div>
           <div class="splite _right">
             <div class="signin-panel">
+              <transition
+                enter-active-class="animated fadeInDown"
+                leave-active-class="animated fadeOutUp"
+              >
+                <div class="alert-box" v-if="!authStatus || connectClose">
+                  <span
+                    class="alert"
+                  >{{connectClose ? `Sign in failed 5 times. Auto reload in ${countdown}` : `Sign In Failed!`}}</span>
+                </div>
+              </transition>
               <div class="signin-logo-box">
                 <transition
                   enter-active-class="animated rotateIn"
@@ -37,14 +47,6 @@
                     <img src="@/assets/img/logo.png" alt />
                   </div>
                 </transition>
-                <div class="alert-box">
-                  <transition
-                    enter-active-class="animated bounceIn"
-                    leave-active-class="animated bounceOut"
-                  >
-                    <span class="alert" v-if="!authStatus">Sign In Failed!</span>
-                  </transition>
-                </div>
               </div>
               <div class="signin-box">
                 <transition
@@ -98,6 +100,7 @@ import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
+      countdown: 5,
       startUp: false,
       authState: {
         user: "",
@@ -127,6 +130,12 @@ export default {
     "authState.password"(val) {
       if (val != "") this.floatPwd = "floating-top";
       else this.floatPwd = "";
+    },
+    connectClose() {
+      this.toReload();
+    },
+    countdown(val) {
+      if (val == 1) clearInterval(this.toReload());
     }
   },
   mounted() {
@@ -141,11 +150,17 @@ export default {
     }, 300);
   },
   computed: {
-    ...mapState("Auth", ["authData", "authStatus"]),
+    ...mapState("Auth", ["authData", "authStatus", "connectClose"]),
     ...mapState("AppData", ["mobileMode"])
   },
   methods: {
     ...mapActions("Auth", ["setAuthData"]),
+    toReload() {
+      setInterval(() => {
+        this.countdown--;
+        if (this.countdown == 1) location.reload();
+      }, 1000);
+    },
     go() {
       this.$v.$touch();
       if (!this.$v.$invalid) {

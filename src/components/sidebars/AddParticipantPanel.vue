@@ -104,7 +104,8 @@ export default {
       "roomCheck",
       "getUserRoom",
       "getParticipantRoom",
-      "addParticipant"
+      "addParticipant",
+      "getParticipantInfo"
     ]),
     ...mapActions("Chat", [
       "getMessage",
@@ -136,6 +137,7 @@ export default {
         text: "",
         fn: ""
       });
+      this.getParticipantInfo();
     }
   }
 };

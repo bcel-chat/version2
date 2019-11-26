@@ -31,12 +31,14 @@ router.beforeEach((to, from, next) => {
       });
     } else {
       if (from.name === null) {
-        ds.login({
+        ds.login(
+          {
             user: thor.user,
             password: thor.password
           },
           (success, data) => {
             if (success) {
+              store.commit("Auth/setUserRole", data[0].role);
               store.commit("Settings/setProfile", {
                 picture: data[0].picture,
                 displayname: data[0].displayname,
