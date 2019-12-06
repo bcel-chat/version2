@@ -99,20 +99,19 @@ const settings = {
       ds.rpc.make("settingSearchUser", payload, (err, data) => {
         if (!err) {
           commit("searchUser", data);
-          if (state.sResult) dispatch("getMenuItem", state.sResult.uid);
+          if (state.sResult)
+            dispatch("getMenuItem", {
+              user: state.sResult.uid,
+              text: "",
+              _page: 1
+            });
         }
       });
     },
     async getMenuItem({ commit }, payload) {
-      ds.rpc.make(
-        "getMenuItem",
-        {
-          user: payload
-        },
-        (err, data) => {
-          if (!err) commit("getMenuItem", data);
-        }
-      );
+      ds.rpc.make("getMenuItem", payload, (err, data) => {
+        if (!err) commit("getMenuItem", data);
+      });
     },
     async menuPermission({ dispatch }, payload) {
       ds.rpc.make("updateMenuPermission", payload, (err, data) => {

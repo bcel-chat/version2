@@ -79,7 +79,7 @@
             :class="['part', mobileMode ? 'app-content' : 'app-content-desktop']"
           >
             <Welcome v-if="!chatClick && !mobileMode" key="1" style="animation-duration: 0s"></Welcome>
-            <router-view key="2" style="animation-duration: 0.1s"></router-view>
+            <router-view key="3" class="router-transition"></router-view>
             <drop-box key="4" v-if="dropBox" style="animation-duration: 0s"></drop-box>
           </transition-group>
           <!-- <div :class="['part', mobileMode ? 'app-content' : 'app-content-desktop']">
@@ -267,6 +267,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/Home.scss";
+
+.router-transition {
+  animation-delay: 0.2s;
+  animation-duration: 0.2s;
+}
+
 .bounce-enter-active {
   animation: bounce-in 0.5s;
 }

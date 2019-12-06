@@ -143,7 +143,7 @@ export default {
     ...mapState("Chat", ["message"])
   },
   methods: {
-    ...mapActions("AppData", ["setImageViewer"]),
+    ...mapActions("AppData", ["setImageViewer", "mobileMode"]),
     ...mapActions("Chat", ["setReadMessage", "downloadFile"]),
     ...mapActions("Context", ["setBubblePopup", "setPopupData"]),
     getMention(item) {

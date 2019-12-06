@@ -8,10 +8,15 @@
             class="card-box"
             :key="index"
             role="button"
-            @click.native="onChatClick({cnt: permissionCheckOnclick(item), module: item.title})"
+            @click.native="
+              onChatClick({
+                cnt: permissionCheckOnclick(item),
+                module: item.title
+              })
+            "
           >
             <div class="card-icon-box">
-              <i :class="[item.icon]" :style="{color: item.color}"></i>
+              <i :class="[item.icon]" :style="{ color: item.color }"></i>
             </div>
             <div class="card-title-box">
               <div class="title-box">
@@ -25,7 +30,10 @@
       <!-- End card-content -->
     </div>
     <!-- End _container -->
-    <transition enter-active-class="animated slideInUp" leave-active-class="animated fadeOut">
+    <transition
+      enter-active-class="animated slideInUp"
+      leave-active-class="animated fadeOut"
+    >
       <toast v-if="toastStart" style="animation-duration: .2s">
         <span slot="body">No permission</span>
       </toast>
@@ -85,9 +93,29 @@ export default {
       userID: null
     };
   },
+  watch: {
+    txtSearch(val) {
+      if (val)
+        this.getMenuItem({
+          user: code.from(localStorage.getItem("roger")),
+          text: val,
+          _page: 2
+        });
+      else
+        this.getMenuItem({
+          user: code.from(localStorage.getItem("roger")),
+          text: "",
+          _page: 1
+        });
+    }
+  },
   beforeMount() {
     this.userID = code.from(localStorage.getItem("miya"));
-    this.getMenuItem(code.from(localStorage.getItem("roger")));
+    this.getMenuItem({
+      user: code.from(localStorage.getItem("roger")),
+      text: "",
+      _page: 1
+    });
   },
   mounted() {
     this.showToast = debounce(() => {
@@ -95,7 +123,7 @@ export default {
     }, 3000);
   },
   computed: {
-    ...mapState("AppData", ["moduleLink"]),
+    ...mapState("AppData", ["moduleLink", "txtSearch"]),
     ...mapState("Menu", ["menuItems"])
   },
   methods: {

@@ -8,7 +8,8 @@
             v-if="startUp"
             key="1"
             @click="setMenuPermission(false)"
-          >{{ mobileMode ? 'arrow_downward' : 'close'}}</i>
+            >{{ mobileMode ? "arrow_downward" : "close" }}</i
+          >
         </transition>
       </div>
       <!-- End back-button -->
@@ -21,7 +22,13 @@
           <div class="personal-panel">
             <div class="search-box">
               <input type="text" placeholder="Search" v-model="search" />
-              <i class="material-icons" role="button" v-if="search" @click="clear">close</i>
+              <i
+                class="material-icons"
+                role="button"
+                v-if="search"
+                @click="clear"
+                >close</i
+              >
             </div>
             <transition
               enter-active-class="animated fadeInRight"
@@ -30,26 +37,24 @@
               <div class="detail" v-if="sResult">
                 <div class="d-inside">
                   <span class="detail-label">ID:</span>
-                  {{sResult.wlc_id}}
+                  {{ sResult.wlc_id }}
                 </div>
                 <div class="d-inside">
                   <span class="detail-label">User Name:</span>
-                  {{sResult.uname}}
+                  {{ sResult.uname }}
                 </div>
                 <div class="d-inside">
                   <span class="detail-label">Employee Name:</span>
-                  {{sResult.fullname}}
+                  {{ sResult.fullname }}
                 </div>
               </div>
             </transition>
           </div>
           <template v-for="(item, index) in menuItems">
             <div class="control-panel" :key="index">
-              <label
-                class="label-box"
-                role="button"
-                :for="`chk-${item.id}`"
-              >{{`${++index}. ${item.title}`}}</label>
+              <label class="label-box" role="button" :for="`chk-${item.id}`">{{
+                `${++index}. ${item.title}`
+              }}</label>
               <div class="checkbox" v-if="sResult">
                 <input
                   :id="`chk-${item.id}`"
@@ -88,7 +93,11 @@ export default {
     }
   },
   mounted() {
-    this.getMenuItem("");
+    this.getMenuItem({
+      user: "",
+      text: "",
+      _page: 1
+    });
     setTimeout(() => {
       this.startUp = true;
     }, 500);

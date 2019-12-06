@@ -73,9 +73,8 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "@/assets/scss/variables.scss"; // * {
-//     font-family: Phetsarath_OT;
-// }
+@import "@/assets/scss/variables.scss";
+
 .test {
   width: 75%;
 }

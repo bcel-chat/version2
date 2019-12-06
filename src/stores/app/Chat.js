@@ -15,9 +15,16 @@ const chat = {
     fileBoxData: [],
     fileBoxToggle: false,
     filePage: 0,
-    scroller: null
+    scroller: null,
+    pictureStatus: {
+      display: true,
+      success: ""
+    }
   },
   mutations: {
+    setPictureStatus(state, payload) {
+      state.pictureStatus = payload;
+    },
     getMessage(state, payload) {
       state.message = null;
       state.message = payload;
@@ -65,6 +72,7 @@ const chat = {
       for (let i = 0; i < state.fileBoxData.length; i++) {
         if (state.fileBoxData[i] == payload) {
           state.fileBoxData.splice(i, 1);
+          if (state.fileBoxData.length == 0) state.fileBoxToggle = false;
         }
       }
     },
@@ -77,6 +85,9 @@ const chat = {
     }
   },
   actions: {
+    setPictureStatus({ commit }, payload) {
+      commit("setPictureStatus", payload);
+    },
     clearMessage({ commit }, payload) {
       commit("getMessage", null);
     },
@@ -159,32 +170,36 @@ const chat = {
 
       let result = null;
 
-      for (let i = 0; i < context.state.fileBoxData.length; i++) {
-        let formData = new FormData();
-        formData.append("file", context.state.fileBoxData[i]);
-        formData.append("uid", uid);
-        formData.append("rid", rid);
-        formData.append("msg", payload.msg);
-        formData.append("type", payload.type);
-        formData.append("chatwith", payload.chatwith);
-        formData.append("rtype", payload.rtype);
-        formData.append("replyid", context.state.replyID);
+      let formData = new FormData();
+      context.state.fileBoxData.forEach(element => {
+        formData.append("file", element);
+      });
+      formData.append("uid", uid);
+      formData.append("rid", rid);
+      formData.append("msg", payload.msg);
+      formData.append("type", payload.type);
+      formData.append("chatwith", payload.chatwith);
+      formData.append("rtype", payload.rtype);
+      formData.append("replyid", context.state.replyID);
 
-        result = await axios.post(
-          `${process.env.VUE_APP_ACCESS_API}/upload`,
-          formData
-        );
-      }
+      result = await axios.post(
+        `${process.env.VUE_APP_ACCESS_API}/upload`,
+        formData
+      );
 
-      if (result.data) {
+      if (result.data.status) {
         if (rid == 0) {
-          context.dispatch("getMessage", result.data);
-          ds.event.subscribe(`chatroom/${result.data}`, res => {
-            context.dispatch("getMessage", result.data);
+          context.dispatch("getMessage", result.data.rid);
+          ds.event.subscribe(`chatroom/${result.data.rid}`, res => {
+            context.dispatch("getMessage", result.data.rid);
+            context.dispatch("setPictureStatus", {
+              display: false,
+              success: result.data.rid
+            });
           });
           ds.record
             .getRecord(`chat`)
-            .subscribe(`typing/${result.data}`, data => {}, true);
+            .subscribe(`typing/${result.data.rid}`, data => {}, true);
         }
 
         store.dispatch("Room/getRoom", {

@@ -101,7 +101,8 @@ export default {
       "setMessage",
       "uploadFile",
       "setReplyBoxToggle",
-      "setFileBoxToggle"
+      "setFileBoxToggle",
+      "setPictureStatus"
     ]),
     ...mapActions("Room", ["setRoom", "setRoomActive"]),
     ...mapActions("Context", ["setToEdit", "editMessage"]),
@@ -211,6 +212,10 @@ export default {
       this.setReplyBoxToggle({ toggle: false, cid: 0 });
     },
     sendFile(type) {
+      this.setPictureStatus({
+        display: true,
+        success: this.roomID
+      });
       this.uploadFile({
         msg: this.message,
         type: type,

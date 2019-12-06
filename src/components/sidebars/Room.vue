@@ -206,7 +206,9 @@ export default {
         rid: rid
       });
 
-      this.onChatClick({ cnt: true, module: "" });
+      setTimeout(() => {
+        this.onChatClick({ cnt: true, module: "" });
+      }, 200);
 
       this.showInfo(false);
       this.setRoomListData({ uid: uid, rid: rid, rtype: rtype });

@@ -1105,9 +1105,7 @@ export default {
 
 
 <style lang="scss" scoped>
-* {
-    font-family: Phetsarath_OT;
-}
+
 .fi-inverse-background{
     position: fixed;
     top: 0px;

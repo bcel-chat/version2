@@ -12,25 +12,47 @@
       <!-- End header-box-fixed -->
       <div class="header">
         <div class="header-cover">
-          <img class="cover" :src="picURL+profile.picture" alt draggable="false" />
+          <img
+            class="cover"
+            :src="picURL + profile.picture"
+            alt
+            draggable="false"
+          />
           <span class="behigh"></span>
         </div>
         <!-- End header-cover -->
         <div class="header-box"></div>
         <div class="profile-content">
-          <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-            <div class="profile-box" v-if="startUp" style="animation-duration: .2s">
+          <transition
+            enter-active-class="animated zoomIn"
+            leave-active-class="animated zoomOut"
+          >
+            <div
+              class="profile-box"
+              v-if="startUp"
+              style="animation-duration: .2s"
+            >
               <!-- <img class="profile" :src="profilePicture" alt  /> -->
               <img
                 v-if="profile.picture"
-                :src="picURL+profile.picture"
+                :src="picURL + profile.picture"
                 class="avatar"
                 alt
                 draggable="false"
               />
-              <img v-else src="@/assets/img/user.svg" class="avatar-defualt" alt srcset />
+              <img
+                v-else
+                src="@/assets/img/user.svg"
+                class="avatar-defualt"
+                alt
+                srcset
+              />
               <span class="behigh"></span>
-              <label for="profile" class="brows-icon-box-desktop" role="button"></label>
+              <label
+                for="profile"
+                class="brows-icon-box-desktop"
+                role="button"
+              ></label>
               <label for="profile" class="brows-icon-box" role="button">
                 <i class="fas fa-camera"></i>
               </label>
@@ -75,7 +97,12 @@
                 <div class="_title-box">
                   <span>Name</span>
                 </div>
-                <div :class="['_control _edit-able',  inputName ? 'input-border' : '']">
+                <div
+                  :class="[
+                    '_control _edit-able',
+                    inputName ? 'input-border' : ''
+                  ]"
+                >
                   <div :class="['input-box']">
                     <div
                       class="input"
@@ -93,13 +120,19 @@
                       enter-active-class="animated zoomIn"
                       leave-active-class="animated zoomOut"
                     >
-                      <div class="ico-box" :style="styling.all" v-if="inputName" :key="1">
+                      <div
+                        class="ico-box"
+                        :style="styling.all"
+                        v-if="inputName"
+                        :key="1"
+                      >
                         <i
                           class="material-icons chk"
                           role="button"
                           @click="editText(1)"
                           title="Save name"
-                        >check</i>
+                          >check</i
+                        >
                       </div>
                       <div class="ico-box" :style="styling.all" v-else :key="2">
                         <i
@@ -107,7 +140,8 @@
                           role="button"
                           @click="editText(1)"
                           title="Edit name"
-                        >edit</i>
+                          >edit</i
+                        >
                       </div>
                     </transition-group>
                   </div>
@@ -124,7 +158,12 @@
                 <div class="_title-box">
                   <span>About</span>
                 </div>
-                <div :class="['_control _edit-able',  inputAbout ? 'input-border' : '']">
+                <div
+                  :class="[
+                    '_control _edit-able',
+                    inputAbout ? 'input-border' : ''
+                  ]"
+                >
                   <div class="input-box">
                     <div
                       class="input"
@@ -143,13 +182,19 @@
                       enter-active-class="animated zoomIn"
                       leave-active-class="animated zoomOut"
                     >
-                      <div class="ico-box" :style="styling.all" v-if="inputAbout" :key="1">
+                      <div
+                        class="ico-box"
+                        :style="styling.all"
+                        v-if="inputAbout"
+                        :key="1"
+                      >
                         <i
                           class="material-icons chk"
                           role="button"
                           @click="editText(2)"
                           title="Save about"
-                        >check</i>
+                          >check</i
+                        >
                       </div>
                       <!-- End ico-box -->
                       <div class="ico-box" :style="styling.all" v-else :key="2">
@@ -158,7 +203,8 @@
                           role="button"
                           @click="editText(2)"
                           title="Edit about"
-                        >edit</i>
+                          >edit</i
+                        >
                       </div>
 
                       <!-- End ico-box -->
@@ -175,7 +221,9 @@
                 key="3"
                 role="button"
                 @click="setMenuPermission(true)"
-              >Menu Permission</div>
+              >
+                Menu Permission
+              </div>
             </transition-group>
             <!-- End control-inside -->
           </div>
@@ -188,7 +236,9 @@
                 v-if="startUp"
                 :style="styling.all"
                 @click="signout"
-              >Sign out</button>
+              >
+                Sign out
+              </button>
             </transition>
           </div>
           <!-- End signout-box -->
@@ -206,7 +256,10 @@
       :text="text"
       :page="page"
     ></EditPanel>
-    <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
+    <transition
+      enter-active-class="animated slideInUp"
+      leave-active-class="animated slideOutDown"
+    >
       <Cropper
         v-if="openCrop"
         :img="picture"
@@ -387,14 +440,14 @@ export default {
       else this.nav = false;
     },
     openCropSide(input) {
-      let blob_ = new Blob([input.target.files[0]], { type: "image/png" });
-      this.picture = URL.createObjectURL(blob_);
-      this.pictureValue = input.target;
-      this.filename = input.target.files[0].name;
-      this.showCrop({ show: true, page: 1 });
+      // let blob_ = new Blob([input.target.files[0]], { type: "image/png" });
+      // this.picture = URL.createObjectURL(blob_);
+      // this.pictureValue = input.target;
+      // this.filename = input.target.files[0].name;
+      // this.showCrop({ show: true, page: 1 });
 
-      return;
-      const width = 250;
+      // return;
+      const width = 300;
       var reader = new FileReader();
       reader.onload = event => {
         var img = new Image();
@@ -410,12 +463,12 @@ export default {
               octx = oc.getContext("2d");
             oc.width = img.width;
             oc.height = img.height;
-            //octx.drawImage(img, 0, 0);
-            // while (oc.width * 0.5 > width) {
-            //   oc.width *= 0.5;
-            //   oc.height *= 0.5;
-            //   octx.drawImage(oc, 0, 0, oc.width, oc.height);
-            // }
+            octx.drawImage(img, 0, 0);
+            while (oc.width * 0.5 > width) {
+              oc.width *= 0.5;
+              oc.height *= 0.5;
+              octx.drawImage(oc, 0, 0, oc.width, oc.height);
+            }
             oc.width = width;
             oc.height = (oc.width * img.height) / img.width;
             octx.drawImage(img, 0, 0, oc.width, oc.height);
@@ -465,4 +518,3 @@ export default {
 <style lang="scss" scoped>
 @import "@/assets/scss/sidebars/settings/Settings.scss";
 </style>
-

@@ -8,7 +8,7 @@
       <span class="fi-toggle-status">{{on_off[0]?'ຮັບອະນຸມັດ':'ບໍ່ຮັບອະນຸມັດ'}}</span>
     </a>
     <router-link to="/modules/flexible/report/pending/all" class="fi-link-report">
-      <i class="fa fa-line-chart"></i>
+      <i class="fas fa-chart-line"></i>
     </router-link>
     <ul class="nav nav-tabs mb-3 justify-content-center hide-on-print-mode">
       <li class="nav-item">
@@ -109,9 +109,6 @@ export default {
 
 
 <style lang="scss" scoped>
-* {
-  font-family: Phetsarath_OT;
-}
 .fi-main-leader {
   position: relative;
 }
@@ -119,6 +116,8 @@ export default {
   position: absolute;
   top: 20px;
   right: 10px;
+  padding-right: 1rem;
+  font-size: 1.2rem;
   background: white;
   border: none;
 }

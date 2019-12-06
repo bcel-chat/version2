@@ -12,8 +12,8 @@
             ref="input"
             id="input"
             v-text="text"
-            @keydown="prevent"
-            @input="prevent"
+            @keydown="prevent($event)"
+            @input="prevent($event)"
             @focus="_focus"
             @blur="focused = false"
             contenteditable="true"
@@ -63,7 +63,7 @@ export default {
 
       this.$emit("floating", false);
     },
-    prevent() {
+    prevent(event) {
       let value = this.$refs.input.innerText;
       this.counter = this.textMax - value.length;
       if (value.length >= 25 && event.keyCode != 8) event.preventDefault();

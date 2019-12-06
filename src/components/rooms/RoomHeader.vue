@@ -2,24 +2,30 @@
   <div id="room-header" :class="dropBox ? 'drop-box-in' : 'drop-box-out'">
     <div class="room-header">
       <div class="header-item-first">
-        <div class="back-box" v-if="mobileMode || roomArrow">
-          <div class="arrow-box" role="button" @click="backButton">
-            <transition enter-active-class="animated zoomIn">
-              <i class="material-icons" v-if="startUp" key="1">arrow_downward</i>
-            </transition>
+        <div :class="['_back', mobileMode ? '_back-enter' : '']">
+          <div class="back-box" v-if="mobileMode || roomArrow">
+            <div class="arrow-box" role="button" @click="backButton(false)">
+              <transition enter-active-class="animated zoomIn">
+                <i class="material-icons" v-if="startUp" key="1">arrow_downward</i>
+              </transition>
+            </div>
           </div>
-        </div>
-        <!--end back-box -->
-        <div class="avatar-box" role="button" @click="showInfo(true)">
-          <div class="avatar">
-            <img
-              v-if="userRoom.picture || participantRoom.img"
-              :src="`${picURL}${roomType == 1 ? userRoom.uid : participantRoom.rid }/${roomType == 1 ? userRoom.picture : participantRoom.img}`"
-              alt
-              class="_avatar"
-            />
-            <img v-else src="@/assets/img/user.svg" class="_avatar-default" alt />
-            <!--end avatar -->
+          <!--end back-box -->
+          <div
+            class="avatar-box"
+            role="button"
+            @click="mobileMode ? backButton(false) : showInfo(true)"
+          >
+            <div class="avatar">
+              <img
+                v-if="userRoom.picture || participantRoom.img"
+                :src="`${picURL}${roomType == 1 ? userRoom.uid : participantRoom.rid }/${roomType == 1 ? userRoom.picture : participantRoom.img}`"
+                alt
+                class="_avatar"
+              />
+              <img v-else src="@/assets/img/user.svg" class="_avatar-default" alt />
+              <!--end avatar -->
+            </div>
           </div>
         </div>
         <!--end avatar-box -->
@@ -115,12 +121,15 @@ export default {
     ...mapActions("AppData", ["onChatClick", "showInfo"]),
     ...mapActions("Room", ["setRoomActive"]),
     ...mapActions("Contact", ["setContact"]),
-    backButton() {
-      this.onChatClick(false);
-      this.setRoomActive({
-        status: false,
-        rid: null
-      });
+    backButton(val) {
+      setTimeout(() => {
+        this.$router.push("/");
+        this.onChatClick(val);
+        this.setRoomActive({
+          status: false,
+          rid: null
+        });
+      }, 200);
     },
     filePanelListen(e) {
       var className1 = "drop-box";

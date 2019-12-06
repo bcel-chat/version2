@@ -971,9 +971,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/assets/scss/variables.scss";
-// * {
-//     font-family: Phetsarath_OT;
-// }
+
 .interest-content {
   position: relative;
   display: flex;

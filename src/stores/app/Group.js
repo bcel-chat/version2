@@ -42,6 +42,7 @@ const group = {
     },
     setGroup(state, payload) {
       state.roomID = payload;
+      state.participantAdded = [];
     },
     groupPicture(state, payload) {
       state.groupPictures = payload;

@@ -359,9 +359,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  font-family: Phetsarath_OT;
-}
 .APPROVED,
 .fi-APPROVED,
 .SUCCESS,

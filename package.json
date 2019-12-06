@@ -28,6 +28,7 @@
     "script-loader": "^0.7.2",
     "vue": "^2.6.10",
     "vue-cam-vision": "^0.0.8",
+    "vue-cropperjs": "^4.0.1",
     "vue-material-design-icons": "^3.3.1",
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.3",

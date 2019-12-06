@@ -230,9 +230,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// * {
-//   font-family: Phetsarath_OT;
-// }
 div.products > div > :not(div) {
   display: none;
 }

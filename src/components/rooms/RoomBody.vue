@@ -8,7 +8,10 @@
           </div>
         </div>
         <div class="bubble-wrapper" v-if="message">
-          <template v-for="(msg, index) in message">
+          {{ pictureStatus.display }} {{ pictureStatus.success }}
+          <template
+            v-for="(msg, index) in message"
+          >
             <div :key="index" :style="[ mobileMode ? 'user-select: none' : '']">
               <bubble-date v-if="checkTime(index, msg.time) != null" :msg="msg.time"></bubble-date>
               <bubble-new-group v-if="msg.type == 2" :msg="msg"></bubble-new-group>
@@ -17,6 +20,7 @@
               <bubble-picture v-if="msg.type == 4" :msg="msg"></bubble-picture>
             </div>
           </template>
+          <BubblePictureDraf v-if="pictureStatus.display && pictureStatus.success == roomID"></BubblePictureDraf>
         </div>
       </div>
     </div>
@@ -34,6 +38,7 @@
 import BubbleNewGroup from "./bubbles/bubbleNewGroup";
 import BubbleText from "./bubbles/bubbleText.vue";
 import BubbleMention from "./bubbles/bubbleMention.vue";
+import BubblePictureDraf from "./bubbles/bubblePicture_draf.vue";
 import BubblePicture from "./bubbles/bubblePicture.vue";
 import BubbleDate from "./bubbles/bubbleDate.vue";
 import { mapState, mapActions } from "vuex";
@@ -46,6 +51,7 @@ export default {
     BubbleDate,
     BubbleText,
     BubbleMention,
+    BubblePictureDraf,
     BubblePicture
   },
   data() {
@@ -95,7 +101,7 @@ export default {
   computed: {
     ...mapState("AppData", ["mobileMode"]),
     ...mapState("Identify", ["myID"]),
-    ...mapState("Chat", ["message", "roomID", "scroller"]),
+    ...mapState("Chat", ["message", "roomID", "scroller", "pictureStatus"]),
     ...mapState("Room", ["countReadMsg", "roomListData"])
   },
   methods: {
