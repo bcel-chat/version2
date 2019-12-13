@@ -8,10 +8,7 @@
           </div>
         </div>
         <div class="bubble-wrapper" v-if="message">
-          {{ pictureStatus.display }} {{ pictureStatus.success }}
-          <template
-            v-for="(msg, index) in message"
-          >
+          <template v-for="(msg, index) in message">
             <div :key="index" :style="[ mobileMode ? 'user-select: none' : '']">
               <bubble-date v-if="checkTime(index, msg.time) != null" :msg="msg.time"></bubble-date>
               <bubble-new-group v-if="msg.type == 2" :msg="msg"></bubble-new-group>
@@ -69,8 +66,7 @@ export default {
   watch: {
     $route(to, from) {
       ds.event.unsubscribe(`chatroom/${from.params.id}`);
-    },
-    message(val) {}
+    }
   },
   beforeMount() {
     clearTimeout(this.timeOut1);
@@ -86,17 +82,6 @@ export default {
     setTimeout(() => {
       this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
     }, 200);
-
-    this.$refs.readScroll.addEventListener("scroll", e => {
-      // console.log(this.$refs.readScroll.scrollTop);
-      // console.log(e);
-    });
-  },
-  beforeDestroy() {
-    // ds.event.unsubscribe(`chatroom/${this.roomList.rid}`);
-    // ds.event.unsubscribe(`scroller/${this.roomList.rid}`);
-    // this.record.unsubscribe(`typing/${this.roomList.rid}`);
-    // this.record.unsubscribe(`online/${this.roomList.uid}`);
   },
   computed: {
     ...mapState("AppData", ["mobileMode"]),
@@ -154,14 +139,6 @@ export default {
 
       if (e.target.scrollTop < height - 50) this.toBottomDisplay = true;
       else this.toBottomDisplay = false;
-
-      // if (e.target.scrollTop == 0) {
-      //   this.reloadMessage({
-      //     uid: this.myID,
-      //     rid: this.roomList.rid,
-      //     length: this.message.length + 20
-      //   });
-      // }
     },
     goBottom() {
       this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;

@@ -17,7 +17,7 @@
                     <ul id="interest" class="text-left fi-dropdown">
                         <li v-for="(user, index) in recieveUserList" :key="index">
                           <label class="fi-checkbox-container">
-                              <span>{{user['fullName']}} <small v-if="user['positionLevel'] == 1"> ({{user['positionId']}})</small></span>
+                              <span>{{user['fullName']}} <span v-if="user['positionLevel'] == 1"> ({{user['positionId']}})</span></span>
                               <label class="fi-on-off" :class="user['enable']"></label>
                             <input type="checkbox" v-model="selectedUser" :disabled="user['enable'] != 'ON'" :value="user['userId']" @change="addOrRemoveUser">
                             <span class="fi-checkbox-mark" :class="(user['enable'] == 'ON')?'fi-hover':'fi-hover-disable'"></span>
@@ -25,7 +25,7 @@
                         </li>
                     </ul>
                   </div>
-                  <small class="danger" v-if="errorMessage">* {{errorMessage}}</small>
+                  <span class="danger" v-if="errorMessage">* {{errorMessage}}</span>
                 </div>
                 <div class="fi-edit-footer">
                     <button type="button" class="fi-btn-edit-cancel" @click="cancelSendApproveRequest()">ຍົກເລີກ</button>
@@ -47,22 +47,22 @@
                 <!-- <h2 class="text-center " :class="'BACKGROUND-'+customer_info['approveStatus']">ລາຍລະອຽດ</!-->
                  <div class="text-left fi-status">
                         <h3><strong>ສະຖານະອະນຸມັດ: </strong> <strong :class="(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']">{{(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']}}</strong></h3>
-                        <small v-if="(customer_info['approveStatus'] == 'APPROVED') || (customer_info['approveStatus'] == 'SUCCESS') || (customer_info['approveStatus'] == 'REJECTED') || (customer_info['approveStatus'] == 'REJECTED_50')" :class="(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']">ໂດຍ: {{customer_info['approveUserName']}}</small>
-                        <small  v-else-if="(customer_info['approveStatus'] == 'CANCEL')" :class="customer_info['approveStatus']">ໂດຍ: {{customer_info['createUserName']}}</small>
+                        <span v-if="(customer_info['approveStatus'] == 'APPROVED') || (customer_info['approveStatus'] == 'SUCCESS') || (customer_info['approveStatus'] == 'REJECTED') || (customer_info['approveStatus'] == 'REJECTED_50')" :class="(customer_info['approveStatus'] == 'REJECTED_50')?'REJECTED':customer_info['approveStatus']">ໂດຍ: {{customer_info['approveUserName']}}</span>
+                        <span  v-else-if="(customer_info['approveStatus'] == 'CANCEL')" :class="customer_info['approveStatus']">ໂດຍ: {{customer_info['createUserName']}}</span>
                     </div>
             </div>
             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left">
                 <div class="fi-card">
-                    <small>
+                    <span>
                         <strong>ຂັ້ນອະນຸມັດ: </strong>
-                    </small>
-                    <small> {{customer_info['organizeStepper']}}</small>
-                    <small v-if="(customer_info['approveStatus'] == 'APPROVED')"> 
+                    </span>
+                    <span> {{customer_info['organizeStepper']}}</span>
+                    <span v-if="(customer_info['approveStatus'] == 'APPROVED')"> 
                         &#8594; <span :class="customer_info['approveStatus']"> ອະນຸມັດ &#10003;</span>
-                    </small>
-                    <small v-else-if="(customer_info['approveStatus'] == 'REJECTED')">
+                    </span>
+                    <span v-else-if="(customer_info['approveStatus'] == 'REJECTED')">
                         &#8594; <span :class="customer_info['approveStatus']"> ປະຕິເສດ &#215;</span>
-                    </small>
+                    </span>
                     <br>
                     <strong class="fi-topic">ຂໍ້ມູນສ່່ວນຕົວຂອງລູກຄ້າ</strong>
                     <hr>
@@ -76,7 +76,7 @@
                                     <tbody>
                                         <tr>
                                             <th class="fi-title">ຊື່ລູກຄ້າ:</th>
-                                            <td>{{customer_info['customerName']?customer_info['customerName']:'................'}} <small> ({{customer_info['customerTypeDesc']}})</small></td>
+                                            <td>{{customer_info['customerName']?customer_info['customerName']:'................'}} <span> ({{customer_info['customerTypeDesc']}})</span></td>
                                         </tr>
                                         <tr>
                                             <th class="fi-title">ເບີໂທ:</th>
@@ -92,7 +92,7 @@
                                                 <span v-if="!customer_info['bankAccounts'].length">................</span>
                                                 <span v-for="(account, index) in customer_info['bankAccounts']" :key="index">
                                                     - {{account['accountNo']}}{{account['description']?':':''}}
-                                                    <small v-if="account['description']"> {{account['description']}}</small>
+                                                    <span v-if="account['description']"> {{account['description']}}</span>
                                                     <br>
                                                 </span>
                                             </td>
@@ -228,7 +228,7 @@
                                 <label style="width: 10px; height: 10px; border-radius: 50%; background: gray; margin-bottom: 2px;"></label> 
                                 ເລກບັນຊີ: <strong>{{product['accountNo']}}</strong>
                                 </h4>
-                                <small v-if="product['description']">&nbsp&nbsp&nbsp&nbsp {{product['description']}}</small>
+                                <span v-if="product['description']">&nbsp&nbsp&nbsp&nbsp {{product['description']}}</span>
                                 <div v-if="product['coreAccs']">
                                     <span v-if="product['coreAccs']['loanAcc']">ບັນຊີເງິນກູ້: <strong> {{product['coreAccs']['loanAcc']}}, </strong> &nbsp&nbsp&nbsp&nbsp</span>
                                     <span>ບັນຊີເງິນຝາກປະຢັດ: <strong> {{product['coreAccs']['savingAcc']}}, </strong> &nbsp&nbsp&nbsp&nbsp</span>
@@ -251,8 +251,8 @@
                     </div>
                 </div>
                 <div class="text-left">
-                    <small> ໂດຍ: {{customer_info['createUserName']}} {{customer_info['createUserDivision']}} {{customer_info['createUserDepartment']}} {{customer_info['createUserBranch']}}</small>
-                     <small> ({{getFormatDate(customer_info['createDate'] + ' ' + customer_info['createTime'])}})</small>
+                    <span> ໂດຍ: {{customer_info['createUserName']}} {{customer_info['createUserDivision']}} {{customer_info['createUserDepartment']}} {{customer_info['createUserBranch']}}</span>
+                     <span> ({{getFormatDate(customer_info['createDate'] + ' ' + customer_info['createTime'])}})</span>
                      
                 </div>
                 
@@ -925,8 +925,6 @@ strong, th, td {
 .PENDING{
     color: rgb(250, 150, 0);
     font-weight: bold;
-    font-family: Helvetica;
-    /*text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);*/
 }
 .REJECTED{
     color: red;

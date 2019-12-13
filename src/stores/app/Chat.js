@@ -30,14 +30,14 @@ const chat = {
       state.message = payload;
     },
     reloadMessage(state, payload) {
-      // payload.forEach(element => {
-      //   state.message(element)
-      // });
-
       state.message = payload;
     },
     setRoomID(state, payload) {
       state.roomID = payload;
+      store.dispatch("Room/setRoomActive", {
+        status: true,
+        rid: payload
+      });
     },
     setRoomType(state, payload) {
       state.roomType = payload;
@@ -102,12 +102,8 @@ const chat = {
           },
           (err, data) => {
             if (!err) {
-              commit("getMessage", data);
               commit("setRoomID", data[0].rid);
-              store.dispatch("Room/setRoomActive", {
-                status: true,
-                rid: data[0].rid
-              });
+              commit("getMessage", data);
             } else {
               commit("getMessage", null);
             }
@@ -192,15 +188,16 @@ const chat = {
           context.dispatch("getMessage", result.data.rid);
           ds.event.subscribe(`chatroom/${result.data.rid}`, res => {
             context.dispatch("getMessage", result.data.rid);
-            context.dispatch("setPictureStatus", {
-              display: false,
-              success: result.data.rid
-            });
           });
           ds.record
             .getRecord(`chat`)
             .subscribe(`typing/${result.data.rid}`, data => {}, true);
         }
+
+        context.dispatch("setPictureStatus", {
+          display: false,
+          success: result.data.rid
+        });
 
         store.dispatch("Room/getRoom", {
           id: uid,

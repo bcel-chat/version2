@@ -4,13 +4,13 @@
       <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item nav-item-custom-style">
           <a class="nav-link" @click="downloadToExcel()">
-            <strong class="fi-tab-title">&#x1f5b6;</strong>
+            <i class="fas fa-file-excel"></i>
             <small>xls</small>
           </a>
         </li>
         <li class="nav-item nav-item-custom-style">
           <a class="nav-link" @click="doPrintPDF()">
-            <strong class="fi-tab-title">&#x1f5b6;</strong>
+            <i class="fas fa-file-pdf"></i>
             <small>pdf</small>
           </a>
         </li>
@@ -336,7 +336,7 @@ export default {
 }
 
 li.nav-item-custom-style > a {
-  color: #f8665b;
+  color: rgb(50, 135, 196);
   cursor: pointer;
 }
 

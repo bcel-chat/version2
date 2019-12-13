@@ -5,9 +5,9 @@
         <h2 class="text-left">
           <strong class="history">History</strong>
           <br class="fi-br" />
-          <small
+          <span
             class="fi-found-item"
-          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</small>
+          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</span>
         </h2>
         <label for="fi_search" class="fi-search">
           <input
@@ -41,10 +41,10 @@
               <span style="font-size: 16px;">ຊື່ລູກຄ້າ:</span>
               <strong>{{history['customerName']}}</strong>
             </h4>
-            <small>
+            <span>
               <strong>ຜ່ານ:</strong>
               {{history['userStepper']}}
-            </small>
+            </span>
           </div>
           <div class="fi-card-body">
             <div class="fi-box">
@@ -89,7 +89,7 @@
           <div class="fi-card-footer">
             <div class="row">
               <div class="col-7 text-left">
-                <small>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</small>
+                <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
               </div>
               <div class="col-5 text-right">
                 <button
@@ -384,8 +384,6 @@ img.img-loader-out {
 .PENDING {
   color: #a8890c;
   font-weight: bold;
-  font-family: Helvetica;
-  /*text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 #A8890C, 0 4px 0 #A8890C;*/
 }
 .history {
   color: #e4ca81;

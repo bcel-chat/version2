@@ -74,14 +74,14 @@
           <i class="fas fa-phone"></i>
         </div>
         <input
-          id="fullname"
+          id="tel"
           type="text"
           class="fi-input"
           v-model="customer_info['tel']"
           required
           @change="validateTel"
         />
-        <label for="fullname" class="control-label">ເບີໂທລະສັບ *</label>
+        <label for="tel" class="control-label">ເບີໂທລະສັບ *</label>
       </div>
       <div
         :class="['input-group-box', error_validation['occupation'].length > 0 ? 'err-input' : '']"
@@ -90,14 +90,14 @@
           <i class="fas fa-briefcase"></i>
         </div>
         <input
-          id="fullname"
+          id="job"
           type="text"
           class="fi-input"
           v-model="customer_info['occupation']"
           required
           @change="validateOccupation"
         />
-        <label for="fullname" class="control-label">ອາຊີບ *</label>
+        <label for="job" class="control-label">ອາຊີບ *</label>
       </div>
       <div>
         <div class="fi-account-group">
@@ -625,7 +625,7 @@ img {
 /* Create a custom radio button */
 .fi-checkmark {
   position: absolute;
-  top: 0;
+  top: 4px;
   left: 0;
   height: 20px;
   width: 20px;

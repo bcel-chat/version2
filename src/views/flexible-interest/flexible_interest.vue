@@ -1,10 +1,13 @@
 <template>
   <div class="container">
     <div v-if="showPersonalConfirm">
-      <div class="fi-inverst-signature-background" @click="cancelSignature()"></div>
+      <div
+        class="fi-inverst-signature-background"
+        @click="cancelSignature()"
+      ></div>
       <div
         class="fi-signature-dialog"
-        :class="useSignature?'fi-choose-signature':'fi-choose-photo'"
+        :class="useSignature ? 'fi-choose-signature' : 'fi-choose-photo'"
       >
         <div class="fi-signature" v-if="useSignature">
           <div class="fi-signature-header">
@@ -21,10 +24,30 @@
             />
           </div>
           <div class="fi-signature-footer">
-            <span class="no-signature" v-if="checkSignatureError">(ບໍ່ມີລາຍເຊັນ)</span>
-            <button type="button" class="fi-btn-signature-cancel" @click="cancelSignature()">ຍົກເລີກ</button>
-            <button type="button" class="fi-btn-signature-clear" @click="clearSignature()">ລ້າງ</button>
-            <button type="button" class="fi-btn-signature-ok" @click="saveSignature()">ຕົກລົງ</button>
+            <span class="no-signature" v-if="checkSignatureError"
+              >(ບໍ່ມີລາຍເຊັນ)</span
+            >
+            <button
+              type="button"
+              class="fi-btn-signature-cancel"
+              @click="cancelSignature()"
+            >
+              ຍົກເລີກ
+            </button>
+            <button
+              type="button"
+              class="fi-btn-signature-clear"
+              @click="clearSignature()"
+            >
+              ລ້າງ
+            </button>
+            <button
+              type="button"
+              class="fi-btn-signature-ok"
+              @click="saveSignature()"
+            >
+              ຕົກລົງ
+            </button>
           </div>
         </div>
         <div class="fi-take-photo" v-if="usePhoto">
@@ -44,18 +67,34 @@
               @cameras="onCameras"
               @camera-change="onCameraChange"
             />
-            <span class="fi-not-supported" v-if="checkPhotoError">Not Supported</span>
+            <span class="fi-not-supported" v-if="checkPhotoError"
+              >Not Supported</span
+            >
           </div>
           <div class="fi-take-photo-footer" v-if="checkPhotoError">
-            <button type="button" class="fi-btn-take-photo-cancel" @click="cancelTakePhoto()">ອອກ</button>
+            <button
+              type="button"
+              class="fi-btn-take-photo-cancel"
+              @click="cancelTakePhoto()"
+            >
+              ອອກ
+            </button>
           </div>
           <div class="fi-take-photo-footer" v-if="!checkPhotoError">
             <button
               type="button"
               class="fi-btn-take-photo-cancel"
               @click="cancelTakePhoto()"
-            >ຍົກເລີກ</button>
-            <button type="button" class="fi-btn-take-photo-shoot" @click="takePhoto()">ຖ່າຍ</button>
+            >
+              ຍົກເລີກ
+            </button>
+            <button
+              type="button"
+              class="fi-btn-take-photo-shoot"
+              @click="takePhoto()"
+            >
+              ຖ່າຍ
+            </button>
           </div>
         </div>
       </div>
@@ -64,10 +103,16 @@
     <div class="row">
       <div class="interest-content">
         <div
-          :class="['input-group-box', error_validation['deposit_amount'].length > 0 ? 'err-input' : '']"
+          :class="[
+            'input-group-box',
+            error_validation['deposit_amount'].length > 0 ? 'err-input' : ''
+          ]"
         >
           <div
-            :class="['fi-ico-box', error_validation['deposit_amount'].length > 0 ? 'err-ico' : '']"
+            :class="[
+              'fi-ico-box',
+              error_validation['deposit_amount'].length > 0 ? 'err-ico' : ''
+            ]"
           >
             <i class="far fa-money-bill-alt"></i>
           </div>
@@ -80,17 +125,33 @@
             @change="changeDepositAmountValue"
             @keyup="validateCustomerDepositAmount()"
           />
-          <label for="fullname" class="control-label">ຈຳນວນເງິນທີ່ຕ້ອງການຝາກ *</label>
+          <label for="fullname" class="control-label"
+            >ຈຳນວນເງິນທີ່ຕ້ອງການຝາກ *</label
+          >
         </div>
         <div
-          :class="['input-group-box', error_validation['currency'].length > 0 ? 'err-input' : '']"
+          :class="[
+            'input-group-box',
+            error_validation['currency'].length > 0 ? 'err-input' : ''
+          ]"
         >
-          <div :class="['fi-ico-box', error_validation['currency'].length > 0 ? 'err-ico' : '']">
+          <div
+            :class="[
+              'fi-ico-box',
+              error_validation['currency'].length > 0 ? 'err-ico' : ''
+            ]"
+          >
             <i class="fas fa-coins"></i>
           </div>
           <select
             id="currency"
-            :class="['selection-box', customer_info['currency']['currencyId'] == 'none' || !customer_info['currency']['currencyId'] ? 'sel-color' : '']"
+            :class="[
+              'selection-box',
+              customer_info['currency']['currencyId'] == 'none' ||
+              !customer_info['currency']['currencyId']
+                ? 'sel-color'
+                : ''
+            ]"
             v-model="customer_info['currency']['currencyId']"
             required
             @change="changeCurrencyValue"
@@ -100,19 +161,38 @@
               v-for="(currency, index) in currencies"
               :key="index"
               :value="currency['currencyId']"
-            >{{currency['currencyNameLa']}} ({{currency['currencyCode']}})</option>
+              >{{ currency["currencyNameLa"] }} ({{
+                currency["currencyCode"]
+              }})</option
+            >
           </select>
-          <label for="curr" class="control-label-option">ເລືອກສະກຸນເງິນ *</label>
+          <label for="curr" class="control-label-option"
+            >ເລືອກສະກຸນເງິນ *</label
+          >
         </div>
         <div
-          :class="['input-group-box', error_validation['currency'].length > 0 ? 'err-input' : '']"
+          :class="[
+            'input-group-box',
+            error_validation['currency'].length > 0 ? 'err-input' : ''
+          ]"
         >
-          <div :class="['fi-ico-box', error_validation['currency'].length > 0 ? 'err-ico' : '']">
+          <div
+            :class="[
+              'fi-ico-box',
+              error_validation['currency'].length > 0 ? 'err-ico' : ''
+            ]"
+          >
             <i class="far fa-clock"></i>
           </div>
           <select
             id="deposit_age"
-            :class="['selection-box', customer_info['deposit_age']['typeId'] == 'none' || !customer_info['deposit_age']['typeId'] ? 'sel-color' : '']"
+            :class="[
+              'selection-box',
+              customer_info['deposit_age']['typeId'] == 'none' ||
+              !customer_info['deposit_age']['typeId']
+                ? 'sel-color'
+                : ''
+            ]"
             v-model="customer_info['deposit_age']['typeId']"
             required
             @change="changeDepositAge"
@@ -122,29 +202,54 @@
               v-for="(depositType, index) in depositTypes"
               :key="index"
               :value="depositType['typeId']"
-            >{{depositType['typeName']}}</option>
+              >{{ depositType["typeName"] }}</option
+            >
           </select>
-          <label for="deposit_age" class="control-label-option">ເລືອກໄລຍະຝາກເງິນ *</label>
+          <label for="deposit_age" class="control-label-option"
+            >ເລືອກໄລຍະຝາກເງິນ *</label
+          >
         </div>
-        <div :class="['input-group-box', error_validation['aclass'].length > 0 ? 'err-input' : '']">
-          <div :class="['fi-ico-box', error_validation['aclass'].length > 0 ? 'err-ico' : '']">
+        <div
+          :class="[
+            'input-group-box',
+            error_validation['aclass'].length > 0 ? 'err-input' : ''
+          ]"
+        >
+          <div
+            :class="[
+              'fi-ico-box',
+              error_validation['aclass'].length > 0 ? 'err-ico' : ''
+            ]"
+          >
             <i class="fas fa-stopwatch"></i>
           </div>
           <select
             id="deposit_age"
-            :class="['selection-box', customer_info['aclass'] == 'none' || !customer_info['aclass'] || !customer_info['aclass']['descriptionLao'] ? 'sel-color' : '']"
+            :class="[
+              'selection-box',
+              customer_info['aclass'] == 'none' ||
+              !customer_info['aclass'] ||
+              !customer_info['aclass']['descriptionLao']
+                ? 'sel-color'
+                : ''
+            ]"
             v-model="customer_info['aclass']"
             @change="aclassSelection"
             required
           >
-            <option class="opt1" value="none" @click="aclassSelection({})">none</option>
+            <option class="opt1" value="none" @click="aclassSelection({})"
+              >none</option
+            >
             <option
               v-for="(aclass, index) in aclasses"
               :key="index"
               :value="aclass"
-            >{{aclass['descriptionLao']}}</option>
+              >{{ aclass["descriptionLao"] }}</option
+            >
           </select>
-          <label for="deposit_age" class="control-label-option">ເລືອກໄລຍະຮັບດອກເບ້ຍ *</label>
+          <label for="deposit_age" class="control-label-option"
+            >ເລືອກໄລຍະຮັບດອກເບ້ຍ *</label
+          >
         </div>
         <div class="input-group-box">
           <div class="fi-ico-box">
@@ -153,7 +258,13 @@
           <span
             v-if="customer_info['normal_interest'] != 0.0"
             class="number-text"
-          >{{Number(customer_info['normal_interest']).toLocaleString(undefined,{'minimumFractionDigits':1,'maximumFractionDigits':3})}}%</span>
+            >{{
+              Number(customer_info["normal_interest"]).toLocaleString(
+                undefined,
+                { minimumFractionDigits: 1, maximumFractionDigits: 3 }
+              )
+            }}%</span
+          >
           <label class="control-label-number">ອັດຕາດອກເບ້ຍປົກກະຕິ</label>
         </div>
         <div class="input-group-box">
@@ -163,24 +274,54 @@
           <span
             v-if="customer_info['earning_general_interest'] != 0.0"
             class="number-text"
-          >{{(customer_info['currency']['currencyCode'] == 'USD')?customer_info['currency']['currencyUnit']:''}}{{Number(customer_info['earning_general_interest']).toLocaleString(undefined,{'minimumFractionDigits':1,'maximumFractionDigits':3})}}{{(customer_info['currency']['currencyCode'] != 'USD')?customer_info['currency']['currencyUnit']:''}}</span>
-          <label class="control-label-number">ດອກເບ້ຍທີ່ລູກຄ້າຈະໄດ້ຮັບ/ປີ</label>
+            >{{
+              customer_info["currency"]["currencyCode"] == "USD"
+                ? customer_info["currency"]["currencyUnit"]
+                : ""
+            }}{{
+              Number(customer_info["earning_general_interest"]).toLocaleString(
+                undefined,
+                {
+                  minimumFractionDigits: 1,
+                  maximumFractionDigits: 3
+                }
+              )
+            }}{{
+              customer_info["currency"]["currencyCode"] != "USD"
+                ? customer_info["currency"]["currencyUnit"]
+                : ""
+            }}</span
+          >
+          <label class="control-label-number"
+            >ດອກເບ້ຍທີ່ລູກຄ້າຈະໄດ້ຮັບ/ປີ</label
+          >
         </div>
         <div class="input-group-box">
-          <div class="fi-ico-box" role="button" @click="visible ? visible = false : visible = true">
+          <div
+            class="fi-ico-box"
+            role="button"
+            @click="visible ? (visible = false) : (visible = true)"
+          >
             <i class="fas fa-money-bill-wave"></i>
           </div>
           <span
-            v-if="customer_info['max_flexible'] != 0.0 && visible"
+            v-if="customer_info['earning_general_interest'] != 0.0 && visible"
             class="number-text"
-          >{{customer_info['max_flexible']}}%</span>
+            >{{ customer_info["max_flexible"] }}%</span
+          >
           <label class="control-label-number">ອັດຕາດອກເບ້ຍຍືດຫຍຸ່ນສູງສຸດ</label>
         </div>
         <div
-          :class="['input-group-box', error_validation['customer_interest'].length > 0 ? 'err-input' : '']"
+          :class="[
+            'input-group-box',
+            error_validation['customer_interest'].length > 0 ? 'err-input' : ''
+          ]"
         >
           <div
-            :class="['fi-ico-box', error_validation['customer_interest'].length > 0 ? 'err-ico' : '']"
+            :class="[
+              'fi-ico-box',
+              error_validation['customer_interest'].length > 0 ? 'err-ico' : ''
+            ]"
           >
             <i class="fas fa-money-bill-wave"></i>
           </div>
@@ -194,38 +335,62 @@
             @keyup="validateCustomerInterest()"
             step="0.01"
           />
-          <label for="m-number" class="control-label">ອັດຕາດອກເບ້ຍຍືດຫຍຸ່ນ(%) *</label>
+          <label for="m-number" class="control-label"
+            >ອັດຕາດອກເບ້ຍຍືດຫຍຸ່ນ(%) *</label
+          >
           <div class="fi-exceeded" v-if="toggleMaxFlexible">
-            <span
-              class="danger"
-              v-if="getExceededOutFlexible()"
-            >(ຍືດຫຍຸ່ນເກີນ​ {{getExceededOutFlexible()}}%)</span>
-            <span
-              class="success"
-              v-if="getExceededInFlexible()"
-            >(ຍືດຫຍຸ່ນໃນກອບ {{getExceededInFlexible()}}%)</span>
+            <span class="danger" v-if="getExceededOutFlexible()"
+              >(ຍືດຫຍຸ່ນເກີນ​ {{ getExceededOutFlexible() }}%)</span
+            >
+            <span class="success" v-if="getExceededInFlexible()"
+              >(ຍືດຫຍຸ່ນໃນກອບ {{ getExceededInFlexible() }}%)</span
+            >
           </div>
         </div>
         <div class="input-group-box">
           <div class="fi-ico-box">
             <i class="fas fa-hand-holding-usd"></i>
           </div>
-          <span
-            v-if="getEarningPerYear() != 0.0"
-            class="number-text"
-          >{{(customer_info['currency']['currencyCode'] == 'USD')?customer_info['currency']['currencyUnit']:''}}{{getEarningPerYear()}}{{(customer_info['currency']['currencyCode'] != 'USD')?customer_info['currency']['currencyUnit']:''}}</span>
+          <span v-if="getEarningPerYear() != 0.0" class="number-text"
+            >{{
+              customer_info["currency"]["currencyCode"] == "USD"
+                ? customer_info["currency"]["currencyUnit"]
+                : ""
+            }}{{ getEarningPerYear()
+            }}{{
+              customer_info["currency"]["currencyCode"] != "USD"
+                ? customer_info["currency"]["currencyUnit"]
+                : ""
+            }}</span
+          >
           <label class="control-label-number">ດອກເບ້ຍທີ່ລູກຄ້າຈະໄດ້ຮັບ</label>
         </div>
         <div class>
           <div class="btn-control-box">
             <div class="fi-btn-box pd-right">
-              <button class="fi-btn-choose-signature" @click="openSignatureDialog()">ລາຍເຊັນ</button>
+              <button
+                class="fi-btn-choose-signature"
+                @click="openSignatureDialog()"
+              >
+                ລາຍເຊັນ
+              </button>
             </div>
             <div class="fi-btn-box pd-left">
-              <button class="fi-btn-choose-photo" @click="openTakePhotoDialog()">ຖ່າຍຮູບ</button>
+              <button
+                class="fi-btn-choose-photo"
+                @click="openTakePhotoDialog()"
+              >
+                ຖ່າຍຮູບ
+              </button>
               <div class="fi-img-panel" v-if="customer_signature || img">
-                <span class="closeIcon" @click="clearUserConfirm()">&#215;</span>
-                <img v-if="customer_signature" :src="customer_signature" alt="Customer Signature" />
+                <span class="closeIcon" @click="clearUserConfirm()"
+                  >&#215;</span
+                >
+                <img
+                  v-if="customer_signature"
+                  :src="customer_signature"
+                  alt="Customer Signature"
+                />
                 <img v-else-if="img" :src="img" alt="Customer Photo" />
               </div>
             </div>
@@ -233,10 +398,14 @@
         </div>
       </div>
       <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-left">
-        <button class="fi-btn-next" type="button" @click="backwardProgress()">&#8592;</button>
+        <button class="fi-btn-next" type="button" @click="backwardProgress()">
+          &#8592;
+        </button>
       </div>
       <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-right">
-        <button class="fi-btn-next" type="button" @click="doNext()">ຕໍ່ໄປ</button>
+        <button class="fi-btn-next" type="button" @click="doNext()">
+          ຕໍ່ໄປ
+        </button>
       </div>
     </div>
   </div>
@@ -530,6 +699,7 @@ export default {
     aclassSelection(e) {
       this.validateAClass();
       this.getGeneralInterest();
+      this.getMaxFlexibleInterest();
     },
     dropdownAcive(aclass) {
       if (this.customer_info["aclass"]["accountClass"]) {
@@ -1015,11 +1185,15 @@ export default {
     color: #000000;
     border: none;
     outline: none;
+    font-weight: 600;
     // border-radius: 0 0.5rem 0.5rem 0;
   }
 
   .number {
     color: $fi-primary;
+    font-weight: 900;
+    font-size: 20px;
+    text-align: right;
   }
 
   .fi-input + .control-label {
@@ -1076,6 +1250,8 @@ export default {
     align-items: center;
     justify-content: flex-end;
     color: #207a09;
+    font-weight: 900;
+    font-size: 20px;
   }
   .number-text + .control-label-number {
     position: absolute;
@@ -1310,4 +1486,3 @@ div.error-message {
   font-size: 3rem;
 }
 </style>
-

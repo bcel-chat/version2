@@ -32,7 +32,7 @@
               </li>
             </ul>
           </div>
-          <small class="danger" v-if="errorMessage">* {{errorMessage}}</small>
+          <span class="danger" v-if="errorMessage">* {{errorMessage}}</span>
         </div>
         <div class="fi-edit-footer">
           <button
@@ -89,9 +89,9 @@
                           :key="index"
                         >
                           - {{account['acc_no']}}{{account['desc']?':':''}}
-                          <small
+                          <span
                             v-if="account['desc']"
-                          >{{account['desc']}}</small>
+                          >{{account['desc']}}</span>
                           <br />
                         </span>
                       </td>
@@ -232,7 +232,7 @@
                   ເລກບັນຊີ:
                   <strong>{{product['acc_no']}}</strong>
                 </h4>
-                <small v-if="product['desc']">&nbsp&nbsp&nbsp&nbsp {{product['desc']}}</small>
+                <span v-if="product['desc']">&nbsp&nbsp&nbsp&nbsp {{product['desc']}}</span>
                 <div v-if="product['coreAccs']">
                   <span v-if="product['coreAccs']['loanAcc']">
                     ບັນຊີເງິນກູ້:

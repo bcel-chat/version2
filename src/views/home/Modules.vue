@@ -92,8 +92,8 @@ export default {
       else this.sideMenu = true;
     },
     back() {
+      this.$router.push("/").catch(err => {});
       this.onChatClick({ cnt: false, module: "" });
-      //   this.$router.push("/");
     }
   },
   beforeDestroy() {

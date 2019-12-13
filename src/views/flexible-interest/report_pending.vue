@@ -97,6 +97,6 @@ export default {
     color: white;
 }
 .tab-style{
-    background: #FA996B;
+    background: #fa9600;
 }
 </style>

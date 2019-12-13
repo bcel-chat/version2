@@ -5,9 +5,9 @@
         <h2 class="text-left">
           <strong class="PENDING">Pending</strong>
           <br class="fi-br" />
-          <small
+          <span
             class="fi-found-item"
-          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</small>
+          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</span>
         </h2>
         <label for="fi_search" class="fi-search">
           <input
@@ -41,10 +41,10 @@
               <span style="font-size: 16px;">ຊື່ລູກຄ້າ:</span>
               <strong>{{history['customerName']}}</strong>
             </h4>
-            <small>
+            <span>
               <strong>ຜ່ານ:</strong>
               {{history['userStepper']}}
-            </small>
+            </span>
             <span
               class="editIcon"
               v-if="getShowEdit(history['editCount'])"
@@ -94,9 +94,9 @@
           <div class="fi-card-footer">
             <div class="row">
               <div class="col-7">
-                <!-- <small> ພ/ງ: {{history['createUserName']}}</small>
+                <!-- <span> ພ/ງ: {{history['createUserName']}}</span>
                 <br>-->
-                <small>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</small>
+                <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
               </div>
               <div class="col-5 text-right">
                 <button
@@ -415,8 +415,6 @@ img.img-loader-out {
 .PENDING {
   color: rgb(250, 150, 0);
   font-weight: bold;
-  font-family: Helvetica;
-  /*text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 rgb(250, 150, 0), 0 4px 0 rgb(250, 150, 0);*/
 }
 .REJECTED {
   color: #f34e4e;

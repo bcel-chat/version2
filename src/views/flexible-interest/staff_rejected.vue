@@ -9,7 +9,7 @@
         </div>
         <div class="fi-edit-body">
           <textarea required v-model="comment" rows="3"></textarea>
-          <small class="REJECTED" v-if="message">{{message}}</small>
+          <span class="REJECTED" v-if="message">{{message}}</span>
         </div>
         <div class="fi-edit-footer">
           <button
@@ -26,9 +26,9 @@
         <h3 class="text-left">
           <strong class="REJECTED">Rejected</strong>
           <br class="fi-br" />
-          <small
+          <span
             class="fi-found-item"
-          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</small>
+          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</span>
         </h3>
         <label for="fi_search" class="fi-search">
           <input
@@ -62,10 +62,10 @@
               <span style="font-size: 16px;">ຊື່ລູກຄ້າ:</span>
               <strong>{{history['customerName']}}</strong>
             </h4>
-            <small>
+            <span>
               <strong>ຜ່ານ:</strong>
               {{history['userStepper']}}
-            </small>
+            </span>
             <span class="fi-top-right-action" v-if="(history['approveStatus'] == 'REJECTED_50')">
               <!-- <span title="ຢືນຢັນຄຳຕອບຂອງລູກຄ້າ" class="confirmIcon">
                                 <i class="fa fa-check-circle" aria-hidden="true"></i>
@@ -123,9 +123,9 @@
           <div class="fi-card-footer">
             <div class="row">
               <div class="col-7">
-                <!-- <small> ພ/ງ: {{history['createUserName']}}</small>
+                <!-- <span> ພ/ງ: {{history['createUserName']}}</span>
                 <br>-->
-                <small>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</small>
+                <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
               </div>
               <div class="col-5 text-right">
                 <button
@@ -680,8 +680,6 @@ textarea:valid {
 .PENDING {
   color: #a8890c;
   font-weight: bold;
-  font-family: Helvetica;
-  /*text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 #A8890C, 0 4px 0 #A8890C;*/
 }
 .REJECTED {
   color: #f34e4e;

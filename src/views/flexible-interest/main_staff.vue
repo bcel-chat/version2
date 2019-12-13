@@ -171,7 +171,6 @@ export default {
 .PENDING {
   color: rgb(250, 150, 0);
   font-weight: bold;
-  font-family: Helvetica;
 }
 .REJECTED {
   color: #f34e4e;

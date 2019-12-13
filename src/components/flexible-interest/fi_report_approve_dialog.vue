@@ -1337,17 +1337,17 @@ div.fi-status{
 /* Create a custom radio button */
 .fi-checkmark {
   position: absolute;
-  top: 1px;
+  top: 4px;
   left: 0;
   height: 18px;
   width:18px;
-  background-color: $fi-primary;
+  background-color: $secondary-color;
   border-radius: 50%;
 }
 
 /* On mouse-over, add a grey background color */
 .fi-container:hover input[type="radio"] ~ .fi-checkmark {
-  background-color:  $fi-hover;
+  background-color:  $semi-secondary-color;
 }
 
 /* When the radio button is checked, add a blue background */

@@ -13,7 +13,6 @@ const route = [
     meta: {
       requiresAuth: true
     },
-
     children: [
       {
         path: "/rooms/:id",
@@ -24,10 +23,7 @@ const route = [
         path: "/modules",
         name: "Modules",
         component: Modules,
-        children: flexible,
-        beforeEnter: (to, from, next) => {
-          next();
-        }
+        children: flexible
       }
     ]
   },

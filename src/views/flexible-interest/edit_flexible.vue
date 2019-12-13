@@ -17,7 +17,7 @@
                 </div>
                 <div class="fi-edit-body">
                     <textarea required v-model="editComment" rows="3"></textarea>
-                    <small class="REJECTED" v-if="errorMessage">* {{errorMessage}}</small>
+                    <span class="REJECTED" v-if="errorMessage">* {{errorMessage}}</span>
                 </div>
                 <div class="fi-edit-footer">
                     <button type="button" class="fi-btn-edit-cancel" @click="cancelCommentDialog()">ຍົກເລີກ</button>
@@ -39,16 +39,16 @@
                                 <strong style="border-bottom: 1px gray solid; font-size: 18px;">{{edit['requestUserName']}}: </strong>
                             </div>
                             <div style="margin-top:-1px; font-size: 12px; color: #908C84;">
-                                <small>
+                                <span>
                                     {{edit['position']}} {{edit['divisionName']}} {{edit['departmentName']}}
-                                </small>
+                                </span>
                             </div>
                         </div>
                         <div>
                             &nbsp&nbsp&nbsp&nbsp <span>{{edit['comments']}}</span>
                         </div>
                         <div class="text-right">
-                            <small>{{getFormatDate(edit['date'] + ' ' + edit['time'])}}</small>
+                            <span>{{getFormatDate(edit['date'] + ' ' + edit['time'])}}</span>
                         </div>
                         <hr class="margin-space">
                     </div>
@@ -264,8 +264,8 @@
                     
                 </div>
                 <div class="text-left">
-                    <small> ໂດຍ: {{customer_info['createUserName']}} {{customer_info['createUserDivision']}} {{customer_info['createUserDepartment']}} {{customer_info['createUserBranch']}}</small>
-                    <small> ({{getFormatDate(customer_info['createDate'] + ' ' + customer_info['createTime'])}})</small>
+                    <span> ໂດຍ: {{customer_info['createUserName']}} {{customer_info['createUserDivision']}} {{customer_info['createUserDepartment']}} {{customer_info['createUserBranch']}}</span>
+                    <span> ({{getFormatDate(customer_info['createDate'] + ' ' + customer_info['createTime'])}})</span>
                      
                 </div>
             </div> 
@@ -1319,8 +1319,6 @@ strong, th, td {
 .PENDING{
     color: #FB8C00;
     font-weight: bold;
-    font-family: Helvetica;
-    text-shadow: 0 1px 0 white, 0 2px 0 white, 0 3px 0 #FB8C00, 0 4px 0 #FB8C00;
 }
 .REJECTED{
     color: red;

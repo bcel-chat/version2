@@ -2,26 +2,35 @@
   <div id="bubble" :class="[checkTime(index, msg.time) != null ? 'new' : '']">
     <div
       :class="['bubble-container', msg.uid == myID ? 'out' : 'in']"
-      @mouseover="mobileMode ? menu = false : menu = true"
+      @mouseover="mobileMode ? (menu = false) : (menu = true)"
       @mouseleave="menu = false"
       ref="touchMenu"
     >
       <div class="menu" v-if="menu">
         <div
-          :class="['menu-inside', checkTime(index, msg.time) == null && !senderCheck(index, msg.uid) ? '' : 'option']"
+          :class="[
+            'menu-inside',
+            checkTime(index, msg.time) == null && !senderCheck(index, msg.uid)
+              ? ''
+              : 'option'
+          ]"
         >
           <i
             class="material-icons"
             role="button"
             @click="setBubblePopup(true), setPopupData(msg)"
-          >more_vert</i>
+            >more_vert</i
+          >
         </div>
       </div>
       <div class="bubble-box-inside">
         <div class="bubble-box">
           <div class="bb-profile-box">
             <div
-              v-if="msg.uid != myID && checkTime(index, msg.read) != null || msg.uid != myID && senderCheck(index, msg.uid)"
+              v-if="
+                (msg.uid != myID && checkTime(index, msg.read) != null) ||
+                  (msg.uid != myID && senderCheck(index, msg.uid))
+              "
               class="bb-avatar"
             >
               <div class="bb-avatar-inside">
@@ -30,41 +39,74 @@
                   class="avatar"
                   v-if="msg.picture"
                 />
-                <img src="@/assets/img/user.svg" class="avatar-default" alt srcset v-else />
+                <img
+                  src="@/assets/img/user.svg"
+                  class="avatar-default"
+                  alt
+                  srcset
+                  v-else
+                />
               </div>
             </div>
             <div
-              v-if="checkTime(index, msg.time) != null || msg.uid != myID && senderCheck(index, msg.uid) || msg.uid == myID && senderCheck(index, msg.uid)"
+              v-if="
+                checkTime(index, msg.time) != null ||
+                  (msg.uid != myID && senderCheck(index, msg.uid)) ||
+                  (msg.uid == myID && senderCheck(index, msg.uid))
+              "
               :class="['bb-name-time', msg.uid == myID ? 'out' : 'in']"
             >
-              <span v-if="msg.uid == myID" :class="['read-msg',msg.read > 0 ? 'read' : 'unread']"></span>
               <span
-                class="_time"
-              >{{ msg.uid == myID ? '' : `${getFirstname(msg.displayname)},` }} {{moment(msg.time).format('h:mm A')}}</span>
+                v-if="msg.uid == myID"
+                :class="['read-msg', msg.read > 0 ? 'read' : 'unread']"
+              ></span>
+              <span class="_time"
+                >{{
+                  msg.uid == myID ? "" : `${getFirstname(msg.displayname)},`
+                }}
+                {{ moment(msg.time).format("h:mm A") }}</span
+              >
             </div>
           </div>
         </div>
         <div
-          :class="['msg-box', checkTime(index, msg.time) == null && !senderCheck(index, msg.uid) ? 'hide' : '', msg.uid == myID ? 'out' : 'in',]"
+          :class="[
+            'msg-box',
+            checkTime(index, msg.time) == null && !senderCheck(index, msg.uid)
+              ? 'hide'
+              : '',
+            msg.uid == myID ? 'out' : 'in'
+          ]"
         >
           <div class="reply-box">
             <div class="reply-side">
-              <div :class="['file', msg.uid == myID ? 'rd-right' : 'rd-left' ]" role="button">
+              <div
+                :class="['file', msg.uid == myID ? 'rd-right' : 'rd-left']"
+                role="button"
+              >
                 <div
                   class="picture-box"
                   v-if="validateFile(msg.path)"
-                  @click.stop="setImageViewer({show: true, url: `${picMsgURL+msg.rid}/${msg.uid}/${msg.path}`, name: msg.displayname, uid: msg.uid})"
+                  @click.stop="
+                    setImageViewer({
+                      show: true,
+                      url: `${picMsgURL + msg.rid}/${msg.uid}/${msg.path}`,
+                      name: msg.displayname,
+                      uid: msg.uid
+                    })
+                  "
                 >
                   <img
                     class="picture"
-                    :src="`${picMsgURL+msg.rid}/${msg.uid}/${msg.path}`"
+                    :src="`${picMsgURL + msg.rid}/${msg.uid}/${msg.path}`"
                     alt
-                    srcset
                   />
                 </div>
                 <div class="file-name-box" v-else>
                   <div class="item-name">
-                    <span class="file-name" :title="msg.path">{{msg.path}}</span>
+                    <span class="file-name" :title="msg.path">{{
+                      msg.path
+                    }}</span>
                   </div>
                   <div class="icon-box">
                     <span class="ico">
@@ -73,12 +115,14 @@
                     <span class="icon-name">File</span>
                   </div>
                   <div class="download-box" @click="toDownload">
-                    <span class="download">{{ download ? 'Completed' : 'Download' }}</span>
+                    <span class="download">{{
+                      download ? "Completed" : "Download"
+                    }}</span>
                   </div>
                 </div>
               </div>
             </div>
-            <div v-if=" msg.msg" class="msg-inside">
+            <div v-if="msg.msg" class="msg-inside">
               <span class="msg">{{ msg.msg }}</span>
             </div>
           </div>

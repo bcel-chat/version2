@@ -30,10 +30,7 @@
       <!-- End card-content -->
     </div>
     <!-- End _container -->
-    <transition
-      enter-active-class="animated slideInUp"
-      leave-active-class="animated fadeOut"
-    >
+    <transition enter-active-class="animated slideInUp" leave-active-class="animated fadeOut">
       <toast v-if="toastStart" style="animation-duration: .2s">
         <span slot="body">No permission</span>
       </toast>

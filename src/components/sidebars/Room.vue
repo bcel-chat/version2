@@ -5,29 +5,45 @@
       <transition-group
         name="flip-list"
         tag="div"
-        :class="['content-group', mobileMode ? 'mobile-enter' : 'desktop-enter']"
+        :class="[
+          'content-group',
+          mobileMode ? 'mobile-enter' : 'desktop-enter'
+        ]"
       >
         <template v-for="item in room">
           <router-link
             :to="`/rooms/${item.rid}`"
             :key="item.rid"
-            :class="['item-inbox', roomActive.status && roomActive.rid == item.rid ? 'roomActive' : '']"
+            :class="[
+              'item-inbox',
+              roomActive.status && roomActive.rid == item.rid
+                ? 'roomActive'
+                : ''
+            ]"
             role="button"
             ref="itemInbox"
-            @click.native="chat(item.myid, item.rid, item.rtype), roomID = item.rid"
+            @click.native="chat(item.myid, item.rid, item.rtype)"
             @mouseover="refID = item.rid"
-            @mouseleave="roomArrow ? refID = item.rid : refID = ''"
+            @mouseleave="roomArrow ? (refID = item.rid) : (refID = '')"
           >
             <div class="avatar-inbox-panel">
               <div class="avatar-inbox">
                 <img
                   v-if="item.picture || item.rimg"
-                  :src="`${picURL}${item.rtype == 1 ? item.myid : item.rid}/${item.rtype == 1 ? item.picture : item.rimg}`"
+                  :src="
+                    `${picURL}${item.rtype == 1 ? item.myid : item.rid}/${
+                      item.rtype == 1 ? item.picture : item.rimg
+                    }`
+                  "
                   class="avatar"
                   alt
                   srcset
                 />
-                <img v-else src="@/assets/img/user.svg" class="avatar-default" />
+                <img
+                  v-else
+                  src="@/assets/img/user.svg"
+                  class="avatar-default"
+                />
               </div>
             </div>
             <!-- End avatar-inbox-panel -->
@@ -35,9 +51,17 @@
               <div class="name-time-box">
                 <div
                   class="sender-name-box"
-                  :title="item.rtype == 1 ? getFirstname(item.chatwith) : item.rname"
-                >{{ item.rtype == 1 ? getFirstname(item.chatwith) : item.rname }}</div>
-                <div class="time-box" :title="checkTime(item.time)">{{ checkTime(item.time) }}</div>
+                  :title="
+                    item.rtype == 1 ? getFirstname(item.chatwith) : item.rname
+                  "
+                >
+                  {{
+                    item.rtype == 1 ? getFirstname(item.chatwith) : item.rname
+                  }}
+                </div>
+                <div class="time-box" :title="checkTime(item.time)">
+                  {{ checkTime(item.time) }}
+                </div>
               </div>
               <!-- End name-time-box -->
               <div class="msg-box">
@@ -46,15 +70,29 @@
                   class="msg"
                   :title="`${userRoomCheck(item)}${item.msg}`"
                 >
-                  <strong>{{userRoomCheck(item)}}</strong>
+                  <strong>{{ userRoomCheck(item) }}</strong>
                   {{ item.msg }}
                 </div>
                 <div
                   v-if="item.msg_type == 2"
                   class="msg"
                   style="font-weight: 600"
-                  :title="`${item.uid == myID ? 'You created this group' : `${getFirstname(item.sender)} added you to this group`}${item.msg}`"
-                >{{ `${item.uid == myID ? 'You created this group' : `${getFirstname(item.sender)} added you to this group`}${item.msg}` }}</div>
+                  :title="
+                    `${
+                      item.uid == myID
+                        ? 'You created this group'
+                        : `${getFirstname(item.sender)} added you to this group`
+                    }${item.msg}`
+                  "
+                >
+                  {{
+                    `${
+                      item.uid == myID
+                        ? "You created this group"
+                        : `${getFirstname(item.sender)} added you to this group`
+                    }${item.msg}`
+                  }}
+                </div>
                 <div class="msg" v-if="item.msg_type == 3">
                   <i class="fas fa-quote-left"></i>
                   <span class="quoted">Quoted message</span>
@@ -62,12 +100,31 @@
                 <div
                   class="msg"
                   v-if="item.msg_type == 4"
-                  :title="`${item.uid == myID ? 'You sent file file' : `${getFirstname(item.sender)} sent file`}`"
-                >{{ `${item.uid == myID ? 'You sent file' : `${getFirstname(item.sender)} sent file`}` }}</div>
-                <div class="msg-counter-box" v-if="item.unread > 0 && item.msg_type != 2">
+                  :title="
+                    `${
+                      item.uid == myID
+                        ? 'You sent file file'
+                        : `${getFirstname(item.sender)} sent file`
+                    }`
+                  "
+                >
+                  {{
+                    `${
+                      item.uid == myID
+                        ? "You sent file"
+                        : `${getFirstname(item.sender)} sent file`
+                    }`
+                  }}
+                </div>
+                <div
+                  class="msg-counter-box"
+                  v-if="item.unread > 0 && item.msg_type != 2"
+                >
                   <span>
                     <div class="counter-box">
-                      <span class="counter" :title="`Unread ${item.unread}`">{{ item.unread }}</span>
+                      <span class="counter" :title="`Unread ${item.unread}`">{{
+                        item.unread
+                      }}</span>
                     </div>
                   </span>
                 </div>
@@ -201,10 +258,7 @@ export default {
       });
     },
     chat(uid, rid, rtype) {
-      this.setRoomActive({
-        status: true,
-        rid: rid
-      });
+      this.roomID = rid;
 
       setTimeout(() => {
         this.onChatClick({ cnt: true, module: "" });

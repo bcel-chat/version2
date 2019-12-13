@@ -9,7 +9,7 @@
         </div>
         <div class="fi-edit-body">
           <textarea required v-model="comment" rows="3"></textarea>
-          <small class="REJECTED" v-if="message">{{message}}</small>
+          <span class="REJECTED" v-if="message">{{message}}</span>
         </div>
         <div class="fi-edit-footer">
           <button type="button" class="fi-btn-edit-cancel" @click="cancelCommentDialog()">ຍົກເລີກ</button>
@@ -22,9 +22,9 @@
         <h2 class="text-left">
           <strong class="APPROVED">Approved</strong>
           <br class="fi-br" />
-          <small
+          <span
             class="fi-found-item"
-          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</small>
+          >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</span>
         </h2>
         <label for="fi_search" class="fi-search">
           <input
@@ -62,10 +62,10 @@
               <span style="font-size: 16px;">ຊື່ລູກຄ້າ:</span>
               <strong>{{history['customerName']}}</strong>
             </h4>
-            <small>
+            <span>
               <strong>ຜ່ານ:</strong>
               {{history['userStepper']}}
-            </small>
+            </span>
             <span class="fi-top-right-action" v-if="(history['approveStatus'] == 'APPROVED')">
               <span
                 title="ຢືນຢັນເປີດບັນຊີແລ້ວ"
@@ -125,9 +125,9 @@
           <div class="fi-card-footer">
             <div class="row">
               <div class="col-7">
-                <!-- <small> ພ/ງ: {{history['createUserName']}}</small>
+                <!-- <span> ພ/ງ: {{history['createUserName']}}</span>
                 <br>-->
-                <small>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</small>
+                <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
               </div>
               <div class="col-5 text-right">
                 <button
@@ -654,12 +654,12 @@ button:focus {
 }
 .closeIcon {
   cursor: pointer;
-  color: rgb(202, 23, 23);
+  color: white;
   margin-left: 3px;
   font-weight: bold;
 }
 .closeIcon:hover {
-  color: rgba(231, 84, 84, 0.938);
+  color: rgb(243, 155, 155);
 }
 
 .confirmIcon {

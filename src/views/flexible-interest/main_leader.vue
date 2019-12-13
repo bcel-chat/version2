@@ -8,7 +8,7 @@
       <span class="fi-toggle-status">{{on_off[0]?'ຮັບອະນຸມັດ':'ບໍ່ຮັບອະນຸມັດ'}}</span>
     </a>
     <router-link to="/modules/flexible/report/pending/all" class="fi-link-report">
-      <i class="fas fa-chart-line"></i>
+      <i class="fas fa-chart-line"></i> <span class="_text">ລາຍງານ</span>
     </router-link>
     <ul class="nav nav-tabs mb-3 justify-content-center hide-on-print-mode">
       <li class="nav-item">
@@ -107,8 +107,9 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
+@import "@/assets/scss/variables.scss";
+
 .fi-main-leader {
   position: relative;
 }
@@ -120,14 +121,22 @@ export default {
   font-size: 1.2rem;
   background: white;
   border: none;
+  ._text{
+    display: none;
+  }
+  @media screen and (min-width: 760px){
+    ._text{
+      display: inline;
+      margin-left: 5px;
+    }
+  }
 }
 .fi-link-report:hover {
-  color: #ee3024;
+  color: $fi-hover;
 }
 .PENDING {
   color: rgb(250, 150, 0);
   font-weight: bold;
-  font-family: Helvetica;
 }
 div.max-flex {
   position: absolute;
@@ -195,27 +204,24 @@ span.fi-toggle-status {
 .fi-slider:before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
-  left: 0px;
-  bottom: 0px;
+  height: 18px;
+  width: 18px;
+  top: 1px;
+  left: 1px;
   background-color: white;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 input:checked + .fi-slider {
-  background-color: #ee3024;
+  background-color: $fi-primary;
 }
 
 input:focus + input:checked + .fi-slider {
-  box-shadow: 0 0 1px #ee3024;
+  box-shadow: 0 0 1px $fi-primary;
 }
 
 input:checked + .fi-slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  transform: translateX(25px);
 }
 
 /* Rounded sliders */

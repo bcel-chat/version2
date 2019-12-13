@@ -18,6 +18,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   localStorage.setItem("flexible_root_router", "/");
+  if (to.name == null) next({ path: "/" });
   let thor = {
     user: null
   };
