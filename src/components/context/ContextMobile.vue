@@ -1,5 +1,5 @@
 <template>
-  <div id="context">
+  <div id="context" @click="$emit('dismiss')">
     <div class="context-menu" :style="menuPosition" ref="menu">
       <div class="_containe">
         <div class="items">
@@ -29,6 +29,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
+  props: ["roomArrow"],
   data() {
     return {
       menuPosition: ""
@@ -36,25 +37,13 @@ export default {
   },
   mounted() {
     this.showContext();
-    window.addEventListener("resize", () => {
-      this.setRoomArrow("");
-    });
-    document.addEventListener("mousedown", this.checkOnClick);
   },
   computed: {
     ...mapState("Identify", ["myID"]),
-    ...mapState("Context", ["roomArrow"]),
     ...mapState("AppData", ["mobileMode"])
   },
   methods: {
     ...mapActions("Context", ["setRoomArrow", "setAdmin"]),
-    checkOnClick(e) {
-      if (e.target.className == "item")
-        setTimeout(() => {
-          this.setRoomArrow("");
-        }, 200);
-      else this.setRoomArrow("");
-    },
     getPosition(e) {
       var posx = 0,
         posy = 0;
@@ -104,9 +93,10 @@ export default {
 
       let windowWidth, windowHeight, top, left;
 
-      if (this.mobileMode)
+      if (this.roomArrow.event.type == "touchstart")
         clickCoords = this.getPositionMobile(this.roomArrow.event);
-      else clickCoords = this.getPosition(this.roomArrow.event);
+      else if (this.roomArrow.event.type == "click")
+        clickCoords = this.getPosition(this.roomArrow.event);
 
       clickCoordsX = clickCoords.x;
       clickCoordsY = clickCoords.y;
@@ -133,12 +123,6 @@ export default {
         left: `${left}px`
       };
     }
-  },
-  beforeDestroy() {
-    window.removeEventListener("resize", () => {
-      this.setRoomArrow("");
-    });
-    document.removeEventListener("mousedown", this.checkOnClick);
   }
 };
 </script>
@@ -147,13 +131,14 @@ export default {
 @import "@/assets/scss/variables.scss";
 
 #context {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: 200;
 }
+
 .context-menu {
   position: absolute;
 }

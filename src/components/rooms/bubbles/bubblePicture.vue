@@ -19,8 +19,7 @@
             class="material-icons"
             role="button"
             @click="setBubblePopup(true), setPopupData(msg)"
-            >more_vert</i
-          >
+          >more_vert</i>
         </div>
       </div>
       <div class="bubble-box-inside">
@@ -39,13 +38,7 @@
                   class="avatar"
                   v-if="msg.picture"
                 />
-                <img
-                  src="@/assets/img/user.svg"
-                  class="avatar-default"
-                  alt
-                  srcset
-                  v-else
-                />
+                <img src="@/assets/img/user.svg" class="avatar-default" alt srcset v-else />
               </div>
             </div>
             <div
@@ -56,16 +49,13 @@
               "
               :class="['bb-name-time', msg.uid == myID ? 'out' : 'in']"
             >
-              <span
-                v-if="msg.uid == myID"
-                :class="['read-msg', msg.read > 0 ? 'read' : 'unread']"
-              ></span>
-              <span class="_time"
-                >{{
-                  msg.uid == myID ? "" : `${getFirstname(msg.displayname)},`
+              <span v-if="msg.uid == myID" :class="['read-msg', msg.read > 0 ? 'read' : 'unread']"></span>
+              <span class="_time">
+                {{
+                msg.uid == myID ? "" : `${getFirstname(msg.displayname)},`
                 }}
-                {{ moment(msg.time).format("h:mm A") }}</span
-              >
+                {{ moment(msg.time).format("h:mm A") }}
+              </span>
             </div>
           </div>
         </div>
@@ -80,10 +70,7 @@
         >
           <div class="reply-box">
             <div class="reply-side">
-              <div
-                :class="['file', msg.uid == myID ? 'rd-right' : 'rd-left']"
-                role="button"
-              >
+              <div :class="['file', msg.uid == myID ? 'rd-right' : 'rd-left']" role="button">
                 <div
                   class="picture-box"
                   v-if="validateFile(msg.path)"
@@ -96,17 +83,15 @@
                     })
                   "
                 >
-                  <img
-                    class="picture"
-                    :src="`${picMsgURL + msg.rid}/${msg.uid}/${msg.path}`"
-                    alt
-                  />
+                  <img class="picture" :src="`${picMsgURL + msg.rid}/${msg.uid}/${msg.path}`" alt />
                 </div>
                 <div class="file-name-box" v-else>
                   <div class="item-name">
-                    <span class="file-name" :title="msg.path">{{
+                    <span class="file-name" :title="msg.path">
+                      {{
                       msg.path
-                    }}</span>
+                      }}
+                    </span>
                   </div>
                   <div class="icon-box">
                     <span class="ico">
@@ -115,9 +100,11 @@
                     <span class="icon-name">File</span>
                   </div>
                   <div class="download-box" @click="toDownload">
-                    <span class="download">{{
+                    <span class="download">
+                      {{
                       download ? "Completed" : "Download"
-                    }}</span>
+                      }}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -176,6 +163,14 @@ export default {
 
     this.$refs.touchMenu.addEventListener(
       "touchend",
+      () => {
+        if (timer) clearTimeout(timer);
+      },
+      false
+    );
+
+    this.$refs.touchMenu.addEventListener(
+      "touchmove",
       () => {
         if (timer) clearTimeout(timer);
       },

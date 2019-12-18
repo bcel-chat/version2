@@ -35,7 +35,7 @@ const settings = {
       ds.rpc.make(
         "getProfile",
         {
-          id: payload
+          id: payload.myID
         },
         (err, data) => {
           if (!err) {

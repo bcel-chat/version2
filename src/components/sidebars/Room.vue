@@ -10,7 +10,7 @@
           mobileMode ? 'mobile-enter' : 'desktop-enter'
         ]"
       >
-        <template v-for="item in room">
+        <template v-for="(item, index) in room">
           <router-link
             :to="`/rooms/${item.rid}`"
             :key="item.rid"
@@ -30,20 +30,14 @@
               <div class="avatar-inbox">
                 <img
                   v-if="item.picture || item.rimg"
-                  :src="
-                    `${picURL}${item.rtype == 1 ? item.myid : item.rid}/${
-                      item.rtype == 1 ? item.picture : item.rimg
-                    }`
-                  "
+                  :src="`${picURL}${item.rtype == 1 ? item.myid : item.rid}/${
+        item.rtype == 1 ? item.picture : item.rimg
+      }`"
                   class="avatar"
                   alt
                   srcset
                 />
-                <img
-                  v-else
-                  src="@/assets/img/user.svg"
-                  class="avatar-default"
-                />
+                <img v-else src="@/assets/img/user.svg" class="avatar-default" />
               </div>
             </div>
             <!-- End avatar-inbox-panel -->
@@ -56,12 +50,10 @@
                   "
                 >
                   {{
-                    item.rtype == 1 ? getFirstname(item.chatwith) : item.rname
+                  item.rtype == 1 ? getFirstname(item.chatwith) : item.rname
                   }}
                 </div>
-                <div class="time-box" :title="checkTime(item.time)">
-                  {{ checkTime(item.time) }}
-                </div>
+                <div class="time-box" :title="checkTime(item.time)">{{ checkTime(item.time) }}</div>
               </div>
               <!-- End name-time-box -->
               <div class="msg-box">
@@ -86,11 +78,11 @@
                   "
                 >
                   {{
-                    `${
-                      item.uid == myID
-                        ? "You created this group"
-                        : `${getFirstname(item.sender)} added you to this group`
-                    }${item.msg}`
+                  `${
+                  item.uid == myID
+                  ? "You created this group"
+                  : `${getFirstname(item.sender)} added you to this group`
+                  }${item.msg}`
                   }}
                 </div>
                 <div class="msg" v-if="item.msg_type == 3">
@@ -109,22 +101,21 @@
                   "
                 >
                   {{
-                    `${
-                      item.uid == myID
-                        ? "You sent file"
-                        : `${getFirstname(item.sender)} sent file`
-                    }`
+                  `${
+                  item.uid == myID
+                  ? "You sent file"
+                  : `${getFirstname(item.sender)} sent file`
+                  }`
                   }}
                 </div>
-                <div
-                  class="msg-counter-box"
-                  v-if="item.unread > 0 && item.msg_type != 2"
-                >
+                <div class="msg-counter-box" v-if="item.unread > 0 && item.msg_type != 2">
                   <span>
                     <div class="counter-box">
-                      <span class="counter" :title="`Unread ${item.unread}`">{{
+                      <span class="counter" :title="`Unread ${item.unread}`">
+                        {{
                         item.unread
-                      }}</span>
+                        }}
+                      </span>
                     </div>
                   </span>
                 </div>
@@ -168,7 +159,8 @@ export default {
       moment: this.$moment,
       record: null,
       roomID: null,
-      picURL: process.env.VUE_APP_PICTURE_PROFILE
+      picURL: process.env.VUE_APP_PICTURE_PROFILE,
+      base64: []
     };
   },
   watch: {
@@ -302,6 +294,32 @@ export default {
         if (item.uid == this.myID) return "You: ";
         else return `${this.getFirstname(item.sender)}: `;
       }
+    },
+    async imgSource(item, index) {
+      let img = document.createElement("img");
+      const src = `${this.picURL}${item.rtype == 1 ? item.myid : item.rid}/${
+        item.rtype == 1 ? item.picture : item.rimg
+      }`;
+
+      localStorage.setItem("imgSrc", JSON.stringify([]));
+      img.src = src;
+
+      img.onload = () => {
+        var oc = document.createElement("canvas"),
+          octx = oc.getContext("2d");
+        oc.width = img.width;
+        oc.height = img.height;
+        octx.drawImage(img, 0, 0);
+        this.base64.push(oc.toDataURL());
+        if (JSON.parse(localStorage.getItem("imgSrc")).length < index)
+          localStorage.setItem("imgSrc", JSON.stringify(this.base64));
+      };
+
+      setTimeout(() => {
+        console.log(JSON.parse(localStorage.getItem("imgSrc"))[index]);
+      }, 100);
+
+      return img.src;
     }
   }
 };

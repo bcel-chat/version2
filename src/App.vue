@@ -88,4 +88,20 @@ div.products td a {
 div.products div.product p {
   display: none;
 }
+
+@media screen and (min-width: 760px) {
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0);
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgba(107, 107, 107, 0.3);
+  }
+}
 </style>

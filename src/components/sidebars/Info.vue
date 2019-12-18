@@ -66,6 +66,7 @@
                     key="3"
                     v-if="roomType == 2"
                     @change="openCropSide"
+                    accept=".jpeg, .jpg, .png, .gif, .bmp, .ico, .svg"
                   />
                 </transition-group>
               </div>

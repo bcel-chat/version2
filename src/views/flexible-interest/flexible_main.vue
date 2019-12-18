@@ -272,4 +272,8 @@ div.products div.product p {
   div.products div.product.visa {
   }
 }
+
+label {
+  margin-bottom: 0rem !important;
+}
 </style>

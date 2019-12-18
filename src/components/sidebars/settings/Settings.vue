@@ -12,26 +12,14 @@
       <!-- End header-box-fixed -->
       <div class="header">
         <div class="header-cover">
-          <img
-            class="cover"
-            :src="picURL + profile.picture"
-            alt
-            draggable="false"
-          />
+          <img class="cover" :src="picURL + profile.picture" alt draggable="false" />
           <span class="behigh"></span>
         </div>
         <!-- End header-cover -->
         <div class="header-box"></div>
         <div class="profile-content">
-          <transition
-            enter-active-class="animated zoomIn"
-            leave-active-class="animated zoomOut"
-          >
-            <div
-              class="profile-box"
-              v-if="startUp"
-              style="animation-duration: .2s"
-            >
+          <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
+            <div class="profile-box" v-if="startUp" :style="styling.all">
               <!-- <img class="profile" :src="profilePicture" alt  /> -->
               <img
                 v-if="profile.picture"
@@ -40,19 +28,9 @@
                 alt
                 draggable="false"
               />
-              <img
-                v-else
-                src="@/assets/img/user.svg"
-                class="avatar-defualt"
-                alt
-                srcset
-              />
+              <img v-else src="@/assets/img/user.svg" class="avatar-defualt" alt srcset />
               <span class="behigh"></span>
-              <label
-                for="profile"
-                class="brows-icon-box-desktop"
-                role="button"
-              ></label>
+              <label for="profile" class="brows-icon-box-desktop" role="button"></label>
               <label for="profile" class="brows-icon-box" role="button">
                 <i class="fas fa-camera"></i>
               </label>
@@ -120,19 +98,13 @@
                       enter-active-class="animated zoomIn"
                       leave-active-class="animated zoomOut"
                     >
-                      <div
-                        class="ico-box"
-                        :style="styling.all"
-                        v-if="inputName"
-                        :key="1"
-                      >
+                      <div class="ico-box" :style="styling.all" v-if="inputName" :key="1">
                         <i
                           class="material-icons chk"
                           role="button"
                           @click="editText(1)"
                           title="Save name"
-                          >check</i
-                        >
+                        >check</i>
                       </div>
                       <div class="ico-box" :style="styling.all" v-else :key="2">
                         <i
@@ -140,8 +112,7 @@
                           role="button"
                           @click="editText(1)"
                           title="Edit name"
-                          >edit</i
-                        >
+                        >edit</i>
                       </div>
                     </transition-group>
                   </div>
@@ -182,19 +153,13 @@
                       enter-active-class="animated zoomIn"
                       leave-active-class="animated zoomOut"
                     >
-                      <div
-                        class="ico-box"
-                        :style="styling.all"
-                        v-if="inputAbout"
-                        :key="1"
-                      >
+                      <div class="ico-box" :style="styling.all" v-if="inputAbout" :key="1">
                         <i
                           class="material-icons chk"
                           role="button"
                           @click="editText(2)"
                           title="Save about"
-                          >check</i
-                        >
+                        >check</i>
                       </div>
                       <!-- End ico-box -->
                       <div class="ico-box" :style="styling.all" v-else :key="2">
@@ -203,8 +168,7 @@
                           role="button"
                           @click="editText(2)"
                           title="Edit about"
-                          >edit</i
-                        >
+                        >edit</i>
                       </div>
 
                       <!-- End ico-box -->
@@ -221,9 +185,7 @@
                 key="3"
                 role="button"
                 @click="setMenuPermission(true)"
-              >
-                Menu Permission
-              </div>
+              >Menu Permission</div>
             </transition-group>
             <!-- End control-inside -->
           </div>
@@ -236,9 +198,7 @@
                 v-if="startUp"
                 :style="styling.all"
                 @click="signout"
-              >
-                Sign out
-              </button>
+              >Sign out</button>
             </transition>
           </div>
           <!-- End signout-box -->
@@ -256,10 +216,7 @@
       :text="text"
       :page="page"
     ></EditPanel>
-    <transition
-      enter-active-class="animated slideInUp"
-      leave-active-class="animated slideOutDown"
-    >
+    <transition enter-active-class="animated slideInUp" leave-active-class="animated slideOutDown">
       <Cropper
         v-if="openCrop"
         :img="picture"
@@ -308,7 +265,7 @@ export default {
           animationDuration: ".5s"
         },
         control2: {
-          animationDuration: ".3s"
+          animationDuration: ".4s"
         }
       },
       startUp: false,
@@ -328,7 +285,14 @@ export default {
       filename: ""
     };
   },
+  watch: {
+    sidebar() {
+      console.log(5555);
+    }
+  },
   beforeMount() {
+    // if (!this.profile.picture) ;
+
     this.getProfile(this.myID);
   },
   mounted() {
@@ -341,7 +305,12 @@ export default {
   computed: {
     ...mapState("Auth", ["userRole"]),
     ...mapState("Identify", ["myID"]),
-    ...mapState("AppData", ["mobileMode", "openCrop", "menuPermission"]),
+    ...mapState("AppData", [
+      "mobileMode",
+      "openCrop",
+      "menuPermission",
+      "sidebar"
+    ]),
     ...mapState("Settings", ["profile"]),
     picURL() {
       return process.env.VUE_APP_PICTURE_PROFILE + this.myID + "/";
@@ -447,7 +416,7 @@ export default {
       // this.showCrop({ show: true, page: 1 });
 
       // return;
-      const width = 300;
+      const width = 350;
       var reader = new FileReader();
       reader.onload = event => {
         var img = new Image();

@@ -110,8 +110,17 @@ export default {
       },
       false
     );
+
+    this.$refs.touchMenu.addEventListener(
+      "touchmove",
+      () => {
+        if (timer) clearTimeout(timer);
+      },
+      false
+    );
   },
   computed: {
+    ...mapState("AppData", ["mobileMode"]),
     ...mapState("Chat", ["message"]),
     ...mapState("Identify", ["myID"])
   },

@@ -13,6 +13,10 @@
           role="button"
           @mouseover="refID = it.uid"
           @mouseleave="roomArrow ? refID = it.uid : refID = ''"
+          @touchstart="openContext(it, $event, 1)"
+          @touchend="openContext(it, $event, 0)"
+          @touchmove="openContext(it, $event, 0)"
+          @click="mobileMode ? openContextClick(it, $event) : ''"
         >
           <div class="avatar-inbox-panel">
             <div class="avatar-inbox">
@@ -41,7 +45,7 @@
               <div
                 class="arrow-box"
                 v-if="refID == it.uid && !mobileMode && it.uid != myID || roomArrow && refID == it.uid && !mobileMode"
-                @click.stop="arrowData(it, $event)"
+                @click.stop="openContextClick(it, $event)"
                 ref="arrow"
                 style="animation-duration: .2s"
               >
@@ -53,6 +57,11 @@
         <!-- End item-inbox -->
       </template>
     </transition-group>
+    <ContextMobile
+      v-if="showContext && uid != myID"
+      @dismiss="closeContext"
+      :roomArrow="contextData"
+    ></ContextMobile>
   </div>
 </template>
 <script>
@@ -61,9 +70,18 @@ import { mapActions, mapState, mapGetters } from "vuex";
 import code from "@/helper/father";
 import ds from "@/helper/deepstream";
 
+import ContextMobile from "@/components/context/ContextMobile.vue";
+
 export default {
+  components: {
+    ContextMobile
+  },
   data() {
     return {
+      uid: "",
+      showContext: false,
+      contextData: "",
+      time: "",
       refID: "",
       picURL: process.env.VUE_APP_PICTURE_PROFILE,
       colors: randomColor({
@@ -110,6 +128,26 @@ export default {
     ]),
     ...mapActions("Group", ["getAdminStatus"]),
     ...mapActions("Context", ["setRoomArrow", "setAdminData"]),
+    openContextClick(val, $event) {
+      this.uid = val.uid;
+      this.contextData = { event: $event, val: val };
+      this.showContext = true;
+    },
+    openContext(val, $event, num) {
+      if (num == 1) this.contextTimeout({ event: $event, val: val });
+      else if (this.time) clearTimeout(this.time);
+    },
+    closeContext() {
+      this.showContext = false;
+      this.uid = "";
+    },
+    contextTimeout(val) {
+      this.time = setTimeout(() => {
+        this.uid = val.val.uid;
+        this.contextData = val;
+        this.showContext = true;
+      }, 250);
+    },
     sendMsg(val) {
       this.setReplyBoxToggle({ toggle: false, cid: this.popupData.cid });
       this.setRoomID(val.rid);

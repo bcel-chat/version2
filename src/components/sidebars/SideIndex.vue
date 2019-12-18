@@ -76,10 +76,10 @@
       </div>
       <!-- End header -->
       <transition-group tag="div" class="content" :name="tabAnimate">
-        <Room v-if="tabActive == 0" :key="1" :style="tabStyle"></Room>
-        <Contact v-else-if="tabActive == 1" :key="2" :style="tabStyle"></Contact>
-        <Extension v-else-if="tabActive == 2" :key="3" :style="tabStyle"></Extension>
-        <Notification v-else-if="tabActive == 3" :key="4" :style="tabStyle"></Notification>
+        <Room v-show="tabActive == 0" :key="1" :style="tabStyle"></Room>
+        <Contact v-show="tabActive == 1" :key="2" :style="tabStyle"></Contact>
+        <Extension v-show="tabActive == 2" :key="3" :style="tabStyle"></Extension>
+        <Notification v-show="tabActive == 3" :key="4" :style="tabStyle"></Notification>
       </transition-group>
       <div class="tab">
         <div class="tab-box">

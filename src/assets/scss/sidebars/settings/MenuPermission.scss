@@ -189,10 +189,6 @@ $md-checkbox-label-padding: .75em;
                 border: $md-checkbox-border-width solid $primary-color;
             }
         }
-
-        &:after {
-            left: .1rem;
-        }
     }
 
     input[type="checkbox"] {
