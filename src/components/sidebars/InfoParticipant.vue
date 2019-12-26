@@ -44,7 +44,7 @@
             >
               <div
                 class="arrow-box"
-                v-if="refID == it.uid && !mobileMode && it.uid != myID || roomArrow && refID == it.uid && !mobileMode"
+                v-if="adminStatus && refID == it.uid && !mobileMode && it.uid != myID"
                 @click.stop="openContextClick(it, $event)"
                 ref="arrow"
                 style="animation-duration: .2s"
@@ -58,7 +58,7 @@
       </template>
     </transition-group>
     <ContextMobile
-      v-if="showContext && uid != myID"
+      v-if="showContext && uid != myID && adminStatus"
       @dismiss="closeContext"
       :roomArrow="contextData"
     ></ContextMobile>
@@ -78,6 +78,7 @@ export default {
   },
   data() {
     return {
+      adminStatus: false,
       uid: "",
       showContext: false,
       contextData: "",
@@ -165,8 +166,7 @@ export default {
     },
     admin(item) {
       if (item.admin == 1) {
-        if (item.uid == this.myID) this.getAdminStatus(true);
-
+        if (item.uid == this.myID) this.adminStatus = true;
         return true;
       } else return false;
     },

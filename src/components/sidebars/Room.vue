@@ -10,7 +10,7 @@
           mobileMode ? 'mobile-enter' : 'desktop-enter'
         ]"
       >
-        <template v-for="(item, index) in room">
+        <template v-for="item in room">
           <router-link
             :to="`/rooms/${item.rid}`"
             :key="item.rid"

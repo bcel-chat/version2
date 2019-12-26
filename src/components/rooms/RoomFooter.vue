@@ -7,9 +7,11 @@
           <file-box v-if="fileBoxToggle"></file-box>
         </div>
         <div class="input-box-inside">
-          <span class="emo-icon left" role="button">
-            <i class="material-icons">sentiment_satisfied_alt</i>
+          <span class="emo-icon left" role="button" @click="emojiPanel">
+            <i class="material-icons" v-if="!emoji">sentiment_satisfied_alt</i>
+            <i class="material-icons" v-else>close</i>
           </span>
+
           <div class="input-inside">
             <div class="hint" :style="{'visibility': visibility}">Type a message</div>
             <div
@@ -21,9 +23,16 @@
               @input="inputUpdate"
               @keydown="inputHandler"
               @keyup.enter="send"
+              @focus="emoji = false"
             ></div>
           </div>
-          <span class="emo-icon right open-file-panel" role="button" id="att" v-if="!fileBoxToggle">
+          <span
+            class="emo-icon right open-file-panel"
+            role="button"
+            id="att"
+            v-if="!fileBoxToggle"
+            @click="emoji = false"
+          >
             <i class="material-icons att">attach_file</i>
           </span>
         </div>
@@ -34,6 +43,12 @@
         </div>
       </div>
     </div>
+    <div class="emoji-mobile" v-if="emoji && mobileMode">
+      <EmojiMobile></EmojiMobile>
+    </div>
+    <!-- <div class="emoji-desktop" v-else>
+      <EmojiDesktop></EmojiDesktop>
+    </div>-->
   </div>
 </template>
 
@@ -42,16 +57,22 @@ import { mapActions, mapState } from "vuex";
 import code from "@/helper/father";
 import ds from "@/helper/deepstream";
 import { debounce } from "lodash";
+
 const ReplyBox = () => import("@/components/rooms/input-object/ReplyBox.vue");
 const FileBox = () => import("@/components/rooms/input-object/FileBox.vue");
+import EmojiMobile from "@/components/rooms/input-object/EmojiMobileBox.vue";
+import EmojiDesktop from "@/components/rooms/input-object/EmojiDesktopBox.vue";
 
 export default {
   components: {
     ReplyBox,
-    FileBox
+    FileBox,
+    EmojiMobile,
+    EmojiDesktop
   },
   data() {
     return {
+      emoji: false,
       message: "",
       visibility: "visible",
       reply: false,
@@ -75,6 +96,7 @@ export default {
     });
   },
   computed: {
+    ...mapState("AppData", ["mobileMode"]),
     ...mapState("Chat", [
       "roomID",
       "roomType",
@@ -290,6 +312,12 @@ export default {
         icon: icon,
         type: type
       });
+    },
+    emojiPanel() {
+      if (this.emoji) this.emoji = false;
+      else {
+        this.emoji = true;
+      }
     }
   }
 };

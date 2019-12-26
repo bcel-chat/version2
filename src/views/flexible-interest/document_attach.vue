@@ -306,7 +306,7 @@ export default {
 }
 .text-editor {
   position: relative;
-  margin: 1rem 0;
+  margin: 1rem 0 0.5rem 0;
   background: white;
   border-radius: 0.5rem;
   border: solid 1px #a2afb8;

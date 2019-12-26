@@ -87,7 +87,7 @@ export default {
       this.$refs.cropper.rotate(this.angle);
     },
     getCrop() {
-      // this.load = true;
+      this.load = true;
       // const y = this.cropper.getValue().y;
       // const x = this.cropper.getValue().x;
       // const width = this.cropper.getValue().width;
@@ -144,8 +144,6 @@ export default {
             this.groupPicture(URL.createObjectURL(blob));
           } else if (this.page == 2) {
             // for person
-            console.log(URL.createObjectURL(blob));
-
             this.setProfilePicture(file);
           } else if (this.page == 3) {
             // for group info

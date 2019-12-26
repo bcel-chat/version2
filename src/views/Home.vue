@@ -144,7 +144,59 @@ export default {
       startUp: false,
       styling: {
         animationDuration: ".2s"
-      }
+      },
+      emojis: [
+        { name: "001-happy.svg" },
+        { name: "002-laughing.svg" },
+        { name: "003-crying.svg" },
+        { name: "004-angry.svg" },
+        { name: "005-tongue.svg" },
+        { name: "006-angry-1.svg" },
+        { name: "007-wink.svg" },
+        { name: "008-disappointed.svg" },
+        { name: "009-sad.svg" },
+        { name: "010-embarrassed.svg" },
+        { name: "011-surprised.svg" },
+        { name: "012-sad-1.svg" },
+        { name: "013-kiss.svg" },
+        { name: "014-thinking.svg" },
+        { name: "015-angel.svg" },
+        { name: "016-nerd.svg" },
+        { name: "017-cool.svg" },
+        { name: "018-shocked.svg" },
+        { name: "019-sick.svg" },
+        { name: "020-secret.svg" },
+        { name: "021-sleeping.svg" },
+        { name: "022-surprised-1.svg" },
+        { name: "023-shocked-1.svg" },
+        { name: "024-happy-1.svg" },
+        { name: "025-rich.svg" },
+        { name: "026-devil.svg" },
+        { name: "027-skull.svg" },
+        { name: "028-cat.svg" },
+        { name: "029-robot.svg" },
+        { name: "030-poo.svg" },
+        { name: "031-sick-1.svg" },
+        { name: "032-alien.svg" },
+        { name: "033-surprised-2.svg" },
+        { name: "034-dead.svg" },
+        { name: "035-happy-2.svg" },
+        { name: "036-shocked-2.svg" },
+        { name: "037-cat-1.svg" },
+        { name: "038-cowboy.svg" },
+        { name: "039-angry-2.svg" },
+        { name: "040-thinking-1.svg" },
+        { name: "041-laughing-1.svg" },
+        { name: "042-injured.svg" },
+        { name: "043-smart.svg" },
+        { name: "044-silent.svg" },
+        { name: "045-happy-3.svg" },
+        { name: "046-demon.svg" },
+        { name: "047-in-love.svg" },
+        { name: "048-tongue-1.svg" },
+        { name: "049-angry-3.svg" },
+        { name: "050-calm.svg" }
+      ]
     };
   },
   watch: {
@@ -172,6 +224,23 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.startUp = true;
+    });
+
+    let emo = [];
+    localStorage.setItem("recently", JSON.stringify([]));
+    this.emojis.forEach(el => {
+      let img = new Image();
+      img.src = process.env.VUE_APP_EMOJI + el.name;
+
+      img.onload = () => {
+        var oc = document.createElement("canvas"),
+          octx = oc.getContext("2d");
+        oc.width = img.width;
+        oc.height = img.height;
+        octx.drawImage(img, 0, 0);
+        emo.push({ name: oc.toDataURL() });
+        localStorage.setItem("emojis", JSON.stringify(emo));
+      };
     });
 
     window.addEventListener("dragover", e => {

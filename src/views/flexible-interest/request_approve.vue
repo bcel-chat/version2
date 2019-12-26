@@ -212,6 +212,18 @@
                   </ul>
                 </div>
               </div>
+              <div class="express-box col-12">
+                <a href="javascript:event" class="fi-switch-on-off">
+                  <label class="fi-switch">
+                    <input id="switch" type="checkbox" v-model="switcher" value="true" />
+                    <span class="fi-slider fi-round"></span>
+                  </label>
+                  <label
+                    for="switch"
+                    :class="['fi-toggle-status', switcher ? 'color-on' : 'color-off']"
+                  >ຂໍອະນຸມັດດ່ວນ</label>
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -304,6 +316,7 @@ export default {
   },
   data() {
     return {
+      switcher: "",
       showProducts: false,
       checkSaveLoading: false,
       showChooseUser: false,
@@ -1167,5 +1180,88 @@ input[type="file"] {
   .hide-on-print-mode {
     display: none;
   }
+}
+
+.express-box {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 2rem;
+  margin-bottom: 1rem;
+}
+
+/*switcher*/
+.fi-switch-on-off {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fi-switch {
+  position: relative;
+  display: inline-block;
+  width: 45.5px;
+  height: 20px;
+}
+
+.fi-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.fi-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $semi-secondary-color;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 1rem;
+}
+
+.fi-toggle-status {
+  margin-left: 0.3rem;
+  cursor: pointer;
+}
+
+.color-on {
+  color: $fi-primary;
+}
+
+.color-off {
+  color: #363636;
+}
+
+.fi-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  top: 1px;
+  left: 1px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 1rem;
+}
+
+input:checked + .fi-slider {
+  background-color: $fi-primary;
+}
+
+input:focus + input:checked + .fi-slider {
+  box-shadow: 0 0 1px $fi-primary;
+}
+
+input:checked + .fi-slider:before {
+  transform: translateX(25px);
+}
+
+label {
+  display: inline-block;
+  margin-bottom: 0rem;
 }
 </style>

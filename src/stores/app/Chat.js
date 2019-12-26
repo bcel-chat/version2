@@ -101,7 +101,7 @@ const chat = {
             rid: payload
           },
           (err, data) => {
-            if (!err) {
+            if (!err && data.length > 0) {
               commit("setRoomID", data[0].rid);
               commit("getMessage", data);
             } else {

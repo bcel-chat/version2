@@ -259,12 +259,58 @@ export default {
     ...mapActions("Group", ["groupPicture", "getRoomID"]),
     ...mapActions("Context", ["setConfirm"]),
     ...mapActions("Room", ["updateGroupName", "getParticipantInfo"]),
-    openCropSide(e) {
-      let blob = new Blob([e.target.files[0]], { type: "image/png" });
-      this.picture = URL.createObjectURL(blob);
-      this.pictureValue = e.target;
-      this.filename = e.target.files[0].name;
-      this.showCrop({ show: true, page: 2 });
+    openCropSide(input) {
+      // let blob = new Blob([e.target.files[0]], { type: "image/png" });
+      // this.picture = URL.createObjectURL(blob);
+      // this.pictureValue = e.target;
+      // this.filename = e.target.files[0].name;
+      // this.showCrop({ show: true, page: 2 });
+      const width = 350;
+      var reader = new FileReader();
+      reader.onload = event => {
+        var img = new Image();
+        var filePath = input.target.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.ico|\.svg)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+          return;
+        }
+        img.src = event.target.result;
+        img.onload = () => {
+          if (img.width > width) {
+            var oc = document.createElement("canvas"),
+              octx = oc.getContext("2d");
+            oc.width = img.width;
+            oc.height = img.height;
+            octx.drawImage(img, 0, 0);
+            while (oc.width * 0.5 > width) {
+              oc.width *= 0.5;
+              oc.height *= 0.5;
+              octx.drawImage(oc, 0, 0, oc.width, oc.height);
+            }
+            oc.width = width;
+            oc.height = (oc.width * img.height) / img.width;
+            octx.drawImage(img, 0, 0, oc.width, oc.height);
+            fetch(oc.toDataURL())
+              .then(res => res.blob())
+              .then(blob => {
+                this.picture = URL.createObjectURL(blob);
+                this.pictureValue = input.target;
+                this.filename = input.target.files[0].name;
+                this.showCrop({ show: true, page: 2 });
+              });
+          } else {
+            fetch(img.src)
+              .then(res => res.blob())
+              .then(blob => {
+                this.picture = URL.createObjectURL(blob);
+                this.pictureValue = input.target;
+                this.filename = input.target.files[0].name;
+                this.showCrop({ show: true, page: 2 });
+              });
+          }
+        };
+      };
+      reader.readAsDataURL(input.target.files[0]);
     },
     clearFile(e) {
       this.$refs.profile.value = e;

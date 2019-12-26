@@ -9,7 +9,9 @@
       <!-- End back-button -->
       <span class="title">Add participant</span>
     </div>
+    <div class="empty-page" v-if="participant.length <= 0">No more contact</div>
     <transition-group
+      v-else
       :name="contact.length > 0 ? 'flip-list' : ''"
       tag="div"
       :class="['content-group', mobileMode ? 'mobile-enter' : 'desktop-enter']"
@@ -148,5 +150,14 @@ export default {
 
 .flip-list-move {
   transition: transform 1s;
+}
+
+.empty-page {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100% - 3.6rem);
+  color: #9ba2af;
 }
 </style>
