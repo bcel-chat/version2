@@ -44,12 +44,16 @@ import randomColor from "randomcolor";
 import { mapActions, mapState } from "vuex";
 import code from "@/helper/father.js";
 import { debounce } from "lodash";
+
+import ds from "@/helper/deepstream.js";
+
 export default {
   components: {
     toast
   },
   data() {
     return {
+      phone: "",
       toastStart: false,
       showToast: "",
       items: [
@@ -113,6 +117,8 @@ export default {
       text: "",
       _page: 1
     });
+
+    this.phone = code.from(localStorage.getItem("phone"));
   },
   mounted() {
     this.showToast = debounce(() => {
@@ -126,6 +132,7 @@ export default {
   methods: {
     ...mapActions("AppData", ["onChatClick", "setModuleLink"]),
     ...mapActions("Menu", ["getMenuItem"]),
+    ...mapActions("Context", ["setOtpBox"]),
     permissionCheck(item) {
       if (item.permission == 1 && this.userID != null) {
         if (item.user.toUpperCase() == this.userID.toUpperCase()) {
@@ -141,7 +148,32 @@ export default {
     },
     permissionCheckOnclick(item) {
       if (item.user) {
-        return true;
+        // ds.rpc.make(
+        //   "otpCheck",
+        //   {
+        //     phone: code.from(localStorage.getItem("phone")),
+        //     otp: code.from(localStorage.getItem("otp"))
+        //   },
+        //   (err, data) => {
+        //     if (data) return true;
+        //     else this.setOtpBox(true);
+        //     return false;
+        //   }
+        // );
+
+        let otp1 = code.from(localStorage.getItem("otpBase"));
+        let otp2 = code.from(localStorage.getItem("otp"));
+
+        if (otp1 && otp2) {
+          if (otp1 == otp2) return true;
+          else {
+            this.setOtpBox(true);
+            return false;
+          }
+        } else {
+          this.setOtpBox(true);
+          return false;
+        }
       } else {
         this.toastStart = true;
         this.showToast();

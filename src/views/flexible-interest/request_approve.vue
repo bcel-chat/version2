@@ -101,7 +101,7 @@
                 <div>
                   <strong class="fi-title">ຂໍ້ມູນອື່ນໆ:</strong>
                   <br />
-                  <span>&nbsp&nbsp&nbsp&nbsp</span>
+                  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                   <span>{{customer_info['more_info']}}</span>
                 </div>
               </div>
@@ -176,13 +176,13 @@
               <div class="col-12">
                 <strong class="fi-title">ຄຳຄິດເຫັນຂອງພະນັກງານ:</strong>
                 <br />
-                <span>&nbsp&nbsp&nbsp&nbsp</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span class="fi-text">{{customer_info['staff_note']}}</span>
               </div>
               <div class="col-12">
                 <strong class="fi-title">ເອກະສານປະກອບຂອງລູກຄ້າ:</strong>
                 <br />
-                <span>&nbsp&nbsp&nbsp&nbsp</span>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
                 <span
                   class="fi-text"
                 >{{customer_info['documents']?customer_info['documents']: '.......................................'}}</span>
@@ -203,7 +203,7 @@
                       <span style="font-size: 12px;">(ເລືອກໄດ້ຫຼາຍຟາຍລ໌)</span> ]
                     </li>
                     <li v-for="(file, index) in customer_info['document_files']" :key="index">
-                      {{file['name']}} &nbsp
+                      {{file['name']}} &nbsp;
                       <i
                         class="fa fa-times closeIcon"
                         @click="removeFile(index)"
@@ -215,12 +215,12 @@
               <div class="express-box col-12">
                 <a href="javascript:event" class="fi-switch-on-off">
                   <label class="fi-switch">
-                    <input id="switch" type="checkbox" v-model="switcher" value="true" />
+                    <input id="switch" type="checkbox" v-model="customer_info['express']" />
                     <span class="fi-slider fi-round"></span>
                   </label>
                   <label
                     for="switch"
-                    :class="['fi-toggle-status', switcher ? 'color-on' : 'color-off']"
+                    :class="['fi-toggle-status', customer_info['express'] ? 'color-on' : 'color-off']"
                   >ຂໍອະນຸມັດດ່ວນ</label>
                 </a>
               </div>
@@ -244,24 +244,24 @@
                   ເລກບັນຊີ:
                   <strong>{{product['acc_no']}}</strong>
                 </h4>
-                <span v-if="product['desc']">&nbsp&nbsp&nbsp&nbsp {{product['desc']}}</span>
+                <span v-if="product['desc']">&nbsp;&nbsp;&nbsp;&nbsp; {{product['desc']}}</span>
                 <div v-if="product['coreAccs']">
                   <span v-if="product['coreAccs']['loanAcc']">
                     ບັນຊີເງິນກູ້:
-                    <strong>{{product['coreAccs']['loanAcc']}},</strong> &nbsp&nbsp&nbsp&nbsp
+                    <strong>{{product['coreAccs']['loanAcc']}},</strong> &nbsp;&nbsp;&nbsp;&nbsp;
                   </span>
                   <span>
                     ບັນຊີເງິນຝາກປະຢັດ:
-                    <strong>{{product['coreAccs']['savingAcc']}},</strong> &nbsp&nbsp&nbsp&nbsp
+                    <strong>{{product['coreAccs']['savingAcc']}},</strong> &nbsp;&nbsp;&nbsp;&nbsp;
                   </span>
 
                   <span v-if="product['coreAccs']['tdAcc']">
                     ບັນຊີເງິນຝາກປະຈຳ:
-                    <strong>{{product['coreAccs']['tdAcc']}},</strong> &nbsp&nbsp&nbsp&nbsp
+                    <strong>{{product['coreAccs']['tdAcc']}},</strong> &nbsp;&nbsp;&nbsp;&nbsp;
                   </span>
                   <span v-if="product['coreAccs']['currentAcc']">
                     ບັນຊີເງິນຝາກກະແສລາຍວັນ:
-                    <strong>{{product['coreAccs']['currentAcc']}},</strong> &nbsp&nbsp&nbsp&nbsp
+                    <strong>{{product['coreAccs']['currentAcc']}},</strong> &nbsp;&nbsp;&nbsp;&nbsp;
                   </span>
                   <span v-if="product['coreAccs']['nostroAcc']">
                     Nostro:
@@ -804,6 +804,10 @@ export default {
         ]
       };
     },
+    express(val) {
+      if (val.target.checked) this.customer_info["express"] = 1;
+      else this.customer_info["express"] = 0;
+    },
     requestApprove() {
       if (this.customer_info["documents"].trim()) {
         if (!this.checkDocumentFiles()) {
@@ -1244,7 +1248,7 @@ input[type="file"] {
   top: 1px;
   left: 1px;
   background-color: white;
-  transition: 0.4s;
+  transition: 0.2s;
   border-radius: 1rem;
 }
 

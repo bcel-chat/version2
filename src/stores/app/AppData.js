@@ -35,6 +35,9 @@ const AppData = {
     setTabActive(state, payload) {
       state.tabActive = payload;
     },
+    onChatClickUpdate(state, payload) {
+      state.chatClick = payload.cnt;
+    },
     onChatClick(state, payload) {
       if (!payload.module) {
         state.moduleLink = "";
@@ -111,6 +114,9 @@ const AppData = {
     },
     setTabActive({ commit }, payload) {
       commit("setTabActive", payload);
+    },
+    onChatClickUpdate({ commit }, payload) {
+      commit("onChatClickUpdate", payload);
     },
     onChatClick({ commit }, payload) {
       commit("onChatClick", payload);

@@ -56,7 +56,8 @@ const flexible_interest_module = {
           deposit_age: {
             typeId: ""
           },
-          normal_interest: 0.0
+          normal_interest: 0.0,
+          express: false
         },
     progressActionActive: window.sessionStorage.getItem("actionProgress")
       ? JSON.parse(window.sessionStorage.getItem("actionProgress"))

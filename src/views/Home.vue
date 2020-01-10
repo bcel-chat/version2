@@ -1,20 +1,50 @@
 <template>
   <div id="home">
     <div class="home-background">
-      <img class="bg" src="@/assets/img/bcel-background.jpg" alt srcset draggable="false" />
+      <img
+        class="bg"
+        src="@/assets/img/bcel-background.jpg"
+        alt
+        srcset
+        draggable="false"
+      />
     </div>
-    <transition enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
-      <context-menu v-if="roomArrow" style="animation-duration: .2s"></context-menu>
-      <image-viewer v-if="imageViewer" style="animation-duration: .2s"></image-viewer>
+    <transition
+      enter-active-class="animated fadeInUp"
+      leave-active-class="animated fadeOutDown"
+    >
+      <context-menu
+        v-if="roomArrow"
+        style="animation-duration: .2s"
+      ></context-menu>
+      <image-viewer
+        v-if="imageViewer"
+        style="animation-duration: .2s"
+      ></image-viewer>
     </transition>
+    <otp-alert v-if="otpBox"></otp-alert>
     <transition :name="mobileMode ? '' : 'bounce'">
-      <div v-if="startUp" :class="mobileMode ? 'app-wrapper' : 'app-wrapper-desktop'">
+      <div
+        v-if="startUp"
+        :class="mobileMode ? 'app-wrapper' : 'app-wrapper-desktop'"
+      >
         <bubble-popup v-if="bubblePopup" key="1"></bubble-popup>
         <forward-popup v-if="forwartPopup" key="2"></forward-popup>
         <confirm-popup v-if="confirm" key="3"></confirm-popup>
-        <div :class="['app-inside', info ? 'three' : 'two', chatClick ? 'chat-room' : '']">
+        <div
+          :class="[
+            'app-inside',
+            info ? 'three' : 'two',
+            chatClick ? 'chat-room' : ''
+          ]"
+        >
           <div class="app-drawer" v-show="sideMenu">
-            <div :class="['part', mobileMode ? 'app-sidebar' : 'app-sidebar-desktop']">
+            <div
+              :class="[
+                'part',
+                mobileMode ? 'app-sidebar' : 'app-sidebar-desktop'
+              ]"
+            >
               <span class="panel">
                 <transition-group
                   tag="div"
@@ -23,19 +53,38 @@
                   leave-active-class="animated slideOutLeft"
                 >
                   <Settings v-if="sidebar" key="1" :style="styling"></Settings>
-                  <NewChat v-else-if="newChat" key="2" :style="styling"></NewChat>
-                  <AddParticipant v-else-if="addParticipant" key="3" :style="styling"></AddParticipant>
-                  <GroupSubject v-if="GroupSubject" key="4" :style="styling"></GroupSubject>
+                  <NewChat
+                    v-else-if="newChat"
+                    key="2"
+                    :style="styling"
+                  ></NewChat>
+                  <AddParticipant
+                    v-else-if="addParticipant"
+                    key="3"
+                    :style="styling"
+                  ></AddParticipant>
+                  <GroupSubject
+                    v-if="GroupSubject"
+                    key="4"
+                    :style="styling"
+                  ></GroupSubject>
                 </transition-group>
               </span>
             </div>
             <!-- End app-sidebar -->
-            <div :class="['part', mobileMode ? 'app-content' : 'app-content-desktop']">
+            <div
+              :class="[
+                'part',
+                mobileMode ? 'app-content' : 'app-content-desktop'
+              ]"
+            >
               <span class="panel">
                 <FilePanel v-if="filePanel" :style="styling"></FilePanel>
               </span>
             </div>
-            <div :class="['part', mobileMode ? 'app-info' : 'app-info-desktop']">
+            <div
+              :class="['part', mobileMode ? 'app-info' : 'app-info-desktop']"
+            >
               <transition
                 enter-active-class="animated slideInRight"
                 leave-active-class="animated slideOutRight"
@@ -50,7 +99,12 @@
                 enter-active-class="animated slideInUp"
                 leave-active-class="animated slideOutDown"
               >
-                <div class="info" v-if="addParticipantPanel" key="1" :style="styling">
+                <div
+                  class="info"
+                  v-if="addParticipantPanel"
+                  key="1"
+                  :style="styling"
+                >
                   <span class="panel">
                     <AddParticipantPanel></AddParticipantPanel>
                   </span>
@@ -65,7 +119,10 @@
             leave-active-class="animated slideOutLeft"
           >
             <div
-              :class="['part', !mobileMode ? 'app-sidebar-desktop' : 'app-sidebar']"
+              :class="[
+                'part',
+                !mobileMode ? 'app-sidebar-desktop' : 'app-sidebar'
+              ]"
               v-show="mainside"
               style="animation-duration: .2s"
             >
@@ -76,11 +133,22 @@
             tag="div"
             enter-active-class="animated slideInUp"
             leave-active-class="animated slideOutDown"
-            :class="['part', mobileMode ? 'app-content' : 'app-content-desktop']"
+            :class="[
+              'part',
+              mobileMode ? 'app-content' : 'app-content-desktop'
+            ]"
           >
-            <Welcome v-if="!chatClick && !mobileMode" key="1" style="animation-duration: 0s"></Welcome>
+            <Welcome
+              v-if="!chatClick && !mobileMode"
+              key="1"
+              style="animation-duration: 0s"
+            ></Welcome>
             <router-view key="3" class="router-transition"></router-view>
-            <drop-box key="4" v-if="dropBox" style="animation-duration: 0s"></drop-box>
+            <drop-box
+              key="4"
+              v-if="dropBox"
+              style="animation-duration: 0s"
+            ></drop-box>
           </transition-group>
           <!-- <div :class="['part', mobileMode ? 'app-content' : 'app-content-desktop']">
           <RoomIndex></RoomIndex>
@@ -111,6 +179,7 @@ import Drawers from "@/views/home/Drawer.vue";
 import BubblePopup from "@/components/context/bubblePopup.vue";
 import ForwardPopup from "@/components/context/forwardPopup.vue";
 import ContextMenu from "@/components/context/Context.vue";
+import OtpAlert from "@/components/context/otpAlert.vue";
 
 import DropBox from "@/components/rooms/input-object/DropBox.vue";
 
@@ -136,6 +205,7 @@ export default {
     ForwardPopup,
     ConfirmPopup,
     ContextMenu,
+    OtpAlert,
     DropBox
   },
   data() {
@@ -284,7 +354,8 @@ export default {
       "forwartPopup",
       "confirm",
       "roomArrow",
-      "dropBox"
+      "dropBox",
+      "otpBox"
     ]),
     ...mapState("AppData", [
       "imageViewer",

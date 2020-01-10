@@ -14,9 +14,13 @@ const context = {
     confirm: false,
     roomArrow: "",
     dropBox: false,
-    setAdmin: ""
+    setAdmin: "",
+    otpBox: false
   },
   mutations: {
+    setOtpBox(state, payload) {
+      state.otpBox = payload;
+    },
     setDropBox(state, payload) {
       state.dropBox = payload;
     },
@@ -55,6 +59,9 @@ const context = {
     }
   },
   actions: {
+    setOtpBox({ commit }, payload) {
+      commit("setOtpBox", payload);
+    },
     setAdmin({ commit }, payload) {
       ds.rpc.make("setGroupAdmin", payload, (err, data) => {
         store.dispatch("Room/getParticipantInfo", "");

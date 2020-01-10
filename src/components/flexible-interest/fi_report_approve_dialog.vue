@@ -823,7 +823,7 @@ export default {
   },
   created(){
     this.$root.$on('reloadAllApprove', () => {
-      ds.rpc.make('/bcel/api/flexible/interest/approve/notification', { requirementId:  this.customer_info['requirementId']}, ( error, result ) => {
+      ds.rpc.make('/bcel/api/flexible/interest/approve/notification', { requirementId:  this.customer_info['requirementId'], express: this.customer_info['express']}, ( error, result ) => {
           if(result) {
             this.requestUsers = result;
             Object.assign(this.requestUsersReverse,this.requestUsers);

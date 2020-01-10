@@ -48,6 +48,8 @@ const resquestPermission = user => {
       messaging
         .getToken()
         .then(token => {
+          console.log(token);
+
           const device_id = new device.DeviceUUID().get();
           ds.rpc.make(
             "/bcel/dashboard/flexible/interest/save/user/notification/token",
@@ -160,6 +162,7 @@ const authentication = {
         permissionCheck(payload.data[0].uname);
         localStorage.setItem("freya", code.to(payload.data[0].uname));
         localStorage.setItem("badang", code.to(payload.data[0].wlc_id));
+        localStorage.setItem("phone", code.to(payload.data[0].phone));
         state.setConnectClose = false;
         router.push("/");
       }
