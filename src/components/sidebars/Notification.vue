@@ -17,7 +17,7 @@
                 <router-link
                   :to="'/modules'+it.path"
                   :key="it.not_id"
-                  :class="['item-inbox', it.active == 0 ? 'active' : '']"
+                  :class="['item-inbox', it.active == 0 ? 'active' : '', it.active == 0 && it.express ? 'active-express' : '',  it.active == 1 && it.express ? 'unactive-express' : '']"
                   role="button"
                   ref="itemInbox"
                   style="animation-duration: .3s"

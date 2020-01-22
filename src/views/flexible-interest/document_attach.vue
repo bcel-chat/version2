@@ -309,7 +309,7 @@ export default {
   margin: 1rem 0 0.5rem 0;
   background: white;
   border-radius: 0.5rem;
-  border: solid 1px #a2afb8;
+  border: solid 1px rgba(197, 208, 216, 0.808);
   color: $secondary-color;
   &:focus-within {
     border: solid 1px $fi-primary;

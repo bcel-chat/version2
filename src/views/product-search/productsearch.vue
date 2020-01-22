@@ -113,7 +113,7 @@ export default {
   justify-content: space-between;
   width: 100%;
   border-bottom: solid 1px rgb(228, 228, 228);
-  box-shadow: 0px 3px 6px -3px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 3px 6px -3px rgba(145, 37, 172, 0.3);
   padding: 1rem;
   z-index: 1;
   .clear-box {

@@ -76,8 +76,8 @@ export default {
   mounted() {
     //this.getData(this.roomListData);
     this.record = ds.record.getRecord(`chat`);
-    if (this.mobileMode)
-      document.addEventListener("contextmenu", e => e.preventDefault());
+    // if (this.mobileMode)
+    //   document.addEventListener("contextmenu", e => e.preventDefault());
 
     setTimeout(() => {
       this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;

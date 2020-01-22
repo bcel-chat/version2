@@ -416,7 +416,7 @@ export default {
       // this.showCrop({ show: true, page: 1 });
 
       // return;
-      const width = 350;
+      const width = 300;
       var reader = new FileReader();
       reader.onload = event => {
         var img = new Image();

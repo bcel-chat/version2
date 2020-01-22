@@ -1,14 +1,15 @@
 <template>
   <div class="fi-main-leader">
     <a href="javascript:event" class="fi-switch-on-off">
-      <label class="fi-switch">
-        <input type="checkbox" v-model="on_off" value="true" @change="changeOnOffLeader" />
+      <span class="fi-switch">
+        <input type="checkbox" id="check" v-model="on_off" value="true" @change="changeOnOffLeader" />
         <span class="fi-slider fi-round"></span>
-      </label>
-      <span class="fi-toggle-status">{{on_off[0]?'ຮັບອະນຸມັດ':'ບໍ່ຮັບອະນຸມັດ'}}</span>
+      </span>
+      <label for="check" class="fi-toggle-status">{{on_off[0]?'ຮັບອະນຸມັດ':'ບໍ່ຮັບອະນຸມັດ'}}</label>
     </a>
     <router-link to="/modules/flexible/report/pending/all" class="fi-link-report">
-      <i class="fas fa-chart-line"></i> <span class="_text">ລາຍງານ</span>
+      <i class="fas fa-chart-line"></i>
+      <span class="_text">ລາຍງານ</span>
     </router-link>
     <ul class="nav nav-tabs mb-3 justify-content-center hide-on-print-mode">
       <li class="nav-item">
@@ -121,11 +122,11 @@ export default {
   font-size: 1.2rem;
   background: white;
   border: none;
-  ._text{
+  ._text {
     display: none;
   }
-  @media screen and (min-width: 760px){
-    ._text{
+  @media screen and (min-width: 760px) {
+    ._text {
       display: inline;
       margin-left: 5px;
     }
@@ -165,7 +166,7 @@ div.max-flex > button:focus {
   margin-top: 30px;
 }
 
-span.fi-toggle-status {
+.fi-toggle-status {
   margin-left: 5px;
   display: inline;
 }

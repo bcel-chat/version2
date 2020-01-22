@@ -8,7 +8,7 @@
             <input type="text" class="input" v-model="input" maxlength="4" />
             <button class="submit" type="submit" ref="submit" disabled>Verify</button>
           </form>
-          <a role="button" @click="sentotp">Resent OTP code</a>
+          <a role="button" @click="sentotp" class="resend">Resend OTP code</a>
           <a role="button" @click="cancel" style="color: #db4646">Cancel</a>
         </div>
       </transition>
@@ -101,9 +101,9 @@ export default {
       if (timer == null) {
         localStorage.setItem("timer", now);
       } else {
-        console.log(now - timer, minutes * 0 * 1000);
+        console.log(now - timer, minutes * 60 * 1000);
 
-        if (now - timer > minutes * 0 * 1000) {
+        if (now - timer > minutes * 60 * 1000) {
           localStorage.removeItem("timer");
           this.otp = "";
           this.time = false;
@@ -114,8 +114,14 @@ export default {
       }
     },
     cancel() {
+      this.onChatClickUpdate({
+        cnt: false
+      });
       this.setOtpBox(false);
+      this.$router.push("/");
       localStorage.removeItem("timer");
+      localStorage.removeItem("otpBase");
+      localStorage.removeItem("otp");
     }
   }
 };
@@ -222,6 +228,15 @@ export default {
     width: 0.3rem;
     height: 100%;
     background-color: $primary-color;
+  }
+}
+
+.resend {
+  &:hover {
+    color: $secondary-color;
+  }
+  &:active {
+    color: $secondary-color;
   }
 }
 </style>

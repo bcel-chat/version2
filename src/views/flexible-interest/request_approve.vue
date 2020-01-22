@@ -416,7 +416,7 @@ export default {
   },
   mounted() {
     // recieveUserList
-
+    this.customer_info["express"] = 0;
     this.getSendToUserList();
   },
   methods: {

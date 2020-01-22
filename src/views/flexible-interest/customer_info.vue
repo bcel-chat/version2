@@ -478,7 +478,7 @@ img {
   margin: 2rem 0;
   background: white;
   border-radius: 0.5rem;
-  border: solid 1px #a2afb8;
+  border: solid 1px rgba(197, 208, 216, 0.808);
   color: $secondary-color;
   &:focus-within {
     border: solid 1px $fi-primary;
@@ -487,7 +487,7 @@ img {
 .fi-account-group {
   position: relative;
   border-radius: 0.5rem;
-  border: solid 1px #a2afb8;
+  border: solid 1px rgba(197, 208, 216, 0.808);
   color: $secondary-color;
   &:focus-within {
     border: solid 1px $fi-primary;
@@ -590,7 +590,7 @@ img {
 
 .fi-group {
   border-radius: 0.5rem;
-  border: solid 1px #a2afb8;
+  border: solid 1px rgba(197, 208, 216, 0.808);
   padding: 1.3rem;
   &:focus-within {
     border: solid 1px $fi-primary;
@@ -743,7 +743,7 @@ div.error-message {
   margin: 1.8rem 0;
   flex: 1 1 auto;
   border-radius: 0.5rem;
-  border: solid 1px #a2afb8;
+  border: solid 1px rgba(197, 208, 216, 0.808);
   color: $secondary-color;
 
   &:focus-within {

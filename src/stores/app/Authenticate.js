@@ -48,8 +48,6 @@ const resquestPermission = user => {
       messaging
         .getToken()
         .then(token => {
-          console.log(token);
-
           const device_id = new device.DeviceUUID().get();
           ds.rpc.make(
             "/bcel/dashboard/flexible/interest/save/user/notification/token",
@@ -209,7 +207,6 @@ const authentication = {
       });
     },
     signout({ commit }) {
-      localStorage.clear();
       commit("setAuthData", {
         data: null,
         status: true
@@ -217,7 +214,21 @@ const authentication = {
       ds.close();
       router.push("/signin");
       store.dispatch("AppData/setTabActive", 0);
-      localStorage.clear();
+      let keysToRemove = [
+        "roger",
+        "miya",
+        "freya",
+        "thor",
+        "badang",
+        "phone",
+        "user",
+        "permission",
+        "emojis"
+      ];
+
+      keysToRemove.forEach(e => {
+        localStorage.removeItem(e);
+      });
     }
   }
 };

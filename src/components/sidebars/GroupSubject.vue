@@ -244,7 +244,7 @@ export default {
         this.$refs.desc.focus();
       }, 100);
     },
-    openCropSide(e) {
+    openCropSide(input) {
       // if (e.target.files && e.target.files[0]) {
       //   let blob = new Blob(e.target.files, { type: "image/png" });
       //   this.picture = URL.createObjectURL(blob);
@@ -252,7 +252,7 @@ export default {
       //   this.filename = e.target.files[0].name;
       //   this.showCrop({ show: true, page: 1 });
       // }
-      const width = 350;
+      const width = 300;
       var reader = new FileReader();
       reader.onload = event => {
         var img = new Image();

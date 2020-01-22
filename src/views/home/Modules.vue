@@ -17,6 +17,9 @@
           <span class="title">{{ moduleLink }}</span>
         </div>
         <!-- End header-box -->
+        <div class="docs" role="button" v-if="lk == 'info'">
+          <a href="/chat/docs/fi_announcement.pdf">ແຈ້ງການ</a>
+        </div>
       </div>
       <div class="modules">
         <router-view />
@@ -30,12 +33,18 @@ import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
+      lk: "",
       sideMenu: true,
       startUp: false,
       styling: {
         animationDuration: ".2s"
       }
     };
+  },
+  watch: {
+    $route(to, from) {
+      this.lk = to.name;
+    }
   },
   mounted() {
     this.$nextTick(() => {
@@ -120,8 +129,21 @@ export default {
   .header {
     position: relative;
     flex: 0 0 3.6rem;
+    display: flex;
     background-color: $info-color;
     border-bottom: solid 0.063rem rgba(136, 152, 170, 0.12);
+  }
+
+  .docs {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    &:hover {
+      color: $primary-color;
+      text-decoration: underline;
+    }
   }
 
   .header-box {

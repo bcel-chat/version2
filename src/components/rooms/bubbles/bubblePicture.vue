@@ -1,5 +1,5 @@
 <template>
-  <div id="bubble" :class="[checkTime(index, msg.time) != null ? 'new' : '']">
+  <div id="bubble" :class="[checkTime(index, msg.time) != null ? 'new' : '']" ref="bubble">
     <div
       :class="['bubble-container', msg.uid == myID ? 'out' : 'in']"
       @mouseover="mobileMode ? (menu = false) : (menu = true)"
@@ -145,6 +145,11 @@ export default {
     }
   },
   mounted() {
+    if (this.mobileMode)
+      this.$refs.bubble.addEventListener("contextmenu", e =>
+        e.preventDefault()
+      );
+
     let timer;
     let touchStart = () => {
       timer = setTimeout(() => {

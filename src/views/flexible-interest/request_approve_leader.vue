@@ -35,13 +35,13 @@
         v-for="(history, index) in customer_requirement_history"
         :key="index"
       >
-        <div class="fi-card text-left">
+        <div :class="['fi-card text-left', history.express ? 'express' : '']">
           <div class="fi-card-title">
             <h4>
               <span style="font-size: 16px;">ຊື່ລູກຄ້າ:</span>
               <strong>{{history['customerName']}}</strong>
             </h4>
-            <span>: {{history['userStepper']}}</span>
+            <span>ຜ່ານ: {{history['userStepper']}}</span>
           </div>
           <div class="fi-card-body">
             <div class="fi-box">
@@ -75,7 +75,9 @@
                   </tr>
                   <tr>
                     <th>ອະນຸມັດ:</th>
-                    <td :class="history['approveStatus']">{{history['approveStatus']}}</td>
+                    <td
+                      :class="history['express'] ? 'pedding-express': history['approveStatus']"
+                    >{{history['approveStatus']}} {{history['express'] ? '(ດ່ວນ)' : ''}}</td>
                   </tr>
                 </tbody>
               </table>
@@ -90,7 +92,7 @@
               </div>
               <div class="col-5 text-right">
                 <button
-                  class="fi-btn"
+                  :class="[history['express']?'fi-btn-express':'fi-btn']"
                   type="button"
                   @click="getCustomerRequirementDetail(history)"
                 >ລາຍລະອຽດ</button>
@@ -395,6 +397,11 @@ img.img-loader-out {
   color: #20a816;
 }
 
+.pedding-express {
+  color: #6870b6;
+  font-weight: bold;
+}
+
 .fi-not-found > strong {
   position: absolute;
   top: 50%;
@@ -436,8 +443,21 @@ table.table > tbody > tr:hover {
   font-weight: bold;
 }
 .fi-btn:hover {
-  color: #c72b2c;
+  color: rgb(236, 182, 101);
 }
+
+.fi-btn-express {
+  background: white;
+  color: #6870b6;
+  border: 1px white solid;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  &:hover {
+    color: #8890d6;
+  }
+}
+
 button:focus {
   outline: none;
 }
@@ -451,7 +471,10 @@ button:focus {
   -webkit-transition: box-shadow 0.5s; /* For Safari 3.1 to 6.0 */
   transition: box-shadow 0.5s;
   margin-bottom: 10px;
-  background: rgb(250, 150, 0);
+  background-color: rgb(250, 150, 0);
+}
+.express {
+  background-color: #6870b6;
 }
 .fi-card:hover {
   -webkit-box-shadow: -2px 3px 20px -7px lightgray;

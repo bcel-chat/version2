@@ -7,7 +7,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: white;
+    background-color: $info-color;
     pointer-events: auto;
     border-right: solid 0.063rem rgb(224, 232, 241);
 }
@@ -162,7 +162,7 @@
     top: 3rem;
     width: 8.6rem;
     height: 8.6rem;
-    background-color: rgb(230, 230, 230);
+    background-color: $info-color;
     box-shadow: 0 0rem .8rem -.2rem rgba(77, 77, 77, .5);
     border-radius: 50%;
     z-index: 1;
@@ -253,21 +253,22 @@
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    padding-left: .6rem;
-    padding-right: .6rem;
+    padding: .6rem .6rem 0 .6rem;
 }
 
 .control-box {
     display: flex;
     flex-direction: column;
     height: 5rem;
-    margin-bottom: .8rem;
-    border-radius: .6rem;
-    border: solid 0.08rem rgba(167, 167, 167, 0.2);
-    box-shadow: 0rem .1rem .45rem -.2rem rgba(77, 77, 77, .25);
+    margin-bottom: 1rem;
+    border-radius: .5rem;
+    // border: solid 0.08rem rgba(167, 167, 167, 0.2);
+    background-color: white;
+    box-shadow: 0rem 0.2rem 0.6rem -0.15rem rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     padding: .4rem .8rem;
     color: #6B6B6B;
+
 }
 
 ._title-box {
@@ -446,13 +447,16 @@
     align-items: center;
     width: 100%;
     padding: .6rem 1rem;
-    border-radius: .6rem;
+    border-radius: .5rem;
     color: $primary-color;
-    background-color: rgb(255, 255, 255);
-    border: solid 0.08rem rgba(167, 167, 167, 0.2);
-    box-shadow: 0rem .1rem .45rem -.2rem rgba(77, 77, 77, .25);
+    //background-color: rgb(255, 255, 255);
+    // border: solid 0.08rem rgba(167, 167, 167, 0.2);
+    //box-shadow: 0rem .1rem .45rem -.2rem rgba(77, 77, 77, .25);
     // animation-delay: 0s;
     animation-duration: .2s;
+
+    background-color: white;
+    box-shadow: 0rem 0.2rem 0.6rem -0.15rem rgba(0, 0, 0, 0.1);
 
     &:hover {
         background-color: $info-color;

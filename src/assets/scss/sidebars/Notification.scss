@@ -52,6 +52,14 @@
     background-color: $border-color;
 }
 
+.active-express {
+    background-color: #c6cef3;
+}
+
+.unactive-express {
+    background-color: #d7ddf1;
+}
+
 .mobile-enter>.item-inbox:active {
     background-color: $primary-hover;
 }
