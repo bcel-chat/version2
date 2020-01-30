@@ -12,8 +12,8 @@
             ref="input"
             id="input"
             v-text="text"
-            @keydown="prevent($event)"
-            @input="prevent($event)"
+            @keypress="prevent"
+            @input="prevent"
             @focus="_focus"
             @blur="focused = false"
             contenteditable="true"
@@ -55,21 +55,21 @@ export default {
   },
   methods: {
     floating(val) {
-      if (val == 1)
+      if (val == 1) {
         this.$emit("save", {
           data: this.$refs.input.innerText,
           page: this.page
         });
-
+      }
       this.$emit("floating", false);
     },
-    prevent(event) {
+    prevent() {
       let value = this.$refs.input.innerText;
       this.counter = this.textMax - value.length;
-      if (value.length >= 25 && event.keyCode != 8) event.preventDefault();
-      if (event.keyCode == 13) {
-        event.preventDefault();
-      }
+
+      if (value.length >= this.textMax) event.preventDefault();
+      if (event.keyCode != 8) event.preventDefault();
+      if (event.keyCode == 13) event.preventDefault();
     },
     _focus() {
       this.focused = true;

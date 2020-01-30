@@ -34,7 +34,7 @@
             >
               <div class="bb-avatar-inside">
                 <img
-                  :src="`${picProfileURL}/${msg.uid}/${msg.picture}`"
+                  :src="`${picProfileURL}/${msg.uid}/icon/${msg.picture}`"
                   class="avatar"
                   v-if="msg.picture"
                 />

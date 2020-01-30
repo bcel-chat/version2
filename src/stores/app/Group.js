@@ -153,6 +153,17 @@ const group = {
           store.dispatch("AppData/showCrop", { show: false, page: 0 });
         });
     },
+    async setGroupPictureIcon({ state }, payload) {
+      let uid = code.from(localStorage.getItem("roger"));
+      let formData = new FormData();
+      formData.append("file", payload);
+      formData.append("uid", state.roomID);
+
+      const res = await axios.post(
+        `${process.env.VUE_APP_ACCESS_API}/profilepictureIcon`,
+        formData
+      );
+    },
     async setGroupPictureInfo({ state, commit }, payload) {
       let formData = new FormData();
       formData.append("file", payload);
@@ -167,6 +178,12 @@ const group = {
           store.dispatch("Room/getParticipantRoom", {
             rid: state.roomID,
             uid: uid
+          });
+          store.dispatch("Room/getRoom", {
+            id: uid,
+            _page: 1,
+            text: "",
+            fn: ""
           });
           commit("getRoomID", []);
           store.dispatch("AppData/showCrop", { show: false, page: 0 });

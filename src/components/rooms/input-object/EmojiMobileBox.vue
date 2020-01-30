@@ -8,6 +8,7 @@
           :class="['tab', indexDef == index ? 'active' : '']"
           @click="selectIcon(index)"
           role="button"
+          v-if="display(index)"
         >
           <i class="material-icons">{{tab.icon}}</i>
         </span>
@@ -16,7 +17,13 @@
     <div class="emoji-tab">
       <div class="emoji-tab-inner">
         <template v-for="(emoji, index) in emojis">
-          <div class="emoji" :title="index" :key="index" role="button" @click="send(emoji)">
+          <div
+            class="emoji"
+            :title="index"
+            :key="index"
+            role="button"
+            @click="send(emoji.name, index)"
+          >
             <img class="img-emoji" :src="emoji.name" alt srcset />
           </div>
         </template>
@@ -26,12 +33,13 @@
 </template>
 
 <script>
+import { replace, indexOf, find } from "lodash";
 export default {
   data() {
     return {
       indexDef: 0,
-      recently: [],
-      emojis: JSON.parse(localStorage.getItem("emojis")),
+      recently: "",
+      emojis: [],
       tabs: [
         {
           title: "Recent",
@@ -44,14 +52,52 @@ export default {
       ]
     };
   },
-  mounted() {
+  beforeMount() {
+    if (!localStorage.getItem("recently")) {
+      localStorage.setItem("recently", JSON.stringify(""));
+    } else {
+      this.emojis = JSON.parse(localStorage.getItem("recently"));
+    }
+
     this.recently = JSON.parse(localStorage.getItem("recently"));
+    if (!this.recently)
+      this.emojis = JSON.parse(localStorage.getItem("emojis"));
   },
   methods: {
     selectIcon(val) {
       this.indexDef = val;
+      if (val == 0) this.emojis = JSON.parse(localStorage.getItem("recently"));
+      else this.emojis = JSON.parse(localStorage.getItem("emojis"));
     },
-    send() {}
+    send(name, index) {
+      if (this.indexDef == 1) this.indexDef = 1;
+      else this.indexDef = 0;
+
+      if (JSON.parse(localStorage.getItem("recently")) == "") {
+        this.recently = [];
+        this.recently.push({ index: index, name: name });
+        localStorage.setItem("recently", JSON.stringify(this.recently));
+      } else {
+        let arr2 = JSON.parse(localStorage.getItem("recently"));
+        // this.recently.splice({ index: index, name: name }, 1);
+
+        this.recently.push({ index: index, name: name });
+
+        var res = this.recently.map(
+          obj => arr2.find(o => o.index === obj.index) || obj
+        );
+
+        console.log(res);
+
+        localStorage.setItem("recently", JSON.stringify(res));
+      }
+    },
+    display(index) {
+      if (index == 0)
+        if (!this.recently) return false;
+        else return true;
+      else return true;
+    }
   }
 };
 </script>

@@ -89,11 +89,22 @@ const settings = {
         `${process.env.VUE_APP_ACCESS_API}/profilepicture`,
         formData
       );
-
       if (res.data) {
         context.dispatch("getProfile", res.data);
         store.dispatch("AppData/showCrop", { show: false, page: 0 });
       }
+    },
+    async setProfilePictureIcon(context, payload) {
+      let uid = code.from(localStorage.getItem("roger"));
+
+      let formData = new FormData();
+      formData.append("file", payload);
+      formData.append("uid", uid);
+
+      const res = await axios.post(
+        `${process.env.VUE_APP_ACCESS_API}/profilepictureIcon`,
+        formData
+      );
     },
     async searchUser({ commit, dispatch, state }, payload) {
       ds.rpc.make("settingSearchUser", payload, (err, data) => {

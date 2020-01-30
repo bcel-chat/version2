@@ -187,10 +187,9 @@
         :imgValue="pictureValue"
         :style="styling.all"
         :filename="filename"
-        page="1"
+        page="3"
         @btnClear="clearFile"
         @btnClearDone="clearDone"
-        @imageCroped="getImage"
       ></Cropper>
     </transition>
   </div>
@@ -265,7 +264,7 @@ export default {
       // this.pictureValue = e.target;
       // this.filename = e.target.files[0].name;
       // this.showCrop({ show: true, page: 2 });
-      const width = 300;
+      const width = 500;
       var reader = new FileReader();
       reader.onload = event => {
         var img = new Image();
@@ -318,9 +317,6 @@ export default {
     },
     clearDone(e) {
       this.$refs.profile.value = e;
-    },
-    getImage(e) {
-      console.log(e);
     },
     addParticipant() {
       this.showAddParticipantPanel(true);

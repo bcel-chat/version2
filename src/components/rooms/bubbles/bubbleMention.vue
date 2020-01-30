@@ -25,7 +25,11 @@
               class="bb-avatar"
             >
               <div class="bb-avatar-inside">
-                <img :src="`${picURL}/${msg.uid}/${msg.picture}`" class="avatar" v-if="msg.picture" />
+                <img
+                  :src="`${picURL}/${msg.uid}/icon/${msg.picture}`"
+                  class="avatar"
+                  v-if="msg.picture"
+                />
                 <img v-else src="@/assets/img/user.svg" class="avatar-default" alt srcset />
               </div>
             </div>

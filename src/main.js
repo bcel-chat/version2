@@ -7,6 +7,7 @@ import "animate.css/animate.min.css";
 import material from "./plugins/icons/meterial";
 import moment from "vue-moment";
 import "./registerServiceWorker";
+import "vue-material-design-icons/styles.css";
 
 Vue.use(moment);
 

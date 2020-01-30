@@ -20,7 +20,7 @@
         <div :key="index" class="item-inbox" ref="itemInbox">
           <div class="avatar-inbox-panel">
             <div class="avatar-inbox">
-              <img v-if="it.picture" :src="`${picURL}/${it.uid}/${it.picture}`" class="avatar" />
+              <img v-if="it.picture" :src="`${picURL}/${it.uid}/icon/${it.picture}`" class="avatar" />
               <img v-else src="@/assets/img/user.svg" class="avatar-default" />
             </div>
           </div>

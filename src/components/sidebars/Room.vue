@@ -30,7 +30,7 @@
               <div class="avatar-inbox">
                 <img
                   v-if="item.picture || item.rimg"
-                  :src="`${picURL}${item.rtype == 1 ? item.myid : item.rid}/${
+                  :src="`${picURL}${item.rtype == 1 ? item.myid : item.rid}/icon/${
         item.rtype == 1 ? item.picture : item.rimg
       }`"
                   class="avatar"
@@ -297,9 +297,9 @@ export default {
     },
     async imgSource(item, index) {
       let img = document.createElement("img");
-      const src = `${this.picURL}${item.rtype == 1 ? item.myid : item.rid}/${
-        item.rtype == 1 ? item.picture : item.rimg
-      }`;
+      const src = `${this.picURL}${
+        item.rtype == 1 ? item.myid : item.rid
+      }/icon/${item.rtype == 1 ? item.picture : item.rimg}`;
 
       localStorage.setItem("imgSrc", JSON.stringify([]));
       img.src = src;

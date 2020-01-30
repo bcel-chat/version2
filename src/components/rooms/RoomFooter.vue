@@ -298,10 +298,10 @@ export default {
 
       if (this.roomType == 1) {
         name = this.profile.name;
-        icon = `${process.env.VUE_APP_PICTURE_PROFILE}/${this.myID}/${this.profile.picture}`;
+        icon = `${process.env.VUE_APP_PICTURE_PROFILE}/${this.myID}/icon/${this.profile.picture}`;
       } else {
         name = this.participantRoom.rname;
-        icon = `${process.env.VUE_APP_PICTURE_PROFILE}/${this.roomID}/${this.participantRoom.img}`;
+        icon = `${process.env.VUE_APP_PICTURE_PROFILE}/${this.roomID}/icon/${this.participantRoom.img}`;
       }
 
       ds.event.emit("notification", {

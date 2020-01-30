@@ -58,27 +58,21 @@ export default {
       picture: null,
       cropper: null,
       pictureCallback: null,
-      angle: 0
+      angle: 0,
+      imgSrc: ""
     };
-  },
-  mounted() {
-    setTimeout(() => {
-      this.cropper = new Croppr(this.$refs.croppr, {
-        maxSize: [500, 500, "px"],
-        minSize: [50, 50, "px"],
-        aspectRatio: 1
-      });
-    }, 150);
   },
   methods: {
     ...mapActions("AppData", ["showCrop"]),
     ...mapActions("Group", [
       "groupPicture",
       "setGroupPicture",
+      "setGroupPictureIcon",
       "setGroupPictureInfo"
     ]),
     ...mapActions("Settings", [
       "setProfilePicture",
+      "setProfilePictureIcon",
       "ProfilePicture",
       "uploadFile"
     ]),
@@ -88,51 +82,6 @@ export default {
     },
     getCrop() {
       this.load = true;
-      // const y = this.cropper.getValue().y;
-      // const x = this.cropper.getValue().x;
-      // const width = this.cropper.getValue().width;
-      // const height = this.cropper.getValue().height;
-
-      // var input = this.imgValue;
-
-      // if (input.files && input.files[0]) {
-      //   var reader = new FileReader();
-      //   reader.onload = event => {
-      //     var img = new Image();
-      //     img.src = event.target.result;
-      //     img.onload = () => {
-      //       var oc = document.createElement("canvas"),
-      //         octx = oc.getContext("2d");
-      //       oc.width = img.width;
-      //       oc.height = img.height;
-      //       octx.drawImage(img, 0, 0);
-
-      //       // var oc = document.createElement("canvas"),
-      //       //   octx = oc.getContext("2d");
-      //       // oc.width = img.width;
-      //       // oc.height = img.height;
-      //       // octx.drawImage(img, 0, 0);
-      //       // while (oc.width * 0.5 > 500) {
-      //       //   oc.width *= 0.5;
-      //       //   oc.height *= 0.5;
-      //       //   octx.drawImage(oc, 0, 0, oc.width, oc.height);
-      //       // }
-      //       // oc.width = 500;
-      //       // oc.height = (oc.width * img.height) / img.width;
-
-      //       // octx.drawImage(img, 0, 0, oc.width, oc.height);
-
-      //       var imageData = octx.getImageData(x, y, width, height);
-
-      //       var canvas1 = document.createElement("canvas");
-      //       canvas1.width = width;
-      //       canvas1.height = height;
-      //       var ctx1 = canvas1.getContext("2d");
-      //       ctx1.rect(0, 0, 100, 100);
-      //       ctx1.fillStyle = "white";
-      //       ctx1.fill();
-      //       ctx1.putImageData(imageData, 0, 0);
-
       const base64 = this.$refs.cropper.getCroppedCanvas().toDataURL();
       fetch(base64)
         .then(res => res.blob())
@@ -141,22 +90,48 @@ export default {
           if (this.page == 1) {
             // for group
             this.setGroupPicture(file);
+            this.msgIcon(base64, 2);
             this.groupPicture(URL.createObjectURL(blob));
           } else if (this.page == 2) {
             // for person
             this.setProfilePicture(file);
+            this.msgIcon(base64, 1);
           } else if (this.page == 3) {
             // for group info
             this.setGroupPictureInfo(file);
+            this.msgIcon(base64, 2);
             this.groupPicture(URL.createObjectURL(blob));
           }
         });
-      //     };
-      //   };
-      //   reader.readAsDataURL(input.files[0]);
-      //   // this.showCrop({ show: false, page: 0 });
-      // }
-      // this.$emit("btnClearDone", null);
+    },
+    msgIcon(val, _page) {
+      let width = 70;
+      let img = new Image();
+      img.src = val;
+      img.onload = () => {
+        var oc = document.createElement("canvas"),
+          octx = oc.getContext("2d");
+        oc.width = img.width;
+        oc.height = img.height;
+        octx.drawImage(img, 0, 0);
+        while (oc.width * 0.5 > width) {
+          oc.width *= 0.5;
+          oc.height *= 0.5;
+          octx.drawImage(oc, 0, 0, oc.width, oc.height);
+        }
+        oc.width = width;
+        oc.height = (oc.width * img.height) / img.width;
+        octx.drawImage(img, 0, 0, oc.width, oc.height);
+        fetch(oc.toDataURL())
+          .then(res => res.blob())
+          .then(blob => {
+            const file = new File([blob], this.filename, {
+              type: "image/jpg"
+            });
+            if (_page == 1) this.setProfilePictureIcon(file);
+            else this.setGroupPictureIcon(file);
+          });
+      };
     },
     cancel() {
       this.showCrop({ show: false, page: 0 });

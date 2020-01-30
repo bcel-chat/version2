@@ -25,7 +25,7 @@
                   <div class="avatar-inbox">
                     <img
                       v-if="it.picture"
-                      :src="`${picURL+it.user_id}/${it.picture}`"
+                      :src="`${picURL+it.user_id}/icon/${it.picture}`"
                       class="avatar"
                     />
                     <img v-else src="@/assets/img/user.svg" class="avatar-default" />

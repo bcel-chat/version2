@@ -73,7 +73,7 @@ export default {
       axios
         .get(
           address["serverIp"] +
-            "/bcel/api//products/search/" +
+            "/bcel/api/products/search/" +
             this.accountSearch +
             "/html"
         )

@@ -14,7 +14,12 @@
           </div>
           <div class="ball-slite sright"></div>
         </div>
-        <div :class="['log-item-inside', mobileMode ? 'log-mobile' : 'log-desktop']">
+        <div
+          :class="[
+            'log-item-inside',
+            mobileMode ? 'log-mobile' : 'log-desktop'
+          ]"
+        >
           <div class="splite _left" v-if="!mobileMode">
             <transition enter-active-class="animated fadeIn">
               <div class="text-box" v-if="startUp">
@@ -23,7 +28,13 @@
               </div>
             </transition>
             <div class="sign-bg-box">
-              <img src alt srcset="@/assets/img/signin-bg.jpg" class="bg" draggable="false" />
+              <img
+                src
+                alt
+                srcset="@/assets/img/signin-bg.jpg"
+                class="bg"
+                draggable="false"
+              />
             </div>
           </div>
           <div class="splite _right">
@@ -33,9 +44,11 @@
                 leave-active-class="animated fadeOutUp"
               >
                 <div class="alert-box" v-if="!authStatus || connectClose">
-                  <span
-                    class="alert"
-                  >{{connectClose ? `Sign in failed 5 times. Auto reload in ${countdown}` : `Sign In Failed!`}}</span>
+                  <span class="alert">{{
+                    connectClose
+                      ? `Sign in failed 5 times. Auto reload in ${countdown}`
+                      : `Sign In Failed!`
+                  }}</span>
                 </div>
               </transition>
               <div class="signin-logo-box">
@@ -53,30 +66,63 @@
                   enter-active-class="animated fadeIn"
                   leave-active-class="animated zoomOutUp"
                 >
-                  <form class="signin-insider" @submit.prevent="go" v-if="startUp">
-                    <div :class="['gp-control', $v.authState.user.$error ? 'err' : 'valid']">
+                  <form
+                    class="signin-insider"
+                    @submit.prevent="go"
+                    v-if="startUp"
+                  >
+                    <div
+                      :class="[
+                        'gp-control',
+                        $v.authState.user.$error ? 'err' : 'valid'
+                      ]"
+                    >
                       <div class="input-icon-box">
                         <span class="input-ico">
                           <i class="fas fa-user" for="u568"></i>
                         </span>
                       </div>
-                      <input type="text" id="u568" v-model.trim="$v.authState.user.$model" />
+                      <input
+                        type="text"
+                        id="u568"
+                        v-model.trim="$v.authState.user.$model"
+                      />
                       <label for="u568" :class="floatUser">User</label>
                     </div>
-                    <div :class="['gp-control', $v.authState.password.$error ? 'err' : 'valid']">
+                    <div
+                      :class="[
+                        'gp-control',
+                        $v.authState.password.$error ? 'err' : 'valid'
+                      ]"
+                    >
                       <div class="input-icon-box">
                         <span class="input-ico">
                           <i class="fas fa-unlock-alt" for="p568"></i>
                         </span>
                       </div>
-                      <input type="password" id="p568" v-model.trim="$v.authState.password.$model" />
+                      <input
+                        type="password"
+                        id="p568"
+                        v-model.trim="$v.authState.password.$model"
+                      />
                       <label for="p568" :class="floatPwd">Password</label>
                     </div>
                     <button
                       type="submit"
                       :class="[mobileMode ? 'btn-login' : 'btn-login-desktop']"
                       role="button"
-                    >SIGN IN</button>
+                      v-if="doLog"
+                    >
+                      SIGN IN
+                    </button>
+                    <div class="loading-box" v-else>
+                      <HollowDotsSpinner
+                        :animation-duration="1000"
+                        :dot-size="18"
+                        :dots-num="3"
+                        :color="'#ef3434'"
+                      />
+                    </div>
                   </form>
                 </transition>
               </div>
@@ -97,9 +143,16 @@
 <script>
 import { required, minLength } from "vuelidate/lib/validators";
 import { mapActions, mapState } from "vuex";
+
+import { HollowDotsSpinner } from "epic-spinners";
+
 export default {
+  components: {
+    HollowDotsSpinner
+  },
   data() {
     return {
+      doLog: true,
       countdown: 5,
       startUp: false,
       authState: {
@@ -123,6 +176,9 @@ export default {
     }
   },
   watch: {
+    authStatus(val) {
+      if (!val) this.doLog = true;
+    },
     "authState.user"(val) {
       if (val != "") this.floatUser = "floating-top";
       else this.floatUser = "";
@@ -164,6 +220,7 @@ export default {
     go() {
       this.$v.$touch();
       if (!this.$v.$invalid) {
+        this.doLog = false;
         this.setAuthData(this.authState);
       }
     }

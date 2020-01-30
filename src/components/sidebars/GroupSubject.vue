@@ -24,12 +24,12 @@
               <div class="avatar-inbox">
                 <img v-if="groupPictures" :src="groupPictures" class="avatar" alt />
                 <img v-else src="@/assets/img/camera.svg" class="avatar-defualt" alt srcset />
-                <label for="profile" class="brows-box" role="button"></label>
+                <label for="profileSubject" class="brows-box" role="button"></label>
                 <input
                   type="file"
-                  id="profile"
+                  id="profileSubject"
                   ref="profile"
-                  @change="openCropSide"
+                  @change="openCropSideSubject"
                   accept=".jpeg, .jpg, .png, .gif, .bmp, .ico, .svg"
                 />
               </div>
@@ -152,7 +152,7 @@ export default {
       desc: "",
       floatDesc: "",
       picture: "",
-      pictureValuepictureValue: null,
+      pictureValue: null,
       base64: null,
       filename: ""
     };
@@ -244,15 +244,10 @@ export default {
         this.$refs.desc.focus();
       }, 100);
     },
-    openCropSide(input) {
-      // if (e.target.files && e.target.files[0]) {
-      //   let blob = new Blob(e.target.files, { type: "image/png" });
-      //   this.picture = URL.createObjectURL(blob);
-      //   this.pictureValue = e.target;
-      //   this.filename = e.target.files[0].name;
-      //   this.showCrop({ show: true, page: 1 });
-      // }
-      const width = 300;
+    openCropSideSubject(input) {
+      console.log("input subject", input.target.files[0]);
+
+      const width = 500;
       var reader = new FileReader();
       reader.onload = event => {
         var img = new Image();

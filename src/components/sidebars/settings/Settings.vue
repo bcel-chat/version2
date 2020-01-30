@@ -7,7 +7,7 @@
             <i class="material-icons" v-if="startUp" key="1">arrow_downward</i>
           </transition>
         </div>
-        <span class="title">Settings</span>
+        <span class="title">Profile</span>
       </div>
       <!-- End header-box-fixed -->
       <div class="header">
@@ -19,7 +19,7 @@
         <div class="header-box"></div>
         <div class="profile-content">
           <transition enter-active-class="animated zoomIn" leave-active-class="animated zoomOut">
-            <div class="profile-box" v-if="startUp" :style="styling.all">
+            <div class="profile-box" v-show="startUp" :style="styling.all">
               <!-- <img class="profile" :src="profilePicture" alt  /> -->
               <img
                 v-if="profile.picture"
@@ -98,6 +98,9 @@
                       enter-active-class="animated zoomIn"
                       leave-active-class="animated zoomOut"
                     >
+                      <div class="counter-box" :key="0" v-if="inputName">
+                        <span>{{counterA}}</span>
+                      </div>
                       <div class="ico-box" :style="styling.all" v-if="inputName" :key="1">
                         <i
                           class="material-icons chk"
@@ -153,6 +156,9 @@
                       enter-active-class="animated zoomIn"
                       leave-active-class="animated zoomOut"
                     >
+                      <div class="counter-box" :key="0" v-if="inputAbout">
+                        <span>{{counterB}}</span>
+                      </div>
                       <div class="ico-box" :style="styling.all" v-if="inputAbout" :key="1">
                         <i
                           class="material-icons chk"
@@ -191,14 +197,22 @@
           </div>
           <!-- End control-content -->
           <div class="signout-box">
-            <transition enter-active-class="animated zoomIn">
+            <transition enter-active-class="animated zoomIn" mode="out-in">
               <button
                 :class="[mobileMode ? 'btn-signout' : 'btn-signout-desktop']"
                 role="button"
-                v-if="startUp"
+                v-if="startUp && SignOurStatus"
                 :style="styling.all"
-                @click="signout"
+                @click="SignOut"
               >Sign out</button>
+              <div v-else-if="!SignOurStatus" class="loading-box">
+                <HollowDotsSpinner
+                  :animation-duration="1000"
+                  :dot-size="15"
+                  :dots-num="3"
+                  :color="'#ef3434'"
+                />
+              </div>
             </transition>
           </div>
           <!-- End signout-box -->
@@ -226,7 +240,6 @@
         page="2"
         @btnClear="clearFile"
         @btnClearDone="clearDone"
-        @imageCroped="getImage"
       ></Cropper>
     </transition>
     <transition-group
@@ -249,8 +262,11 @@ import Cropper from "@/components/sidebars/subcomponents/Cropper.vue";
 import EditPanel from "@/components/sidebars/subcomponents/EditPanel.vue";
 import { mapState, mapActions, mapGetters } from "vuex";
 
+import { HollowDotsSpinner } from "epic-spinners";
+
 export default {
   components: {
+    HollowDotsSpinner,
     MenuPermission,
     Cropper,
     EditPanel
@@ -268,6 +284,8 @@ export default {
           animationDuration: ".4s"
         }
       },
+      counterA: 0,
+      counterB: 0,
       startUp: false,
       editPanel: false,
       title: "",
@@ -282,25 +300,27 @@ export default {
       picture: null,
       pictureValue: null,
       base64: null,
-      filename: ""
+      filename: "",
+      SignOurStatus: true,
+      InputMax: 25
     };
   },
   watch: {
-    sidebar() {
-      console.log(5555);
+    sidebar(val) {
+      setTimeout(() => {
+        this.startUp = val;
+      }, 300);
     }
   },
   beforeMount() {
-    // if (!this.profile.picture) ;
-
     this.getProfile(this.myID);
   },
   mounted() {
-    setTimeout(() => {
-      this.startUp = true;
-    }, 300);
     this.name = this.profile.name;
     this.about = this.profile.about;
+
+    this.counterA = this.InputMax - this.name.length;
+    this.counterB = this.InputMax - this.about.length;
   },
   computed: {
     ...mapState("Auth", ["userRole"]),
@@ -333,7 +353,9 @@ export default {
     ...mapActions("Auth", ["signout"]),
     preventA() {
       let value = this.$refs.inputName.innerText;
-      if (value.length > 25 && event.keyCode != 8) event.preventDefault();
+      this.counterA = this.InputMax - value.length;
+      if (value.length >= this.InputMax && event.keyCode != 8)
+        event.preventDefault();
       if (event.keyCode == 13) {
         this.editText(1);
         event.preventDefault();
@@ -341,27 +363,34 @@ export default {
     },
     preventB() {
       let value = this.$refs.inputAbout.innerText;
-      if (value.length > 25 && event.keyCode != 8) event.preventDefault();
+      this.counterB = this.InputMax - value.length;
+      if (value.length >= this.InputMax && event.keyCode != 8)
+        event.preventDefault();
       if (event.keyCode == 13) {
         this.editText(2);
         event.preventDefault();
       }
     },
     floating(e, num) {
-      if (this.mobileMode) {
-        if (num == 1) {
-          this.title = "Enter name";
-          this.text = this.$refs.inputName.innerText;
-          this.page = 1;
-        } else {
-          this.title = "Enter about";
-          this.text = this.$refs.inputAbout.innerText;
-          this.page = 2;
-        }
-        this.editPanel = e;
-      } else {
-        return;
-      }
+      this.title = "Enter name";
+      this.text = this.$refs.inputName.innerText;
+      this.page = 1;
+      this.editPanel = e;
+
+      // if (this.mobileMode) {
+      //   if (num == 1) {
+      //     this.title = "Enter name";
+      //     this.text = this.$refs.inputName.innerText;
+      //     this.page = 1;
+      //   } else {
+      //     this.title = "Enter about";
+      //     this.text = this.$refs.inputAbout.innerText;
+      //     this.page = 2;
+      //   }
+      //   this.editPanel = e;
+      // } else {
+      //   return;
+      // }
     },
     setNameText(e) {
       this.name = e.target.innerText;
@@ -416,7 +445,8 @@ export default {
       // this.showCrop({ show: true, page: 1 });
 
       // return;
-      const width = 300;
+      console.log("input setting", input.target.files[0]);
+      const width = 500;
       var reader = new FileReader();
       reader.onload = event => {
         var img = new Image();
@@ -470,11 +500,14 @@ export default {
     clearDone(e) {
       this.$refs.profile.value = e;
     },
-    getImage(e) {
-      console.log(e);
-    },
     floatingClose(e) {
       this.editPanel = e;
+    },
+    SignOut() {
+      this.SignOurStatus = false;
+      setTimeout(() => {
+        this.signout();
+      }, 1000);
     }
   },
   beforeDestroy() {

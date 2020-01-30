@@ -1,7 +1,11 @@
 <template>
   <span class="chip-box">
     <span class="chip-avatar">
-      <img class="avatar" v-if="values.picture" :src="`${picURL+values.uid}/${values.picture}`" />
+      <img
+        class="avatar"
+        v-if="values.picture"
+        :src="`${picURL+values.uid}/icon/${values.picture}`"
+      />
       <!-- <img class="avatar-default" v-else src="@/assets/img/user.svg" /> -->
       <i class="material-icons avatar-default" v-else>person_outline</i>
     </span>

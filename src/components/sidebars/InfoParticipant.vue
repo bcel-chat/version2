@@ -20,7 +20,7 @@
         >
           <div class="avatar-inbox-panel">
             <div class="avatar-inbox">
-              <img v-if="it.picture" :src="`${picURL}/${it.uid}/${it.picture}`" class="avatar" />
+              <img v-if="it.picture" :src="`${picURL}/${it.uid}/icon/${it.picture}`" class="avatar" />
               <img v-else src="@/assets/img/user.svg" class="avatar-default" />
             </div>
           </div>
@@ -165,8 +165,11 @@ export default {
       }, 500);
     },
     admin(item) {
-      if (item.admin == 1) {
-        if (item.uid == this.myID) this.adminStatus = true;
+      if (item.admin == 1 && item.uid == this.myID) {
+        this.getAdminStatus(true);
+        return true;
+      } else if (item.admin == 1) {
+        this.adminStatus = true;
         return true;
       } else return false;
     },

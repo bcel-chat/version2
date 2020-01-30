@@ -1,4 +1,3 @@
-import store from "../store";
 import router from "../../routers/router.js";
 
 const AppData = {

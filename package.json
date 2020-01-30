@@ -9,7 +9,6 @@
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
-    "@mdi/font": "^4.7.95",
     "animate.css": "^3.7.2",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
@@ -31,7 +30,7 @@
     "vue-cam-vision": "^0.0.8",
     "vue-cropperjs": "^4.0.1",
     "vue-infinite-loading": "^2.4.4",
-    "vue-material-design-icons": "^3.3.1",
+    "vue-material-design-icons": "^4.4.0",
     "vue-moment": "^4.0.0",
     "vue-router": "^3.0.3",
     "vue-select": "^3.2.0",

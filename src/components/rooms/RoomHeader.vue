@@ -19,7 +19,7 @@
             <div class="avatar">
               <img
                 v-if="userRoom.picture || participantRoom.img"
-                :src="`${picURL}${roomType == 1 ? userRoom.uid : participantRoom.rid }/${roomType == 1 ? userRoom.picture : participantRoom.img}`"
+                :src="`${picURL}${roomType == 1 ? userRoom.uid : participantRoom.rid }/icon/${roomType == 1 ? userRoom.picture : participantRoom.img}`"
                 alt
                 class="_avatar"
               />

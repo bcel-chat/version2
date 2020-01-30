@@ -5,7 +5,7 @@
         <div class="item-box" v-if="display">
           <div class="title">Please enter the One-Time Password</div>
           <form class="control-box" @submit.prevent="verify">
-            <input type="text" class="input" v-model="input" maxlength="4" />
+            <input type="number" class="input" v-model="input" @keydown="numberValidate" />
             <button class="submit" type="submit" ref="submit" disabled>Verify</button>
           </form>
           <a role="button" @click="sentotp" class="resend">Resend OTP code</a>
@@ -55,6 +55,10 @@ export default {
   methods: {
     ...mapActions("AppData", ["onChatClickUpdate"]),
     ...mapActions("Context", ["setOtpBox"]),
+    numberValidate() {
+      if (event.target.value.length >= 4 && event.keyCode != 8)
+        event.preventDefault();
+    },
     verify() {
       this.setTime();
       if (this.input)
@@ -101,8 +105,6 @@ export default {
       if (timer == null) {
         localStorage.setItem("timer", now);
       } else {
-        console.log(now - timer, minutes * 60 * 1000);
-
         if (now - timer > minutes * 60 * 1000) {
           localStorage.removeItem("timer");
           this.otp = "";
@@ -238,5 +240,17 @@ export default {
   &:active {
     color: $secondary-color;
   }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 </style>

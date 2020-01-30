@@ -12,7 +12,7 @@
               <div class="avatar-inbox">
                 <img
                   v-if="it.picture || it.img"
-                  :src="`${picURL}${it.rtype == 1 ? it.user_id : it.rid}/${it.rtype == 1 ? it.picture : it.img}`"
+                  :src="`${picURL}${it.rtype == 1 ? it.user_id : it.rid}/icon/${it.rtype == 1 ? it.picture : it.img}`"
                   class="avatar"
                 />
                 <img v-else src="@/assets/img/user.svg" class="avatar-default" />

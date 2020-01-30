@@ -176,10 +176,12 @@ const room = {
       });
     },
     getParticipantInfo({ commit, state }, payload) {
+      let uid = code.from(localStorage.getItem("roger"));
       ds.rpc.make(
         "getParticipantInfo",
         {
-          rid: state.participantRoom.rid
+          rid: state.participantRoom.rid,
+          uid: uid
         },
         (err, data) => {
           if (!err) commit("getParticipantInfo", data);

@@ -7,7 +7,7 @@
             <img
               class="avatar"
               v-if="profile.picture"
-              :src="`${picURL+profile.picture}`"
+              :src="`${picURL + profile.picture}`"
               alt
               draggable="false"
             />
@@ -25,14 +25,29 @@
           <!-- End user-detail-box -->
           <div class="control-box">
             <div class="button-box">
-              <div class="ico-box" role="button" @click="search(true)" title="Search">
-                <i class="material-icons">search</i>
+              <div
+                class="ico-box"
+                role="button"
+                @click="search(true)"
+                title="Search"
+              >
+                <!-- <i class="material-icons">search</i> -->
+                <Magnify class="icon" title="Search"></Magnify>
               </div>
             </div>
             <!-- End button-box -->
             <div class="button-box">
-              <div class="ico-box" role="button" @click="showNewChat(true)" title="New chat">
-                <i class="material-icons">chat</i>
+              <div
+                class="ico-box"
+                role="button"
+                @click="showNewChat(true)"
+                title="New chat"
+              >
+                <SquareEditOutline
+                  class="icon"
+                  title="New chat"
+                ></SquareEditOutline>
+                <!-- <i class="material-icons">chat</i> -->
               </div>
             </div>
             <!-- End button-box -->
@@ -64,7 +79,12 @@
                 />
               </div>
               <!-- End search-input-box -->
-              <div class="search-icon-box" v-if="txtSearch" @click="clearSearch" role="button">
+              <div
+                class="search-icon-box"
+                v-if="txtSearch"
+                @click="clearSearch"
+                role="button"
+              >
                 <i class="material-icons">clear</i>
               </div>
               <!-- End search-icon-box -->
@@ -78,8 +98,16 @@
       <transition-group tag="div" class="content" :name="tabAnimate">
         <Room v-show="tabActive == 0" :key="1" :style="tabStyle"></Room>
         <Contact v-show="tabActive == 1" :key="2" :style="tabStyle"></Contact>
-        <Extension v-show="tabActive == 2" :key="3" :style="tabStyle"></Extension>
-        <Notification v-show="tabActive == 3" :key="4" :style="tabStyle"></Notification>
+        <Extension
+          v-show="tabActive == 2"
+          :key="3"
+          :style="tabStyle"
+        ></Extension>
+        <Notification
+          v-show="tabActive == 3"
+          :key="4"
+          :style="tabStyle"
+        ></Notification>
       </transition-group>
       <div class="tab">
         <div class="tab-box">
@@ -90,7 +118,9 @@
             :key="1"
           >
             <div class="item" role="button">
-              <i class="material-icons">chat_bubble</i>
+              <!-- <i class="material-icons">chat_bubble</i> -->
+
+              <MessageText class="icon"></MessageText>
               <span role="button" class="item-text">Chats</span>
             </div>
             <!-- End items -->
@@ -102,8 +132,10 @@
             :key="2"
           >
             <div class="item" role="button">
-              <i class="material-icons">contact_mail</i>
-              <span role="button" class="item-text">Contact</span>
+              <!-- <i class="material-icons">contact_mail</i> -->
+
+              <ContactMail class="icon"></ContactMail>
+              <span role="button" class="item-text">Contacts</span>
             </div>
             <!-- End items -->
           </div>
@@ -114,7 +146,8 @@
             :key="3"
           >
             <div class="item" role="button">
-              <i class="material-icons">extension</i>
+              <!-- <i class="material-icons">extension</i> -->
+              <Puzzle class="icon"></Puzzle>
               <span role="button" class="item-text">Modules</span>
             </div>
             <!-- End items -->
@@ -127,9 +160,10 @@
           >
             <div class="item" role="button">
               <div class="number" v-if="notificationCount > 0">
-                <span>{{notificationCount}}</span>
+                <span>{{ notificationCount }}</span>
               </div>
-              <i class="material-icons">notification_important</i>
+              <!-- <i class="material-icons">notification_important</i> -->
+              <Bell class="icon"></Bell>
               <span role="button" class="item-text">Notification</span>
             </div>
             <!-- End items -->
@@ -153,8 +187,22 @@ import { mapState, mapActions } from "vuex";
 import code from "@/helper/father";
 import ds from "@/helper/deepstream";
 
+// MessageTextOutline
+import MessageText from "vue-material-design-icons/MessageText.vue";
+import ContactMail from "vue-material-design-icons/ContactMail.vue";
+import Puzzle from "vue-material-design-icons/Puzzle.vue";
+import Bell from "vue-material-design-icons/Bell.vue";
+import SquareEditOutline from "vue-material-design-icons/SquareEditOutline.vue";
+import Magnify from "vue-material-design-icons/Magnify.vue";
+
 export default {
   components: {
+    MessageText,
+    ContactMail,
+    Puzzle,
+    Bell,
+    SquareEditOutline,
+    Magnify,
     Room,
     Contact,
     Extension,
@@ -173,7 +221,7 @@ export default {
           icon: "chat_bubble"
         },
         {
-          name: "Contact",
+          name: "Contacts",
           icon: "contact_mail"
         },
         {
@@ -238,7 +286,7 @@ export default {
     ...mapState("Contact", ["contact"]),
     ...mapState("Notification", ["notificationCount"]),
     picURL() {
-      return process.env.VUE_APP_PICTURE_PROFILE + this.myID + "/";
+      return process.env.VUE_APP_PICTURE_PROFILE + this.myID + "/icon/";
     }
   },
   methods: {

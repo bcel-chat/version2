@@ -12,8 +12,6 @@ const identify = {
   },
   getters: {
     getRole() {
-      console.log(code.from(localStorage.getItem("your_name")));
-
       return code.from(localStorage.getItem("your_name"));
     }
   },
