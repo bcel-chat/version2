@@ -7,7 +7,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: white;
+    background-color: $info-color;
 }
 
 ._container {
@@ -174,8 +174,8 @@
             margin: 0 2rem;
             width: 70rem;
             height: 40rem;
-            border-radius: 2rem;
-            box-shadow: 0rem .15rem .8rem -.15rem rgba(0, 0, 0, .3);
+            border-radius: 1rem;
+            box-shadow: 0rem .15rem .8rem -.15rem rgba(43, 43, 43, 0.2);
         }
     }
 }
@@ -188,7 +188,7 @@
     &._left {
         display: none;
         position: relative;
-        background-color: $primary-color;
+        background-color: #5cbce9;
 
         @media screen and (min-width: 960px) {
             display: block;
@@ -252,10 +252,11 @@
         height: auto;
         transition: all .4s;
 
-        img {
+        .logo {
             position: relative;
             width: 100%;
             height: 100%;
+            filter: drop-shadow(5px 0px 6px rgba(0, 0, 0, .3));
         }
     }
 
@@ -450,6 +451,39 @@ input {
 
 .band {
     margin-left: .3rem;
+}
+
+.pick-box {
+    position: absolute;
+    top: -30px;
+    left: 10px;
+    z-index: 100;
+
+    i {
+        pointer-events: none;
+    }
+
+    label {
+        color: #5cbce9;
+        margin-right: 5px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    span {
+        color: #f190ec;
+        margin-left: 5px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    #pick {
+        display: none;
+    }
 }
 
 @media screen and (min-width: 760px) {

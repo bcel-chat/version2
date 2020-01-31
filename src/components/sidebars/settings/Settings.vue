@@ -372,25 +372,20 @@ export default {
       }
     },
     floating(e, num) {
-      this.title = "Enter name";
-      this.text = this.$refs.inputName.innerText;
-      this.page = 1;
-      this.editPanel = e;
-
-      // if (this.mobileMode) {
-      //   if (num == 1) {
-      //     this.title = "Enter name";
-      //     this.text = this.$refs.inputName.innerText;
-      //     this.page = 1;
-      //   } else {
-      //     this.title = "Enter about";
-      //     this.text = this.$refs.inputAbout.innerText;
-      //     this.page = 2;
-      //   }
-      //   this.editPanel = e;
-      // } else {
-      //   return;
-      // }
+      if (this.mobileMode) {
+        if (num == 1) {
+          this.title = "Enter name";
+          this.text = this.$refs.inputName.innerText;
+          this.page = 1;
+        } else {
+          this.title = "Enter about";
+          this.text = this.$refs.inputAbout.innerText;
+          this.page = 2;
+        }
+        this.editPanel = e;
+      } else {
+        return;
+      }
     },
     setNameText(e) {
       this.name = e.target.innerText;
@@ -445,7 +440,6 @@ export default {
       // this.showCrop({ show: true, page: 1 });
 
       // return;
-      console.log("input setting", input.target.files[0]);
       const width = 500;
       var reader = new FileReader();
       reader.onload = event => {

@@ -6,7 +6,7 @@ import store from "@/stores/store.js";
 // import * as firebase from "firebase";
 // import * as device from "device-uuid";
 
-// import { debounce } from "lodash";
+import { debounce } from "lodash";
 
 // const firebaseConfig = {
 //   apiKey: "AIzaSyChPx8QKJSwSVHCjzWRLBqXfPg3kJKLKfo",

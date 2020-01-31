@@ -67,9 +67,10 @@ export default {
       let value = this.$refs.input.innerText;
       this.counter = this.textMax - value.length;
 
-      if (value.length >= this.textMax) event.preventDefault();
-      if (event.keyCode != 8) event.preventDefault();
-      if (event.keyCode == 13) event.preventDefault();
+      event.preventDefault();
+      // if (value.length >= this.textMax) event.preventDefault();
+      // if (event.keyCode != 8) event.preventDefault();
+      // if (event.keyCode == 13) event.preventDefault();
     },
     _focus() {
       this.focused = true;
