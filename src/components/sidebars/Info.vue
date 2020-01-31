@@ -143,9 +143,14 @@
           </div>
         </div>
         <div class="content-box" v-if="roomType == 2">
-          <div class="participant-title">
-            <span class="num">{{ participantInfo.length }}</span>
-            <span class="p-title">Participants</span>
+          <div class="title-search-box">
+            <div class="participant-title">
+              <span class="num">{{ participantInfo.length }}</span>
+              <span class="p-title">Participants</span>
+            </div>
+            <div class="search-box" role="button" title="Search participants">
+              <Magnify title="Search participants"></Magnify>
+            </div>
           </div>
           <div class="add-box" v-if="adminStatus">
             <div
@@ -196,13 +201,16 @@
 </template>
 
 <script>
-import Context from "@/components/context/Context.vue";
+// import Context from "@/components/context/Context.vue";
 import InfoParticipant from "@/components/sidebars/InfoParticipant.vue";
 import Cropper from "@/components/sidebars/subcomponents/Cropper.vue";
 import { mapState, mapActions } from "vuex";
+
+import Magnify from "vue-material-design-icons/Magnify.vue";
+
 export default {
   components: {
-    Context,
+    Magnify,
     Cropper,
     InfoParticipant
   },

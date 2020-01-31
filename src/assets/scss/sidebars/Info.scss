@@ -275,6 +275,21 @@
     margin-bottom: .7rem;
 }
 
+.title-search-box {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-box {
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    color: $primary-color;
+    font-size: 1.2rem;
+}
+
 .participant-title {
     flex: 0 0 auto;
     position: relative;
