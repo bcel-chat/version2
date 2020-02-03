@@ -45,58 +45,53 @@
           </div>
           <div class="fi-card-body">
             <div class="fi-box">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>ຈຳນວນເງິນຝາກ:</th>
-                    <td>{{(history['currencyCode'] == 'USD')?history['currencyUnit']:''}}{{history['depositAmount']?history['depositAmount'].toLocaleString().replace(/,/g, '.'):'0'}}{{(history['currencyCode'] != 'USD')?history['currencyUnit']:''}}</td>
-                  </tr>
-                  <tr>
-                    <th>ສະກຸນເງິນ:</th>
-                    <td>{{history['currencyName']}} ({{history['currencyCode']}})</td>
-                  </tr>
-                  <tr>
-                    <th>ດອກເບ້ຍທີ່ຕ້ອງການ:</th>
-                    <td>
-                      {{history['customerInterest']}}%
-                      <span
-                        style="color: red;"
-                        v-if="getExceededOutFlexible(index) "
-                      >(ຍືດຫຍຸ່ນເກີນ {{getExceededOutFlexible(index)}}%)</span>
-                      <span
-                        style="color: #20A816;"
-                        v-if="getExceededInFlexible(index)"
-                      >(ຍືດຫຍຸ່ນໃນກອບ​ {{getExceededInFlexible(index)}}%)</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>ໄລຍະຝາກ:</th>
-                    <td>{{history['depositTypeName']}}</td>
-                  </tr>
-                  <tr>
-                    <th>ອະນຸມັດ:</th>
-                    <td
-                      :class="history['express'] ? 'pedding-express': history['approveStatus']"
-                    >{{history['approveStatus']}} {{history['express'] ? '(ດ່ວນ)' : ''}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="fi-card-footer">
-            <div class="row">
-              <div class="col-7">
-                <!-- <span> ພ/ງ: {{history['createUserName']}}</span>
-                <br>-->
-                <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
+              <div class="detail-box">
+                <div class="detail-inside">
+                  <strong>ຈຳນວນເງິນຝາກ:</strong>
+                  <div
+                    class="detail-title"
+                  >{{(history['currencyCode'] == 'USD')?history['currencyUnit']:''}}{{history['depositAmount'].toLocaleString().replace(/,/g, '.')}}{{(history['currencyCode'] != 'USD')?history['currencyUnit']:''}}</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ສະກຸນເງິນ:</strong>
+                  <div
+                    class="detail-title"
+                  >{{history['currencyName']}} ({{history['currencyCode']}})</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ດອກເບ້ຍທີ່ຕ້ອງການ:</strong>
+                  <div class="detail-title">
+                    {{history['customerInterest']}}%
+                    <span
+                      style="color: red;"
+                      v-if="getExceededOutFlexible(index) "
+                    >(ຍືດຫຍຸ່ນເກີນ​​ {{getExceededOutFlexible(index)}}%)</span>
+                    <span
+                      style="color: #20A816;"
+                      v-if="getExceededInFlexible(index)"
+                    >(ຍືດຫຍຸ່ນໃນກອບ {{getExceededInFlexible(index)}}%)</span>
+                  </div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ໄລຍະຝາກ:</strong>
+                  <div class="detail-title">{{history['depositTypeName']}}</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ອະນຸມັດ:</strong>
+                  <div
+                    :class="history['express'] ? 'pedding-express': history['approveStatus']"
+                  >{{history['approveStatus']}} {{history['express'] ? '(ດ່ວນ)' : ''}}</div>
+                </div>
+                <div class="detail-inside _footer">
+                  <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
+                  <span
+                    :class="[history['express']?'fi-btn-express':'fi-btn']"
+                    @click="getCustomerRequirementDetail(history)"
+                    role="button"
+                  >ລາຍລະອຽດ</span>
+                </div>
               </div>
-              <div class="col-5 text-right">
-                <button
-                  :class="[history['express']?'fi-btn-express':'fi-btn']"
-                  type="button"
-                  @click="getCustomerRequirementDetail(history)"
-                >ລາຍລະອຽດ</button>
-              </div>
+              <!-- End of detail-box -->
             </div>
           </div>
         </div>
@@ -369,6 +364,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/variables.scss";
 a.fi-loadmore-link {
   font-size: 22px;
 }
@@ -398,7 +394,7 @@ img.img-loader-out {
 }
 
 .pedding-express {
-  color: #6870b6;
+  color: $fi-express;
   font-weight: bold;
 }
 
@@ -429,6 +425,23 @@ table.table > tbody > tr:hover {
   background: #f15e54;
   color: white;
 }
+
+.detail-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 0.5rem;
+  .detail-inside {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+  ._footer {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+}
+
 .fi-btn {
   /*position: absolute;
     width: auto;
@@ -448,7 +461,7 @@ table.table > tbody > tr:hover {
 
 .fi-btn-express {
   background: white;
-  color: #6870b6;
+  color: $fi-express;
   border: 1px white solid;
   border-radius: 10px;
   font-size: 1rem;
@@ -474,7 +487,7 @@ button:focus {
   background-color: rgb(250, 150, 0);
 }
 .express {
-  background-color: #6870b6;
+  background-color: $fi-express;
 }
 .fi-card:hover {
   -webkit-box-shadow: -2px 3px 20px -7px lightgray;
@@ -492,6 +505,8 @@ button:focus {
   padding: 5px 5px 5px 5px;
   color: rgb(92, 91, 91);
   background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .fi-card-footer {
   background: white;

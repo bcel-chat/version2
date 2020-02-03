@@ -48,7 +48,54 @@
           </div>
           <div class="fi-card-body">
             <div class="fi-box">
-              <table>
+              <div class="detail-box">
+                <div class="detail-inside">
+                  <strong>ຈຳນວນເງິນຝາກ:</strong>
+                  <div
+                    class="detail-title"
+                  >{{(history['currencyCode'] == 'USD')?history['currencyUnit']:''}}{{history['depositAmount'].toLocaleString().replace(/,/g, '.')}}{{(history['currencyCode'] != 'USD')?history['currencyUnit']:''}}</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ສະກຸນເງິນ:</strong>
+                  <div
+                    class="detail-title"
+                  >{{history['currencyName']}} ({{history['currencyCode']}})</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ດອກເບ້ຍທີ່ຕ້ອງການ:</strong>
+                  <div class="detail-title">
+                    {{history['customerInterest']}}%
+                    <span
+                      style="color: red;"
+                      v-if="getExceededOutFlexible(index) "
+                    >(ຍືດຫຍຸ່ນເກີນ​​ {{getExceededOutFlexible(index)}}%)</span>
+                    <span
+                      style="color: #20A816;"
+                      v-if="getExceededInFlexible(index)"
+                    >(ຍືດຫຍຸ່ນໃນກອບ {{getExceededInFlexible(index)}}%)</span>
+                  </div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ໄລຍະຝາກ:</strong>
+                  <div class="detail-title">{{history['depositTypeName']}}</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ອະນຸມັດ:</strong>
+                  <div
+                    :class="(history['approveStatus'] == 'REJECTED_50')?'REJECTED':history['approveStatus']"
+                  >{{(history['approveStatus'] == 'REJECTED_50')?'REJECTED':history['approveStatus']}}</div>
+                </div>
+                <div class="detail-inside _footer">
+                  <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
+                  <span
+                    :class="['fi-' + history['approveStatus']]"
+                    @click="getCustomerRequirementDetail(history)"
+                    role="button"
+                  >ລາຍລະອຽດ</span>
+                </div>
+              </div>
+              <!-- End of detail-box -->
+              <!-- <table>
                 <tbody>
                   <tr>
                     <th>ຈຳນວນເງິນຝາກ:</th>
@@ -83,22 +130,7 @@
                     >{{(history['approveStatus'] == 'REJECTED_50')?'REJECTED':history['approveStatus']}}</td>
                   </tr>
                 </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="fi-card-footer">
-            <div class="row">
-              <div class="col-7 text-left">
-                <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
-              </div>
-              <div class="col-5 text-right">
-                <button
-                  class="fi-btn"
-                  :class="'fi-'+history['approveStatus']"
-                  type="button"
-                  @click="getCustomerRequirementDetail(history)"
-                >ລາຍລະອຽດ</button>
-              </div>
+              </table>-->
             </div>
           </div>
         </div>
@@ -482,6 +514,22 @@ table.table > tbody > tr:hover {
   color: white;
 }
 
+.detail-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 0.5rem;
+  .detail-inside {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+  ._footer {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+}
+
 .fi-card {
   border: 1px lightgrey solid;
   border-radius: 10px;
@@ -508,6 +556,8 @@ table.table > tbody > tr:hover {
   padding: 5px 5px 5px 5px;
   color: rgb(92, 91, 91);
   background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .fi-card-footer {
   background: white;

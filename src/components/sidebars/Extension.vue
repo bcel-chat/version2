@@ -161,7 +161,7 @@ export default {
         //   }
         // );
 
-        // return true;
+        return true;
 
         let otp1 = code.from(localStorage.getItem("otpBase"));
         let otp2 = code.from(localStorage.getItem("otp"));

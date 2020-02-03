@@ -86,57 +86,53 @@
           </div>
           <div class="fi-card-body">
             <div class="fi-box">
-              <table>
-                <tbody>
-                  <tr>
-                    <th>ຈຳນວນເງິນຝາກ:</th>
-                    <td>{{(history['currencyCode'] == 'USD')?history['currencyUnit']:''}}{{history['depositAmount'].toLocaleString().replace(/,/g, '.')}}{{(history['currencyCode'] != 'USD')?history['currencyUnit']:''}}</td>
-                  </tr>
-                  <tr>
-                    <th>ສະກຸນເງິນ:</th>
-                    <td>{{history['currencyName']}} ({{history['currencyCode']}})</td>
-                  </tr>
-                  <tr>
-                    <th>ດອກເບ້ຍທີ່ຕ້ອງການ:</th>
-                    <td>
-                      {{history['customerInterest']}}%
-                      <span
-                        style="color: red;"
-                        v-if="getExceededOutFlexible(index) "
-                      >(ຍືດຫຍຸ່ນເກີນ​ {{getExceededOutFlexible(index)}}%)</span>
-                      <span
-                        style="color: #20A816;"
-                        v-if="getExceededInFlexible(index)"
-                      >(ຍືດຫຍຸ່ນໃນກອບ {{getExceededInFlexible(index)}}%)</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>ໄລຍະຝາກ:</th>
-                    <td>{{history['depositTypeName']}}</td>
-                  </tr>
-                  <tr>
-                    <th>ອະນຸມັດ:</th>
-                    <td :class="history['approveStatus']">{{history['approveStatus']}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <div class="fi-card-footer">
-            <div class="row">
-              <div class="col-7">
-                <!-- <span> ພ/ງ: {{history['createUserName']}}</span>
-                <br>-->
-                <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
+              <div class="detail-box">
+                <div class="detail-inside">
+                  <strong>ຈຳນວນເງິນຝາກ:</strong>
+                  <div
+                    class="detail-title"
+                  >{{(history['currencyCode'] == 'USD')?history['currencyUnit']:''}}{{history['depositAmount'].toLocaleString().replace(/,/g, '.')}}{{(history['currencyCode'] != 'USD')?history['currencyUnit']:''}}</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ສະກຸນເງິນ:</strong>
+                  <div
+                    class="detail-title"
+                  >{{history['currencyName']}} ({{history['currencyCode']}})</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ດອກເບ້ຍທີ່ຕ້ອງການ:</strong>
+                  <div class="detail-title">
+                    {{history['customerInterest']}}%
+                    <span
+                      style="color: red;"
+                      v-if="getExceededOutFlexible(index) "
+                    >(ຍືດຫຍຸ່ນເກີນ​​ {{getExceededOutFlexible(index)}}%)</span>
+                    <span
+                      style="color: #20A816;"
+                      v-if="getExceededInFlexible(index)"
+                    >(ຍືດຫຍຸ່ນໃນກອບ {{getExceededInFlexible(index)}}%)</span>
+                  </div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ໄລຍະຝາກ:</strong>
+                  <div class="detail-title">{{history['depositTypeName']}}</div>
+                </div>
+                <div class="detail-inside">
+                  <strong>ອະນຸມັດ:</strong>
+                  <div
+                    :class="history['express'] ? 'pedding-express': history['approveStatus']"
+                  >{{history['approveStatus']}} {{history['express'] ? '(ດ່ວນ)' : ''}}</div>
+                </div>
+                <div class="detail-inside _footer">
+                  <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
+                  <span
+                    :class="['fi-'+history['approveStatus']]"
+                    @click="getCustomerRequirementDetail(history)"
+                    role="button"
+                  >ລາຍລະອຽດ</span>
+                </div>
               </div>
-              <div class="col-5 text-right">
-                <button
-                  class="fi-btn"
-                  :class="'fi-' + history['approveStatus']"
-                  type="button"
-                  @click="getCustomerRequirementDetail(history)"
-                >ລາຍລະອຽດ</button>
-              </div>
+              <!-- End of detail-box -->
             </div>
           </div>
         </div>
@@ -634,6 +630,23 @@ table.table > tbody > tr:hover {
   background: #f15e54;
   color: white;
 }
+
+.detail-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0 0.5rem;
+  .detail-inside {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+  ._footer {
+    position: relative;
+    margin-top: 0.5rem;
+  }
+}
+
 .fi-btn {
   background: white;
   border: 1px white solid;
@@ -649,7 +662,7 @@ button:focus {
 }
 .fi-top-right-action {
   position: absolute;
-  top: 0px;
+  top: 3px;
   right: 6px;
 }
 .closeIcon {
@@ -793,6 +806,8 @@ textarea:valid {
   padding: 5px 5px 5px 5px;
   color: rgb(92, 91, 91);
   background: white;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 .fi-card-footer {
   background: white;
