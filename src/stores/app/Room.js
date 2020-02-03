@@ -64,18 +64,23 @@ const room = {
     }
   },
   actions: {
-    setIsTyping({ commit }, payload) {
+    setIsTyping({
+      commit
+    }, payload) {
       commit("setIsTyping", payload);
     },
-    setIsOnline({ commit }, payload) {
+    setIsOnline({
+      commit
+    }, payload) {
       commit("setIsOnline", payload);
     },
-    roomCheck({ commit }, payload) {
+    roomCheck({
+      commit
+    }, payload) {
       let uid = code.from(localStorage.getItem("roger"));
       if (payload.rid)
         ds.rpc.make(
-          "roomCheck",
-          {
+          "roomCheck", {
             id: uid,
             chatwith: payload.uid,
             rid: payload.rid,
@@ -95,7 +100,9 @@ const room = {
         );
       else commit("roomCheck", "");
     },
-    getRoom({ commit }, payload) {
+    getRoom({
+      commit
+    }, payload) {
       ds.rpc.make("getRoom", payload, (err, data) => {
         if (!err) commit("getRoom", data);
         else console.log(err);
@@ -104,8 +111,7 @@ const room = {
     setRoom(context, payload) {
       let uid = code.from(localStorage.getItem("roger"));
       ds.rpc.make(
-        "setRoom",
-        {
+        "setRoom", {
           id: uid,
           chatwith: payload,
           rtype: 1
@@ -116,46 +122,65 @@ const room = {
         }
       );
     },
-    setChat({ commit }, payload) {
+    setChat({
+      commit
+    }, payload) {
       ds.rpc.make("setChat", payload, (err, data) => {
         if (!err) console.log(data);
         else console.log(data);
       });
     },
-    setNewChat({ commit }, payload) {
+    setNewChat({
+      commit
+    }, payload) {
       ds.rpc.make("setNewChat", payload, (err, data) => {
         if (!err) console.log(data);
         else console.log(data);
       });
     },
-    getUserRoom({ commit }, payload) {
+    getUserRoom({
+      commit
+    }, payload) {
       ds.rpc.make("getUserRoom", payload, (err, data) => {
         if (!err) commit("getUserRoom", data[0]);
         else console.log(data);
       });
     },
-    getParticipantRoom({ commit }, payload) {
+    getParticipantRoom({
+      commit
+    }, payload) {
       ds.rpc.make("getParticipantRoom", payload, (err, data) => {
         if (!err) commit("getParticipantRoom", data[0]);
         else console.log(data);
       });
     },
-    setRoomActive({ commit }, payload) {
+    setRoomActive({
+      commit
+    }, payload) {
       commit("setRoomActive", payload);
     },
-    getCountReadMsg({ commit }, payload) {
+    getCountReadMsg({
+      commit
+    }, payload) {
       ds.rpc.make("countReadMsg", payload, (err, data) => {
         if (!err) commit("getCountReadMsg", data);
         else console.log(data);
       });
     },
-    setRoomBody({ commit }, payload) {
+    setRoomBody({
+      commit
+    }, payload) {
       commit("setRoomBody", payload);
     },
-    setRoomListData({ commit }, payload) {
+    setRoomListData({
+      commit
+    }, payload) {
       commit("setRoomListData", payload);
     },
-    updateGroupName({ dispatch, state }, payload) {
+    updateGroupName({
+      dispatch,
+      state
+    }, payload) {
       let uid = code.from(localStorage.getItem("roger"));
       ds.rpc.make("updateGroupName", payload, (err, data) => {
         if (!err) {
@@ -175,24 +200,29 @@ const room = {
         } else console.log(data);
       });
     },
-    getParticipantInfo({ commit, state }, payload) {
+    getParticipantInfo({
+      commit,
+      state
+    }, payload) {
       let uid = code.from(localStorage.getItem("roger"));
       ds.rpc.make(
-        "getParticipantInfo",
-        {
+        "getParticipantInfo", {
           rid: state.participantRoom.rid,
-          uid: uid
+          uid: uid,
+          text: payload.text,
+          _page: payload._page
         },
         (err, data) => {
           if (!err) commit("getParticipantInfo", data);
         }
       );
     },
-    addParticipant({ state }, payload) {
+    addParticipant({
+      state
+    }, payload) {
       payload.forEach(e => {
         ds.rpc.make(
-          "addParticipant",
-          {
+          "addParticipant", {
             assigner: store.state.Identify.myID,
             uid: e.uid,
             rid: state.participantRoom.rid
@@ -203,10 +233,12 @@ const room = {
         );
       });
     },
-    deleteParticipant({ dispatch, state }, payload) {
+    deleteParticipant({
+      dispatch,
+      state
+    }, payload) {
       ds.rpc.make(
-        "deleteParticipant",
-        {
+        "deleteParticipant", {
           uid: store.state.Identify.myID,
           rid: state.participantRoom.rid
         },

@@ -199,7 +199,8 @@
             </div>
           </div>
           <div class="participant">
-            <InfoParticipant></InfoParticipant>
+            <InfoParticipant v-if="participantInfo.length > 0"></InfoParticipant>
+            <div v-else class="no-result">No result</div>
           </div>
           <div class="control-box" role="button" @click="setConfirm(true)">
             <span id="exit">
@@ -269,8 +270,14 @@ export default {
       searchBox: false
     };
   },
+  watch: {
+    search(val) {
+      if (val) this.getParticipantInfo({ text: val, _page: 2 });
+      else this.getParticipantInfo({ text: val, _page: 1 });
+    }
+  },
   beforeMount() {
-    this.getParticipantInfo();
+    this.getParticipantInfo({ text: "", _page: 1 });
   },
   mounted() {
     this.getRoomID(this.participantRoom.rid);
