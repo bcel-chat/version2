@@ -149,8 +149,33 @@
               <span class="p-title">Participants</span>
             </div>
             <div class="search-box" role="button" title="Search participants">
-              <Magnify title="Search participants"></Magnify>
+              <Magnify title="Search participants" @click="searchBox = true"></Magnify>
             </div>
+            <transition
+              enter-active-class="animated zoomInRight"
+              leave-active-class="animated zoomOutRight"
+            >
+              <div class="search-control-box" v-if="searchBox">
+                <span role="button" title="Back">
+                  <ArrowLeft class="arrow" title="Back" @click="searchBox = false"></ArrowLeft>
+                </span>
+                <input
+                  class="search-input"
+                  type="text"
+                  v-model="search"
+                  placeholder="Search participants"
+                  autofocus
+                />
+                <span role="button" title="Clear">
+                  <transition
+                    enter-active-class="animated zoomIn"
+                    leave-active-class="animated zoomOut"
+                  >
+                    <Close v-if="search" class="arrow" title="Clear" @click="search = ''"></Close>
+                  </transition>
+                </span>
+              </div>
+            </transition>
           </div>
           <div class="add-box" v-if="adminStatus">
             <div
@@ -207,10 +232,14 @@ import Cropper from "@/components/sidebars/subcomponents/Cropper.vue";
 import { mapState, mapActions } from "vuex";
 
 import Magnify from "vue-material-design-icons/Magnify.vue";
+import ArrowLeft from "vue-material-design-icons/ArrowLeft.vue";
+import Close from "vue-material-design-icons/Close.vue";
 
 export default {
   components: {
     Magnify,
+    ArrowLeft,
+    Close,
     Cropper,
     InfoParticipant
   },
@@ -235,7 +264,9 @@ export default {
       picURL: process.env.VUE_APP_PICTURE_PROFILE,
       picture: null,
       pictureValue: null,
-      filename: ""
+      filename: "",
+      search: "",
+      searchBox: false
     };
   },
   beforeMount() {

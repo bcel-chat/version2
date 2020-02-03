@@ -1,7 +1,7 @@
 <template>
   <div id="contact">
     <transition-group
-      :name="contact.length > 0 ? 'flip-list' : ''"
+      name="flip-list"
       tag="div"
       :class="['content-group', mobileMode ? 'mobile-enter' : 'desktop-enter']"
     >
@@ -66,8 +66,8 @@
 </template>
 <script>
 import randomColor from "randomcolor";
-import { mapActions, mapState, mapGetters } from "vuex";
-import code from "@/helper/father";
+import { mapActions, mapState } from "vuex";
+// import code from "@/helper/father";
 import ds from "@/helper/deepstream";
 
 import ContextMobile from "@/components/context/ContextMobile.vue";
