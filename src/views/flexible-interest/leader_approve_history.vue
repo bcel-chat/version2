@@ -37,10 +37,10 @@
       >
         <div class="fi-card text-left" :class="'BACKGROUND-'+history['approveStatus']">
           <div class="fi-card-title">
-            <h4>
-              <span style="font-size: 16px;">ຊື່ລູກຄ້າ:</span>
+            <h5>
+              <span style="font-size: 16px; margin-right: 5px">ຊື່ລູກຄ້າ:</span>
               <strong>{{history['customerName']}}</strong>
-            </h4>
+            </h5>
             <span>
               <strong>ຜ່ານ:</strong>
               {{history['userStepper']}}

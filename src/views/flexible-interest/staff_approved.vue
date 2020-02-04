@@ -58,12 +58,12 @@
           :disabled="(history['approveStatus'] != 'CANCEL')?'disabled':''"
         >
           <div class="fi-card-title">
-            <h4>
-              <span style="font-size: 16px;">ຊື່ລູກຄ້າ:</span>
+            <h5>
+              <span style="font-size: 16px; margin-right: 5px">ຊື່ລູກຄ້າ:</span>
               <strong>{{history['customerName']}}</strong>
-            </h4>
+            </h5>
             <span>
-              <strong>ຜ່ານ:</strong>
+              <span>ຜ່ານ:</span>
               {{history['userStepper']}}
             </span>
             <span class="fi-top-right-action" v-if="(history['approveStatus'] == 'APPROVED')">
