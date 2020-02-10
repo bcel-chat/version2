@@ -14,34 +14,40 @@ const ReportRejected = () =>
   import("@/views/flexible-interest/report_rejected.vue");
 
 const productSearch = () => import("@/views/product-search/productsearch.vue");
-const router = [
-  {
+const router = [{
     path: "productsearch",
     name: "productsearch",
+    component: productSearch
+  },
+  {
+    path: "signature",
+    name: "signature",
+    component: productSearch
+  },
+  {
+    path: "helpdesk",
+    name: "helpdesk",
     component: productSearch
   },
   {
     path: "flexible",
     name: "flexible",
     component: FlexibleMain,
-    children: [
-      {
+    children: [{
         path: "staff",
         name: "staff",
         meta: {
           permissionStaff: true
         },
         component: MainStaff,
-        children: [
-          {
+        children: [{
             path: "progress",
             name: "progress",
             meta: {
               permissionStaff: true
             },
             component: FlexibleProcess,
-            children: [
-              {
+            children: [{
                 path: "info",
                 name: "info",
                 meta: {
@@ -124,8 +130,7 @@ const router = [
           permissionLeader: true
         },
         component: MainLeader,
-        children: [
-          {
+        children: [{
             path: "approve",
             name: "leader_approve",
             meta: {
@@ -153,8 +158,7 @@ const router = [
           permissionReport: true
         },
         component: MainReport,
-        children: [
-          {
+        children: [{
             path: "pending",
             name: "report_pending",
             meta: {
@@ -162,8 +166,7 @@ const router = [
               permissionReport: true
             },
             component: ReportPending,
-            children: [
-              {
+            children: [{
                 path: "all",
                 name: "report_pending_all",
                 meta: {
@@ -221,8 +224,7 @@ const router = [
               permissionReport: true
             },
             component: ReportApproved,
-            children: [
-              {
+            children: [{
                 path: "all",
                 name: "report_approved_all",
                 meta: {
@@ -280,8 +282,7 @@ const router = [
               permissionReport: true
             },
             component: ReportRejected,
-            children: [
-              {
+            children: [{
                 path: "all",
                 name: "report_rejected_all",
                 meta: {

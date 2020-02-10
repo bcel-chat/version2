@@ -140,28 +140,19 @@ export default {
         } else {
           return false;
         }
-      } else if (item.permission == 0) {
+      } else if (
+        (item.permission == 0 && this.userID != null) ||
+        this.userID == null
+      ) {
         return true;
       } else {
         return false;
       }
     },
     permissionCheckOnclick(item) {
-      if (item.user) {
-        // ds.rpc.make(
-        //   "otpCheck",
-        //   {
-        //     phone: code.from(localStorage.getItem("phone")),
-        //     otp: code.from(localStorage.getItem("otp"))
-        //   },
-        //   (err, data) => {
-        //     if (data) return true;
-        //     else this.setOtpBox(true);
-        //     return false;
-        //   }
-        // );
+      if (item.user && item.permission == 1) {
 
-        return true;
+        // return true;
 
         let otp1 = code.from(localStorage.getItem("otpBase"));
         let otp2 = code.from(localStorage.getItem("otp"));
@@ -176,6 +167,8 @@ export default {
           this.setOtpBox(true);
           return false;
         }
+      } else if (item.user && item.permission == 0) {
+        return true;
       } else {
         this.toastStart = true;
         this.showToast();

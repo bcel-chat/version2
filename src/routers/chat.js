@@ -5,16 +5,14 @@ const Modules = () => import("@/views/home/Modules.vue");
 
 import flexible from "./flexible";
 
-const route = [
-  {
+const route = [{
     path: "/",
     name: "chat",
     component: Home,
     meta: {
       requiresAuth: true
     },
-    children: [
-      {
+    children: [{
         path: "/rooms/:id",
         name: "Rooms",
         component: Rooms
