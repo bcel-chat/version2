@@ -85,18 +85,23 @@ const chat = {
     }
   },
   actions: {
-    setPictureStatus({ commit }, payload) {
+    setPictureStatus({
+      commit
+    }, payload) {
       commit("setPictureStatus", payload);
     },
-    clearMessage({ commit }, payload) {
+    clearMessage({
+      commit
+    }, payload) {
       commit("getMessage", null);
     },
-    getMessage({ commit }, payload) {
+    getMessage({
+      commit
+    }, payload) {
       const uid = code.from(localStorage.getItem("roger"));
       if (payload)
         ds.rpc.make(
-          "getMessage",
-          {
+          "getMessage", {
             uid: uid,
             rid: payload
           },
@@ -111,6 +116,16 @@ const chat = {
         );
       else commit("getMessage", null);
     },
+    async sendMessage(context, payload) {
+      // try {
+      //   const res = await axios.post(process.env.VUE_APP_ACCESS_API + "/sendmessage", payload, {
+      //     headers:
+      //   })
+      //   console.log(res.data);
+      // } catch (err) {
+      //   console.log(err);
+      // }
+    },
     setMessage(context, payload) {
       const uid = code.from(localStorage.getItem("roger"));
       let rid = null;
@@ -119,8 +134,7 @@ const chat = {
       } else rid = context.state.roomID;
 
       ds.rpc.make(
-        "setMessage",
-        {
+        "setMessage", {
           uid: uid,
           rid: rid,
           msg: payload.msg,
@@ -213,7 +227,9 @@ const chat = {
         });
       }
     },
-    setMessageCreateGroup({ commit }, payload) {
+    setMessageCreateGroup({
+      commit
+    }, payload) {
       ds.rpc.make("setMessageCreateGroup", payload, (err, data) => {
         store.dispatch("Room/getRoom", {
           id: payload.uid,
@@ -223,19 +239,27 @@ const chat = {
         });
       });
     },
-    setRoomID({ commit }, payload) {
+    setRoomID({
+      commit
+    }, payload) {
       commit("setRoomID", payload);
     },
-    setRoomType({ commit }, payload) {
+    setRoomType({
+      commit
+    }, payload) {
       commit("setRoomType", payload);
     },
-    setReplyBoxToggle({ commit }, payload) {
+    setReplyBoxToggle({
+      commit
+    }, payload) {
       commit("setReplyBoxToggle", payload);
       if (!payload.toggle) {
         commit("getReplyBoxData", []);
       }
     },
-    getReplyBoxData({ commit }, payload) {
+    getReplyBoxData({
+      commit
+    }, payload) {
       ds.rpc.make("getReplyBoxData", payload, (err, data) => {
         if (!err) {
           commit("getReplyBoxData", data[0]);
@@ -257,25 +281,39 @@ const chat = {
         }
       });
     },
-    getFile({ commit }, payload) {
+    getFile({
+      commit
+    }, payload) {
       commit("getFile", payload);
     },
-    getFileDropBox({ commit }, payload) {
+    getFileDropBox({
+      commit
+    }, payload) {
       commit("getFileDropBox", payload);
     },
-    addFile({ commit }, payload) {
+    addFile({
+      commit
+    }, payload) {
       commit("addFile", payload);
     },
-    removeFile({ commit }, payload) {
+    removeFile({
+      commit
+    }, payload) {
       commit("removeFile", payload);
     },
-    setFileBoxToggle({ commit }, payload) {
+    setFileBoxToggle({
+      commit
+    }, payload) {
       commit("setFileBoxToggle", payload);
     },
-    setScroller({ commit }, payload) {
+    setScroller({
+      commit
+    }, payload) {
       commit("setScroller", payload);
     },
-    reloadMessage({ commit }, payload) {
+    reloadMessage({
+      commit
+    }, payload) {
       ds.rpc.make("reloadMessage", payload, (err, data) => {
         commit("reloadMessage", data);
       });

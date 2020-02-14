@@ -251,21 +251,7 @@ export default {
       this.startUp = true;
     });
 
-    let emo = [];
-    this.emojis.forEach(el => {
-      let img = new Image();
-      img.src = process.env.VUE_APP_EMOJI + el.name;
-
-      img.onload = () => {
-        var oc = document.createElement("canvas"),
-          octx = oc.getContext("2d");
-        oc.width = img.width;
-        oc.height = img.height;
-        octx.drawImage(img, 0, 0);
-        emo.push({ name: oc.toDataURL() });
-        localStorage.setItem("emojis", JSON.stringify(emo));
-      };
-    });
+    this.getEmoji();
 
     window.addEventListener("dragover", e => {
       e.preventDefault();
@@ -350,6 +336,29 @@ export default {
     showMenu() {
       if (this.sideMenu) this.sideMenu = false;
       else this.sideMenu = true;
+    },
+    getEmoji() {
+      ds.rpc.make("getEmoji", {}, (err, data) => {
+        if (!err) {
+          let emo = [];
+          data.forEach(el => {
+            let img = new Image();
+            img.src = process.env.VUE_APP_EMOJI + el.emoji_path;
+
+            console.log(el);
+
+            img.onload = () => {
+              var oc = document.createElement("canvas"),
+                octx = oc.getContext("2d");
+              oc.width = img.width;
+              oc.height = img.height;
+              octx.drawImage(img, 0, 0);
+              emo.push({ path: oc.toDataURL(), name: el.emoji_name });
+              localStorage.setItem("emojis", JSON.stringify(emo));
+            };
+          });
+        }
+      });
     }
   },
   beforeDestroy() {

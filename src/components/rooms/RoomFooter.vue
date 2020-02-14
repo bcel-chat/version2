@@ -1,10 +1,15 @@
 <template>
   <div id="room-footer">
     <div class="footer-box">
-      <div :class="['input-box', replyBoxToggle || fileBoxToggle ? 'reply' : '']">
+      <div
+        :class="['input-box', replyBoxToggle || fileBoxToggle ? 'reply' : '', emoji && !mobileMode ? 'reply' : '']"
+      >
         <div class="reply">
           <reply-box v-if="replyBoxToggle"></reply-box>
           <file-box v-if="fileBoxToggle"></file-box>
+          <div class="emoji-desktop" v-if="emoji && !mobileMode">
+            <EmojiDesktop></EmojiDesktop>
+          </div>
         </div>
         <div class="input-box-inside">
           <span class="emo-icon left" role="button" @click="emojiPanel">
@@ -46,15 +51,12 @@
     <div class="emoji-mobile" v-if="emoji && mobileMode">
       <EmojiMobile></EmojiMobile>
     </div>
-    <!-- <div class="emoji-desktop" v-else>
-      <EmojiDesktop></EmojiDesktop>
-    </div>-->
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
-import code from "@/helper/father";
+// import code from "@/helper/father";
 import ds from "@/helper/deepstream";
 import { debounce } from "lodash";
 
@@ -80,6 +82,11 @@ export default {
       recordMsg: null,
       clearType: ""
     };
+  },
+  watch: {
+    $route() {
+      this.emoji = false;
+    }
   },
   mounted() {
     this.record = ds.record.getRecord(`chat`);
@@ -120,6 +127,7 @@ export default {
       "showNewChat"
     ]),
     ...mapActions("Chat", [
+      "sendMessage",
       "setMessage",
       "uploadFile",
       "setReplyBoxToggle",
@@ -223,8 +231,14 @@ export default {
           msg: this.message,
           uid: this.myID
         });
+      // this.setMessage({
+      //   msg: this.message,
+      //   type: type,
+      //   chatwith: this.userRoom.uid,
+      //   rtype: this.roomType
+      // });
       else
-        this.setMessage({
+        this.sendMessage({
           msg: this.message,
           type: type,
           chatwith: this.userRoom.uid,

@@ -16,8 +16,8 @@
     <div class="emoji-tab">
       <div class="emoji-tab-inner">
         <template v-for="(emoji, index) in emojis">
-          <div class="emoji" :title="index" :key="index" role="button" @click="send(emoji)">
-            <img class="img-emoji" :src="emoji.name" alt srcset />
+          <div class="emoji" :title="emoji.name" :key="index" role="button" @click="send(emoji)">
+            <img class="img-emoji" :src="emoji.path" alt srcset />
           </div>
         </template>
       </div>
@@ -62,7 +62,7 @@ export default {
 #emoji {
   position: relative;
   width: 100%;
-  height: 15rem;
+  height: 13rem;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -89,6 +89,8 @@ export default {
   width: 100%;
   overflow: auto;
   padding: 0.3rem;
+  background-color: $info-color;
+  border-radius: 0.2rem;
   .emoji-tab-inner {
     position: relative;
     display: flex;
