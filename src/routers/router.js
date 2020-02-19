@@ -18,7 +18,9 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   localStorage.setItem("flexible_root_router", "/");
-  if (to.name == null) next({ path: "/" });
+  if (to.name == null) next({
+    path: "/"
+  });
   let thor = {
     user: null
   };
@@ -32,18 +34,17 @@ router.beforeEach((to, from, next) => {
       });
     } else {
       if (from.name === null) {
-        ds.login(
-          {
+        ds.login({
             user: thor.user,
             password: thor.password
           },
           (success, data) => {
             if (success) {
-              store.commit("Auth/setUserRole", data[0].role);
+              store.commit("Auth/setUserRole", data.data.user[0].role);
               store.commit("Settings/setProfile", {
-                picture: data[0].picture,
-                displayname: data[0].displayname,
-                desc: data[0].description
+                picture: data.data.user[0].picture,
+                displayname: data.data.user[0].displayname,
+                desc: data.data.user[0].description
               });
               next();
             }

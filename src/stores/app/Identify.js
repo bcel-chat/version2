@@ -13,10 +13,15 @@ const identify = {
   getters: {
     getRole() {
       return code.from(localStorage.getItem("your_name"));
+    },
+    getToken() {
+      return code.from(localStorage.getItem("takachi"));
     }
   },
   actions: {
-    setMyID({ commit }, payload) {
+    setMyID({
+      commit
+    }, payload) {
       commit("setMyID", payload);
     }
   }

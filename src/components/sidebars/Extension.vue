@@ -45,8 +45,6 @@ import { mapActions, mapState } from "vuex";
 import code from "@/helper/father.js";
 import { debounce } from "lodash";
 
-import ds from "@/helper/deepstream.js";
-
 export default {
   components: {
     toast
@@ -151,7 +149,6 @@ export default {
     },
     permissionCheckOnclick(item) {
       if (item.user && item.permission == 1) {
-
         // return true;
 
         let otp1 = code.from(localStorage.getItem("otpBase"));

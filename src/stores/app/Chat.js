@@ -117,14 +117,14 @@ const chat = {
       else commit("getMessage", null);
     },
     async sendMessage(context, payload) {
-      // try {
-      //   const res = await axios.post(process.env.VUE_APP_ACCESS_API + "/sendmessage", payload, {
-      //     headers:
-      //   })
-      //   console.log(res.data);
-      // } catch (err) {
-      //   console.log(err);
-      // }
+      try {
+        const res = await axios.post(process.env.VUE_APP_ACCESS_API + "/sendmessage", payload, {
+          headers: store.getters.getToken
+        })
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
     },
     setMessage(context, payload) {
       const uid = code.from(localStorage.getItem("roger"));

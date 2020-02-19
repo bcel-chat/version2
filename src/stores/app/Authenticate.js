@@ -184,17 +184,18 @@ const authentication = {
     }, payload) {
       ds.login(payload, (success, data) => {
         if (success) {
-          commit("setUserRole", data[0].role);
+          commit("setUserRole", data.data.user[0].role);
           // localStorage.setItem("your_name", code.to(data[0].role));
           localStorage.setItem("thor", code.to(JSON.stringify(payload)));
-          localStorage.setItem("roger", code.to(data[0].uid));
+          localStorage.setItem("roger", code.to(data.data.user[0].uid));
+          localStorage.setItem("takachi", code.to(data.data.token))
           store.commit("Settings/setProfile", {
-            picture: data[0].picture,
-            displayname: data[0].displayname,
-            desc: data[0].description
+            picture: data.data.user[0].picture,
+            displayname: data.data.user[0].displayname,
+            desc: data.data.user[0].description
           });
           commit("setAuthData", {
-            data: data,
+            data: data.data.user,
             status: success
           });
         } else {
