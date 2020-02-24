@@ -260,7 +260,7 @@ import MenuPermission from "@/components/sidebars/settings/MenuPermission.vue";
 
 import Cropper from "@/components/sidebars/subcomponents/Cropper.vue";
 import EditPanel from "@/components/sidebars/subcomponents/EditPanel.vue";
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 import { HollowDotsSpinner } from "epic-spinners";
 

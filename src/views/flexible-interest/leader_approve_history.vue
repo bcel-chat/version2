@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
+    <div class="row" v-if="mobileMode">
       <div class="col-12 col-sm-12 col-md-12">
         <h2 class="text-left">
           <strong class="history">History</strong>
@@ -35,7 +35,7 @@
         v-for="(history, index) in customer_requirement_history"
         :key="index"
       >
-        <div class="fi-card text-left" :class="'BACKGROUND-'+history['approveStatus']">
+        <div class="fi-card text-left" :class="'BACKGROUND-CARD-'+history['approveStatus']">
           <div class="fi-card-title">
             <h5>
               <span style="font-size: 16px; margin-right: 5px">ຊື່ລູກຄ້າ:</span>
@@ -95,42 +95,6 @@
                 </div>
               </div>
               <!-- End of detail-box -->
-              <!-- <table>
-                <tbody>
-                  <tr>
-                    <th>ຈຳນວນເງິນຝາກ:</th>
-                    <td>{{(history['currencyCode'] == 'USD')?history['currencyUnit']:''}}{{history['depositAmount']?history['depositAmount'].toLocaleString().replace(/,/g, '.'):'0'}}{{(history['currencyCode'] != 'USD')?history['currencyUnit']:''}}</td>
-                  </tr>
-                  <tr>
-                    <th>ສະກຸນເງິນ:</th>
-                    <td>{{history['currencyName']}} ({{history['currencyCode']}})</td>
-                  </tr>
-                  <tr>
-                    <th>ດອກເບ້ຍທີ່ຕ້ອງການ:</th>
-                    <td>
-                      {{history['customerInterest']}}%
-                      <span
-                        style="color: red;"
-                        v-if="getExceededOutFlexible(index) "
-                      >(ຍືດຫຍຸ່ນເກີນ​​ {{getExceededOutFlexible(index)}}%)</span>
-                      <span
-                        style="color: #20A816;"
-                        v-if="getExceededInFlexible(index)"
-                      >(ຍືດຫຍຸ່ນໃນກອບ​ {{getExceededInFlexible(index)}}%)</span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <th>ໄລຍະຝາກ:</th>
-                    <td>{{history['depositTypeName']}}</td>
-                  </tr>
-                  <tr>
-                    <th>ອະນຸມັດ:</th>
-                    <td
-                      :class="(history['approveStatus'] == 'REJECTED_50')?'REJECTED':history['approveStatus']"
-                    >{{(history['approveStatus'] == 'REJECTED_50')?'REJECTED':history['approveStatus']}}</td>
-                  </tr>
-                </tbody>
-              </table>-->
             </div>
           </div>
         </div>
@@ -150,21 +114,106 @@
         >Load more&#8228;&#8228;&#8228;</a>
       </div>
     </div>
+    <div class="item-container" v-else>
+      <h2 class="text-left">
+        <strong class="history">History</strong>
+        <br class="fi-br" />
+        <span
+          class="fi-found-item"
+        >( {{customer_requirement_history.length}}/{{totalFound}} ລາຍການ )</span>
+      </h2>
+      <label for="fi_search" class="fi-search">
+        <input
+          id="fi_search"
+          class="fi-search-input"
+          required
+          type="text"
+          placeholder="ຄົ້ນຫາ"
+          v-model="search_data"
+          @change="searchTextChange"
+        />
+        <button type="button" class="fi-search-button" @click="doSearch()">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </button>
+      </label>
+      <div class="content-box">
+        <div class="item-header">
+          <span class="cus-name">ຊື່ລູກຄ້າ</span>
+          <span class="pass">ຜ່ານ</span>
+          <span class="amount">ຈຳນວນເງິນຝາກ</span>
+          <span class="cur">ສະກຸນເງິນ</span>
+          <span class="inter">ດອກເບ້ຍທີ່ຕ້ອງການ</span>
+          <span class="dista">ໄລຍະຝາກ</span>
+          <span class="appr">ອະນຸມັດ</span>
+        </div>
+        <template v-for="(history, index) in customer_requirement_history">
+          <div
+            :class="['item-box', 'BACKGROUND-'+history['approveStatus']]"
+            :key="index"
+            role="button"
+            @click="getCustomerRequirementDetail(history)"
+          >
+            <div class="cus-name">
+              <span>{{history['customerName']}}</span>
+            </div>
+            <span class="pass">{{history['userStepper']}}</span>
+            <span
+              class="amount"
+            >{{(history['currencyCode'] == 'USD')?history['currencyUnit']:''}}{{history['depositAmount'].toLocaleString().replace(/,/g, '.')}}{{(history['currencyCode'] != 'USD')?history['currencyUnit']:''}}</span>
+            <span class="cur">{{history['currencyName']}} ({{history['currencyCode']}})</span>
+            <div class="inter">
+              {{history['customerInterest']}}%
+              <span
+                style="color: red;"
+                v-if="getExceededOutFlexible(index)"
+              >(ຍືດຫຍຸ່ນເກີນ​​ {{getExceededOutFlexible(index)}}%)</span>
+              <span
+                style="color: #20A816;"
+                v-if="getExceededInFlexible(index)"
+              >(ຍືດຫຍຸ່ນໃນກອບ {{getExceededInFlexible(index)}}%)</span>
+            </div>
+            <span class="dista">{{history['depositTypeName']}}</span>
+            <div
+              :class="['appr',(history['approveStatus'] == 'REJECTED_50')?'REJECTED':history['approveStatus']]"
+            >
+              <span>{{(history['approveStatus'] == 'REJECTED_50')?'REJECTED':history['approveStatus']}}</span>
+              <span>{{getFormatDate(history['createDate'] + ' ' + history['createTime'])}}</span>
+            </div>
+          </div>
+        </template>
+      </div>
+      <div class="show-more-box" v-if="customer_requirement_history.length < totalFound">
+        <span
+          class="more"
+          role="button"
+          @click="showMore"
+          v-if="customer_requirement_history.length < totalFound"
+        >More</span>
+        <span
+          class="less"
+          role="button"
+          @click="getAllApprovedRejectedHistory"
+          v-if="customer_requirement_history.length > 20"
+        >Less</span>
+      </div>
+    </div>
   </div>
 </template>
 
 
 <script>
 import ds from "@/helper/ds.js";
-import address from "@/helper/server_address.js";
-import axios from "axios";
+// import address from "@/helper/server_address.js";
+// import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";
 import "@/assets/flexible_interest/fonts/phetsarath_font.css";
+import { mapState } from "vuex";
 
 export default {
   name: "leader_approve_history",
   data() {
     return {
+      ssize: true,
       customer_requirement_history: [],
       totalFound: 0,
       search_data: "",
@@ -174,7 +223,9 @@ export default {
   created() {
     this.getAllApprovedRejectedHistory();
   },
-  mounted() {},
+  computed: {
+    ...mapState("AppData", ["mobileMode"])
+  },
   methods: {
     searchTextChange() {
       if (!this.search_data.trim()) {
@@ -262,7 +313,10 @@ export default {
     getAllApprovedRejectedHistory() {
       ds.rpc.make(
         "/bcel/api/flexible/interest/leader/request/approve/history",
-        { user: this.$store.getters["flexible_interest_module/user"] },
+        {
+          user: this.$store.getters["flexible_interest_module/user"],
+          display: 20
+        },
         (error, result) => {
           if (error) {
             this.aclasses = [];
@@ -298,6 +352,22 @@ export default {
                         //this.normalInterest.push('0');
                     })
                 }*/
+          }
+        }
+      );
+    },
+    showMore() {
+      ds.rpc.make(
+        "/bcel/api/flexible/interest/leader/request/approve/history",
+        {
+          user: this.$store.getters["flexible_interest_module/user"],
+          display: this.customer_requirement_history.length + 20
+        },
+        (error, result) => {
+          if (error) {
+            this.aclasses = [];
+          } else {
+            this.customer_requirement_history = result["data"];
           }
         }
       );
@@ -405,6 +475,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "@/assets/scss/variables.scss";
+
 a.fi-loadmore-link {
   font-size: 22px;
 }
@@ -474,19 +546,31 @@ button:focus {
   background: rgb(147, 209, 143);
 }
 .BACKGROUND-APPROVED {
-  background: #20a816;
+  background-color: #fafafa;
+  &:hover {
+    background-color: #dcffdc;
+  }
+}
+.BACKGROUND-CARD-APPROVED {
+  background-color: #1db925;
 }
 .BACKGROUND-SUCCESS {
-  background: rgb(33, 145, 33);
+  background: rgb(33, 145, 39);
 }
 .BACKGROUND-REJECTED {
-  background: #f34e4e;
+  background-color: #fafafa;
+  &:hover {
+    background-color: #ffe0dc;
+  }
+}
+.BACKGROUND-CARD-REJECTED {
+  background-color: #f34545;
 }
 .BACKGROUND-PENDING {
-  background: rgb(250, 150, 0);
+  background: rgb(255, 255, 255);
 }
 
-.fi-not-found > strong {
+.fi-not-found > span {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -599,6 +683,93 @@ input.fi-search-input:focus,
 input:not([type="file"]):valid {
   border: 1px rgba(248, 204, 201, 0.849) solid;
 }
+
+.item-container {
+  position: relative;
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 0.3rem;
+  box-shadow: 0px 3px 5px 1px rgba(0, 0, 0, 0.1);
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.content-box {
+  position: relative;
+  width: 100%;
+  min-width: 900px;
+}
+
+.item-header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  font-weight: 600;
+  width: 100%;
+}
+
+.item-box {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #fcfcfc;
+  border-top: solid 1px rgb(223, 223, 223);
+  &:nth-of-type(2) {
+    border-top: none;
+  }
+}
+
+.cus-name {
+  width: 15%;
+}
+.pass {
+  width: 20%;
+}
+.amount {
+  width: 12%;
+}
+.cur {
+  width: 10%;
+}
+.inter {
+  width: 23%;
+}
+.dista {
+  width: 8%;
+}
+
+.appr {
+  display: flex;
+  flex-direction: column;
+  width: 15%;
+}
+
+.show-more-box {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 10px;
+  span {
+    margin-left: 10px;
+    &.more {
+      color: $fi-primary;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    &.less {
+      color: $secondary-color;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
 ::placeholder {
   color: #d3d3d3;
   opacity: 1; /* Firefox */
