@@ -173,6 +173,9 @@
     .msg-inside {
         color: $msg-color;
         background-color: white;
+        background: linear-gradient(145deg,
+                rgb(179, 209, 228) 0%,
+                rgb(206, 224, 235) 87%);
         border-radius: 0.625rem 0.625rem 0 0.625rem;
 
         &:active {
@@ -194,11 +197,9 @@
     margin-left: 3.125rem;
 
     .msg-inside {
-        color: white;
-        background: rgb(236, 121, 121);
-        background: linear-gradient(145deg,
-                rgba(236, 121, 121, 1) 0%,
-                rgba(135, 76, 76, 1) 87%);
+        color: black;
+        background: white;
+
         border-radius: 0 0.625rem 0.625rem;
 
         &:active {
