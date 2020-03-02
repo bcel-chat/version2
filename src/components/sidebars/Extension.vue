@@ -148,13 +148,9 @@ export default {
       }
     },
     permissionCheckOnclick(item) {
-       return true;
       if (item.user && item.permission == 1) {
-       
-
         let otp1 = code.from(localStorage.getItem("otpBase"));
         let otp2 = code.from(localStorage.getItem("otp"));
-
         if (otp1 && otp2) {
           if (otp1 == otp2) return true;
           else {

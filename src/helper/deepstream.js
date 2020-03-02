@@ -1,4 +1,4 @@
-import deepstream from "deepstream.io-client-js";
+import { DeepstreamClient } from "@deepstream/client";
 const options = {
   reconnectIntervalIncrement: 1000,
   maxReconnectInterval: 30000,
@@ -7,6 +7,6 @@ const options = {
   rpcResponseTimeout: 100000
 };
 
-const ds = deepstream(process.env.VUE_APP_DEEPSTREAM_HOST, options);
+const ds = new DeepstreamClient(process.env.VUE_APP_DEEPSTREAM_HOST, options);
 
 export default ds;
