@@ -2,7 +2,11 @@
   <div id="room-footer">
     <div class="footer-box">
       <div
-        :class="['input-box', replyBoxToggle || fileBoxToggle ? 'reply' : '', emoji && !mobileMode ? 'reply' : '']"
+        :class="[
+          'input-box',
+          replyBoxToggle || fileBoxToggle ? 'reply' : '',
+          emoji && !mobileMode ? 'reply' : ''
+        ]"
       >
         <div class="reply">
           <reply-box v-if="replyBoxToggle"></reply-box>
@@ -18,7 +22,9 @@
           </span>
 
           <div class="input-inside">
-            <div class="hint" :style="{'visibility': visibility}">Type a message</div>
+            <div class="hint" :style="{ visibility: visibility }">
+              Type a message
+            </div>
             <div
               class="input"
               contenteditable="true"
@@ -231,19 +237,19 @@ export default {
           msg: this.message,
           uid: this.myID
         });
-      // this.setMessage({
-      //   msg: this.message,
-      //   type: type,
-      //   chatwith: this.userRoom.uid,
-      //   rtype: this.roomType
-      // });
       else
-        this.sendMessage({
+        this.setMessage({
           msg: this.message,
           type: type,
           chatwith: this.userRoom.uid,
           rtype: this.roomType
         });
+      // this.sendMessage({
+      //   msg: this.message,
+      //   type: type,
+      //   chatwith: this.userRoom.uid,
+      //   rtype: this.roomType
+      // });
       this.reloadData();
       this.setReplyBoxToggle({ toggle: false, cid: 0 });
     },
