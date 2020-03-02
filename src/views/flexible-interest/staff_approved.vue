@@ -157,7 +157,7 @@
 
 
 <script>
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 import address from "@/helper/server_address.js";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.css";

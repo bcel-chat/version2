@@ -348,7 +348,7 @@ import VueSignaturePad from "vue-signature-pad";
 Vue.use(VueSignaturePad);
 //Vue.use(WebCam);
 
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 import { setTimeout } from "timers";
 
 export default {

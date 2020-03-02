@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 import "@/assets/flexible_interest/fonts/phetsarath_font.css";
 import "@/assets/flexible_interest/fonts/glyphicons.css";
 

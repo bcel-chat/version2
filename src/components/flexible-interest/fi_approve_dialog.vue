@@ -475,7 +475,7 @@
 </template>
 
 <script>
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 export default {
   name: "fi_approve_dialog",
   data() {

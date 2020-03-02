@@ -100,7 +100,7 @@ export default {
   computed: {
     ...mapState("Identify", ["myID"]),
     ...mapState("AppData", ["mobileMode", "txtSearch", "newChat"]),
-    ...mapState("Contact", "contact"),
+    ...mapState("Contact", ["contact"]),
     ...mapState("Room", ["roomStatus"]),
     ...mapGetters("Contact", ["_contact"])
   },

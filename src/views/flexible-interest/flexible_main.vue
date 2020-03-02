@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 import store from "@/stores/store.js";
 export default {
   name: "flexible_main",

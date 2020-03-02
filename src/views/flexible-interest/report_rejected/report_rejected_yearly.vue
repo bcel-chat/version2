@@ -10,7 +10,7 @@
         </li>
         <li class="nav-item nav-item-custom-style">
           <a class="nav-link" @click="doPrintPDF()">
-           <i class="fas fa-file-pdf"></i>
+            <i class="fas fa-file-pdf"></i>
             <small>pdf</small>
           </a>
         </li>
@@ -117,7 +117,7 @@
 import Vue from "vue";
 import Datepicker from "vuejs-datepicker";
 
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 
 export default {
   name: "flexible_main",

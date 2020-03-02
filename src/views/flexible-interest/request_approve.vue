@@ -298,7 +298,7 @@
 
 <script>
 import axios from "axios";
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 import address from "@/helper/server_address.js";
 import "bootstrap/dist/css/bootstrap.css";
 import "@/assets/flexible_interest/fonts/phetsarath_font.css";

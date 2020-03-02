@@ -4,7 +4,7 @@
       <ul class="nav nav-tabs justify-content-end">
         <li class="nav-item nav-item-custom-style">
           <a class="nav-link" @click="downloadToExcel()">
-           <i class="fas fa-file-excel"></i>
+            <i class="fas fa-file-excel"></i>
             <small>xls</small>
           </a>
         </li>
@@ -116,7 +116,7 @@
 import Vue from "vue";
 import Datepicker from "vuejs-datepicker";
 
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 
 export default {
   name: "flexible_main",

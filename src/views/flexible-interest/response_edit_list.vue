@@ -96,7 +96,7 @@
 
 
 <script>
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 import "bootstrap/dist/css/bootstrap.css";
 import "@/assets/flexible_interest/fonts/phetsarath_font.css";
 

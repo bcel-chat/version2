@@ -116,7 +116,7 @@
 import Vue from "vue";
 import Datepicker from "vuejs-datepicker";
 
-import ds from "@/helper/ds.js";
+import ds from "@/helper/deepstream.js";
 
 export default {
   name: "flexible_main",
