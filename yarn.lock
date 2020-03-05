@@ -601,10 +601,7 @@
 "@deepstream/client@^5.0.6":
   version "5.0.6"
   resolved "https://registry.yarnpkg.com/@deepstream/client/-/client-5.0.6.tgz#a34b08ebc80feefaf05c2979246073146a9f5717"
-<<<<<<< HEAD
-=======
   integrity sha512-HTFuwmUjsE2Hdi1vbF1BIW5d1huHglArHVFVPMiBFolneKeW6vxuidawfIiMs028A5qBsql1X6WV00Myjhb+Uw==
->>>>>>> dd4d268b2c6f38813c45c185d07d103a2bfad5c8
   dependencies:
     "@deepstream/protobuf" "^1.0.1"
     protobufjs "^6.8.8"
@@ -613,10 +610,7 @@
 "@deepstream/protobuf@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@deepstream/protobuf/-/protobuf-1.0.1.tgz#c5692cffc19c33f95f0b1edb79f3fd1268a89cf2"
-<<<<<<< HEAD
-=======
   integrity sha512-D+Hg+GkZDKf6hcAhn+t6iTDHTGNiiJwmXSELQkuLrJ/hSboWKuDhnfv1Gi04vJbHl7K25of8OdypyyrHnD/3zg==
->>>>>>> dd4d268b2c6f38813c45c185d07d103a2bfad5c8
   dependencies:
     protobufjs "^6.8.8"
 
@@ -9898,10 +9892,7 @@ ws@^6.0.0, ws@^6.2.1:
 ws@^7.2.1:
   version "7.2.1"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.1.tgz#03ed52423cd744084b2cf42ed197c8b65a936b8e"
-<<<<<<< HEAD
-=======
   integrity sha512-sucePNSafamSKoOqoNfBd8V0StlkzJKL2ZAhGQinCfNQ+oacw+Pk7lcdAElecBF2VkLNZRiIb5Oi1Q5lVUVt2A==
->>>>>>> dd4d268b2c6f38813c45c185d07d103a2bfad5c8
 
 xlsx@^0.14.4:
   version "0.14.5"

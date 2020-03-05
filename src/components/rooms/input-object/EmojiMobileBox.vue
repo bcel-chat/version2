@@ -8,7 +8,6 @@
           :class="['tab', indexDef == index ? 'active' : '']"
           @click="selectIcon(index)"
           role="button"
-          v-if="display(index)"
         >
           <i class="material-icons">{{tab.icon}}</i>
         </span>
@@ -17,14 +16,8 @@
     <div class="emoji-tab">
       <div class="emoji-tab-inner">
         <template v-for="(emoji, index) in emojis">
-          <div
-            class="emoji"
-            :title="index"
-            :key="index"
-            role="button"
-            @click="send(emoji.name, index)"
-          >
-            <img class="img-emoji" :src="emoji.name" alt srcset />
+          <div class="emoji" :title="emoji.name" :key="index" role="button" @click="send(emoji)">
+            <img class="img-emoji" :src="emoji.path" alt srcset />
           </div>
         </template>
       </div>
@@ -33,13 +26,12 @@
 </template>
 
 <script>
-import { replace, indexOf, find } from "lodash";
 export default {
   data() {
     return {
       indexDef: 0,
-      recently: "",
-      emojis: [],
+      recently: [],
+      emojis: JSON.parse(localStorage.getItem("emojis")),
       tabs: [
         {
           title: "Recent",
@@ -52,52 +44,14 @@ export default {
       ]
     };
   },
-  beforeMount() {
-    if (!localStorage.getItem("recently")) {
-      localStorage.setItem("recently", JSON.stringify(""));
-    } else {
-      this.emojis = JSON.parse(localStorage.getItem("recently"));
-    }
-
+  mounted() {
     this.recently = JSON.parse(localStorage.getItem("recently"));
-    if (!this.recently)
-      this.emojis = JSON.parse(localStorage.getItem("emojis"));
   },
   methods: {
     selectIcon(val) {
       this.indexDef = val;
-      if (val == 0) this.emojis = JSON.parse(localStorage.getItem("recently"));
-      else this.emojis = JSON.parse(localStorage.getItem("emojis"));
     },
-    send(name, index) {
-      if (this.indexDef == 1) this.indexDef = 1;
-      else this.indexDef = 0;
-
-      if (JSON.parse(localStorage.getItem("recently")) == "") {
-        this.recently = [];
-        this.recently.push({ index: index, name: name });
-        localStorage.setItem("recently", JSON.stringify(this.recently));
-      } else {
-        let arr2 = JSON.parse(localStorage.getItem("recently"));
-        // this.recently.splice({ index: index, name: name }, 1);
-
-        this.recently.push({ index: index, name: name });
-
-        var res = this.recently.map(
-          obj => arr2.find(o => o.index === obj.index) || obj
-        );
-
-        console.log(res);
-
-        localStorage.setItem("recently", JSON.stringify(res));
-      }
-    },
-    display(index) {
-      if (index == 0)
-        if (!this.recently) return false;
-        else return true;
-      else return true;
-    }
+    send() {}
   }
 };
 </script>
@@ -108,7 +62,7 @@ export default {
 #emoji {
   position: relative;
   width: 100%;
-  height: 20rem;
+  height: 13rem;
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -135,6 +89,8 @@ export default {
   width: 100%;
   overflow: auto;
   padding: 0.3rem;
+  background-color: $info-color;
+  border-radius: 0.2rem;
   .emoji-tab-inner {
     position: relative;
     display: flex;
@@ -145,8 +101,8 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 28px;
-      height: 28px;
+      width: 33px;
+      height: 33px;
       margin: 6px;
       transition: all 0.2s;
 

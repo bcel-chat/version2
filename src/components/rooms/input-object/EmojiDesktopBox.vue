@@ -101,8 +101,8 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 28px;
-      height: 28px;
+      width: 34px;
+      height: 34px;
       margin: 6px;
       transition: all 0.2s;
 

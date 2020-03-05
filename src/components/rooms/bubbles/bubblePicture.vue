@@ -100,11 +100,8 @@
                     <span class="icon-name">File</span>
                   </div>
                   <div class="download-box" @click="toDownload">
-                    <span class="download">
-                      {{
-                      download ? "Completed" : "Download"
-                      }}
-                    </span>
+                    <span v-if="download">Completed</span>
+                    <span v-else>Download</span>
                   </div>
                 </div>
               </div>
@@ -120,7 +117,6 @@
 </template>
 
 <script>
-import code from "@/helper/father.js";
 import { mapState, mapActions } from "vuex";
 import LongPress from "@/mixins/LongPress.js";
 import ds from "@/helper/deepstream";

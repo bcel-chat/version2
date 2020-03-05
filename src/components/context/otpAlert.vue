@@ -215,7 +215,7 @@ export default {
   position: relative;
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   padding: 1rem;
   background-color: #ffffff;
