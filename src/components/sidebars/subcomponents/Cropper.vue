@@ -111,6 +111,7 @@ export default {
       img.onload = () => {
         var oc = document.createElement("canvas"),
           octx = oc.getContext("2d");
+
         oc.width = img.width;
         oc.height = img.height;
         octx.drawImage(img, 0, 0);

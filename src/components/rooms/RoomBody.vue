@@ -15,6 +15,7 @@
               <BubbleText v-else-if="msg.type == 1" :msg="msg" :index="index"></BubbleText>
               <bubble-mention v-if="msg.type == 3" :msg="msg"></bubble-mention>
               <bubble-picture v-if="msg.type == 4" :msg="msg"></bubble-picture>
+              <bubble-sticker v-if="true" :msg="msg"></bubble-sticker>
             </div>
           </template>
           <BubblePictureDraf v-if="pictureStatus.display && pictureStatus.success == roomID"></BubblePictureDraf>
@@ -38,6 +39,7 @@ import BubbleMention from "./bubbles/bubbleMention.vue";
 import BubblePictureDraf from "./bubbles/bubblePicture_draf.vue";
 import BubblePicture from "./bubbles/bubblePicture.vue";
 import BubbleDate from "./bubbles/bubbleDate.vue";
+import BubbleSticker from "./bubbles/bubbleSticker.vue";
 import { mapState, mapActions } from "vuex";
 import ds from "@/helper/deepstream";
 import { debounce } from "lodash";
@@ -49,7 +51,8 @@ export default {
     BubbleText,
     BubbleMention,
     BubblePictureDraf,
-    BubblePicture
+    BubblePicture,
+    BubbleSticker
   },
   data() {
     return {

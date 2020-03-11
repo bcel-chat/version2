@@ -11,6 +11,30 @@
     z-index: 1;
 }
 
+.sticker-box {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5rem;
+    width: 100%;
+    top: -5rem;
+    background-color: rgba(59, 80, 97, 0.5);
+
+    .st-close {
+        position: absolute;
+        right: 5px;
+        top: 0;
+        font-size: 22px;
+        color: #747474;
+    }
+
+    .img-emoji {
+        width: 4rem;
+        height: 4rem;
+    }
+}
+
 .footer-box {
     padding: 0.313rem 0.625rem;
     display: flex;

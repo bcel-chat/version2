@@ -68,14 +68,65 @@ export default {
   },
   methods: {
     ...mapActions("AppData", ["showFilePanel"]),
-    ...mapActions("Chat", ["getFile"]),
+    ...mapActions("Chat", ["getFile", "getPicture"]),
     picture(e) {
+      // let file = [];
+      // for (var i = 0; i < e.target.files.length; i++)
+      //   this.reduce(e.target.files[i]);
       this.getFile({ file: e.target.files, page: 1 });
       this.showFilePanel(false);
     },
     file(e) {
       this.getFile({ file: e.target.files, page: 2 });
       this.showFilePanel(false);
+    },
+    reduce(files) {
+      const width = 700;
+      var reader = new FileReader();
+      reader.onload = event => {
+        var img = new Image();
+        var filePath = files.name;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.bmp|\.ico|\.svg)$/i;
+        if (!allowedExtensions.exec(filePath)) {
+          return;
+        }
+        img.src = event.target.result;
+        console.log(img.src);
+
+        img.onload = () => {
+          if (img.width > width) {
+            var oc = document.createElement("canvas"),
+              octx = oc.getContext("2d");
+            oc.width = img.width;
+            oc.height = img.height;
+            octx.drawImage(img, 0, 0);
+            // while (oc.width * 0.5 > width) {
+            //   oc.width *= 0.5;
+            //   oc.height *= 0.5;
+            //   octx.drawImage(oc, 0, 0, oc.width, oc.height);
+            // }
+            oc.width = width;
+            oc.height = (oc.width * img.height) / img.width;
+            octx.drawImage(img, 0, 0, oc.width, oc.height);
+            console.log(oc.toDataURL());
+
+            fetch(oc.toDataURL())
+              .then(res => res.blob())
+              .then(blob => {
+                const file = new File([blob], files.name);
+                this.getPicture(file);
+              });
+          } else {
+            fetch(img.src)
+              .then(res => res.blob())
+              .then(blob => {
+                const file = new File([blob], files.name);
+                this.getPicture(file);
+              });
+          }
+        };
+      };
+      reader.readAsDataURL(files);
     }
   }
 };

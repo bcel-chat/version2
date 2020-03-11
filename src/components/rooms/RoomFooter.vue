@@ -1,5 +1,11 @@
 <template>
   <div id="room-footer">
+    <div class="sticker-box" v-if="stickerBox.status">
+      <div class="st-close" @click="setStickerBox({status: false,src: ''})">
+        <CloseIcon class="close-icon"></CloseIcon>
+      </div>
+      <img :src="stickerBox.src" alt srcset class="img-emoji" />
+    </div>
     <div class="footer-box">
       <div
         :class="[
@@ -22,9 +28,7 @@
           </span>
 
           <div class="input-inside">
-            <div class="hint" :style="{ visibility: visibility }">
-              Type a message
-            </div>
+            <div class="hint" :style="{ visibility: visibility }">Type a message</div>
             <div
               class="input"
               contenteditable="true"
@@ -34,7 +38,7 @@
               @input="inputUpdate"
               @keydown="inputHandler"
               @keyup.enter="send"
-              @focus="emoji = false"
+              @focus="inputFocus"
             ></div>
           </div>
           <span
@@ -71,12 +75,15 @@ const FileBox = () => import("@/components/rooms/input-object/FileBox.vue");
 import EmojiMobile from "@/components/rooms/input-object/EmojiMobileBox.vue";
 import EmojiDesktop from "@/components/rooms/input-object/EmojiDesktopBox.vue";
 
+import CloseIcon from "vue-material-design-icons/Close.vue";
+
 export default {
   components: {
     ReplyBox,
     FileBox,
     EmojiMobile,
-    EmojiDesktop
+    EmojiDesktop,
+    CloseIcon
   },
   data() {
     return {
@@ -121,7 +128,7 @@ export default {
     ]),
     ...mapState("Room", ["userRoom", "roomStatus", "participantRoom"]),
     ...mapState("Group", ["participantId"]),
-    ...mapState("Context", ["toEdit"]),
+    ...mapState("Context", ["toEdit", "stickerBox"]),
     ...mapState("Identify", ["myID"]),
     ...mapState("Settings", ["profile"])
   },
@@ -141,7 +148,7 @@ export default {
       "setPictureStatus"
     ]),
     ...mapActions("Room", ["setRoom", "setRoomActive"]),
-    ...mapActions("Context", ["setToEdit", "editMessage"]),
+    ...mapActions("Context", ["setToEdit", "editMessage", "setStickerBox"]),
     inputHandler(e) {
       if (e.keyCode === 13 && !e.shiftKey) {
         e.preventDefault();
@@ -307,6 +314,10 @@ export default {
         status: true,
         rid: this.roomID
       });
+    },
+    inputFocus() {
+      this.emoji = false;
+      this.setStickerBox({ status: false, src: "" });
     },
     notify() {
       let name;

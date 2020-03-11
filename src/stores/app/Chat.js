@@ -52,6 +52,11 @@ const chat = {
     getReplyBoxData(state, payload) {
       state.replyBoxData = payload;
     },
+    getPicture(state, payload) {
+      state.fileBoxData.push(payload);
+      state.filePage = payload.page;
+      state.fileBoxToggle = true;
+    },
     getFile(state, payload) {
       state.fileBoxData = [];
 
@@ -272,6 +277,9 @@ const chat = {
           }, 100);
         }
       });
+    },
+    getPicture({ commit }, payload) {
+      commit("getPicture", payload);
     },
     getFile({ commit }, payload) {
       commit("getFile", payload);

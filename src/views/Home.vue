@@ -298,7 +298,11 @@ export default {
               oc.width = img.width;
               oc.height = img.height;
               octx.drawImage(img, 0, 0);
-              emo.push({ path: oc.toDataURL(), name: el.emoji_name });
+              emo.push({
+                path: oc.toDataURL(),
+                name: el.emoji_name,
+                src: el.emoji_path
+              });
               localStorage.setItem("emojis", JSON.stringify(emo));
             };
           });

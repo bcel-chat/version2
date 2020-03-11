@@ -16,7 +16,13 @@
     <div class="emoji-tab">
       <div class="emoji-tab-inner">
         <template v-for="(emoji, index) in emojis">
-          <div class="emoji" :title="emoji.name" :key="index" role="button" @click="send(emoji)">
+          <div
+            class="emoji"
+            :title="emoji.name"
+            :key="index"
+            role="button"
+            @click="setStickerBox({status: true, src: emoji.path})"
+          >
             <img class="img-emoji" :src="emoji.path" alt srcset />
           </div>
         </template>
@@ -26,6 +32,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -48,10 +55,10 @@ export default {
     this.recently = JSON.parse(localStorage.getItem("recently"));
   },
   methods: {
+    ...mapActions("Context", ["setStickerBox"]),
     selectIcon(val) {
       this.indexDef = val;
-    },
-    send() {}
+    }
   }
 };
 </script>
@@ -101,16 +108,31 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 33px;
-      height: 33px;
-      margin: 6px;
+      width: 40px;
+      height: 40px;
+      margin: 2px;
+      padding: 5px;
       transition: all 0.2s;
 
       &:active {
-        background-color: $primary-color;
+        background-color: #9faabd;
+        border-radius: 3px;
+        box-shadow: inset 0px 0px 3px 1px rgba(32, 52, 65, 0.3);
+      }
+
+      @media screen and (min-width: 370px) {
+        width: 48px;
+        height: 48px;
+      }
+
+      @media screen and (min-width: 400px) {
+        width: 53px;
+        height: 53px;
       }
 
       @media screen and (min-width: 760px) {
+        width: 56px;
+        height: 56px;
         &:hover {
           background-color: $info-color;
         }
