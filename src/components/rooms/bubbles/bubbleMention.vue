@@ -54,7 +54,16 @@
                   <span>{{ mentionData.uid == myID ? 'You' : mentionData.displayname}}</span>
                 </div>
                 <div class="title-msg">
-                  <span>{{mentionData.msg}}</span>
+                  <span v-if="mentionData.type == 1">{{mentionData.msg}}</span>
+                  <div class="msg-inside-sticker" v-else-if="mentionData.type == 5">
+                    <img
+                      data-v-5679474e
+                      :src="`/chat/img/emojis/${mentionData.path}`"
+                      alt
+                      srcset
+                      class="img-emoji"
+                    />
+                  </div>
                 </div>
               </div>
             </div>

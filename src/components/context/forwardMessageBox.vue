@@ -5,10 +5,19 @@
         <div class="reply-side">
           <div class="inside">
             <div class="title-name">
-              <span>{{ msg.uid == myID ? 'Yoy' : msg.displayname}}</span>
+              <span>{{ msg.uid == myID ? 'You' : msg.displayname}}</span>
             </div>
             <div class="title-msg">
-              <span>{{msg.msg}}</span>
+              <span v-if="msg.type == 1">{{msg.msg}}</span>
+              <div class="msg-inside-sticker" v-else-if="msg.type == 5">
+                <img
+                  data-v-5679474e
+                  :src="`/chat/img/emojis/${msg.path}`"
+                  alt
+                  srcset
+                  class="img-emoji"
+                />
+              </div>
             </div>
           </div>
         </div>

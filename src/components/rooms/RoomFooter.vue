@@ -1,10 +1,10 @@
 <template>
   <div id="room-footer">
     <div class="sticker-box" v-if="stickerBox.status">
-      <div class="st-close" @click="setStickerBox({status: false,src: ''})">
+      <div class="st-close" @click="setStickerBox({status: false, name: '',src: ''})">
         <CloseIcon class="close-icon"></CloseIcon>
       </div>
-      <img :src="stickerBox.src" alt srcset class="img-emoji" />
+      <img :src="`/chat/img/emojis/${stickerBox.src}`" alt srcset class="img-emoji" />
     </div>
     <div class="footer-box">
       <div
@@ -46,7 +46,7 @@
             role="button"
             id="att"
             v-if="!fileBoxToggle"
-            @click="emoji = false"
+            @click="closeEmoji"
           >
             <i class="material-icons att">attach_file</i>
           </span>
@@ -99,6 +99,7 @@ export default {
   watch: {
     $route() {
       this.emoji = false;
+      this.clear();
     }
   },
   mounted() {
@@ -126,7 +127,7 @@ export default {
       "fileBoxToggle",
       "fileBoxData"
     ]),
-    ...mapState("Room", ["userRoom", "roomStatus", "participantRoom"]),
+    ...mapState("Room", ["userRoom", "roomStatus", "participantRoom", "room"]),
     ...mapState("Group", ["participantId"]),
     ...mapState("Context", ["toEdit", "stickerBox"]),
     ...mapState("Identify", ["myID"]),
@@ -228,6 +229,7 @@ export default {
       let type = 1;
       if (this.replyBoxToggle && !this.toEdit) type = 3;
       else if (this.fileBoxToggle) type = 4;
+      else if (this.stickerBox.status) type = 5;
       else type = 1;
 
       if (this.replyBoxToggle) {
@@ -236,6 +238,7 @@ export default {
           this.sendConfirm(type);
       } else if (this.message.trim() != "") this.sendConfirm(type);
       else if (this.fileBoxToggle) this.sendFile(type);
+      else if (this.stickerBox.status) this.sendConfirm(type);
     },
     sendConfirm(type) {
       if (this.toEdit)
@@ -249,7 +252,8 @@ export default {
           msg: this.message,
           type: type,
           chatwith: this.userRoom.uid,
-          rtype: this.roomType
+          rtype: this.roomType,
+          path: this.stickerBox.src
         });
       // this.sendMessage({
       //   msg: this.message,
@@ -298,6 +302,8 @@ export default {
         });
     },
     clear() {
+      this.setReplyBoxToggle({ toggle: false, cid: 0 });
+      this.setStickerBox({ status: false, name: "", src: "" });
       setTimeout(() => {
         ds.event.emit(`scroller/${this.roomID}`, {
           rid: this.roomID,
@@ -345,10 +351,16 @@ export default {
       });
     },
     emojiPanel() {
-      if (this.emoji) this.emoji = false;
-      else {
+      if (this.emoji) {
+        this.emoji = false;
+        this.setStickerBox({ status: false, name: "", src: "" });
+      } else {
         this.emoji = true;
       }
+    },
+    closeEmoji() {
+      this.emoji = false;
+      this.setStickerBox({ status: false, name: "", src: "" });
     }
   }
 };

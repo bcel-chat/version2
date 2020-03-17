@@ -15,7 +15,7 @@
               <BubbleText v-else-if="msg.type == 1" :msg="msg" :index="index"></BubbleText>
               <bubble-mention v-if="msg.type == 3" :msg="msg"></bubble-mention>
               <bubble-picture v-if="msg.type == 4" :msg="msg"></bubble-picture>
-              <bubble-sticker v-if="true" :msg="msg"></bubble-sticker>
+              <bubble-sticker v-if="msg.type == 5" :msg="msg"></bubble-sticker>
             </div>
           </template>
           <BubblePictureDraf v-if="pictureStatus.display && pictureStatus.success == roomID"></BubblePictureDraf>
@@ -69,6 +69,11 @@ export default {
   watch: {
     $route(to, from) {
       ds.event.unsubscribe(`chatroom/${from.params.id}`);
+    },
+    message() {
+      this.$nextTick(() => {
+        this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
+      });
     }
   },
   beforeMount() {

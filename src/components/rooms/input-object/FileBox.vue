@@ -86,7 +86,7 @@ export default {
   // }
 
   .reply-box-inside {
-    background-color: #f8f8f8;
+    background-color: #ffffff;
     border-radius: 0.3rem;
     padding: 0.2rem 1.2rem 0.2rem 0.2rem;
     display: flex;
@@ -119,7 +119,7 @@ export default {
         width: 6rem;
         height: 6rem;
         border-radius: 0.3rem;
-        background-color: rgb(206, 206, 206);
+        background-color: #ffffff;
         overflow: hidden;
         margin: 0.3rem;
 

@@ -176,7 +176,7 @@ export default {
   height: 100%;
   width: 100%;
   border-radius: 0.3rem;
-  background-color: white;
+  background-color: $info-color;
   clip-path: circle(0% at 78% 100%);
   transition: clip-path 0.4s ease-in-out;
   box-shadow: 0rem 0.113rem 0.425rem -0.225rem rgba(136, 152, 170, 0.8);

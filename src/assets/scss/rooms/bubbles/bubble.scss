@@ -127,8 +127,8 @@
     }
 
     .read-msg.read {
-        background-color: $primary-color;
-        box-shadow: 0rem .1rem .2rem -.2rem rgba(253, 0, 0, 0.5)
+        background-color: $read;
+        box-shadow: 0rem .1rem .2rem -.2rem rgba(0, 253, 34, 0.5)
     }
 
     .read-msg.unread {
@@ -171,15 +171,17 @@
     margin-left: 0;
 
     .msg-inside {
-        color: $msg-color;
-        background-color: white;
-        background: linear-gradient(145deg,
-                rgb(179, 209, 228) 0%,
-                rgb(206, 224, 235) 87%);
+        // color: $msg-color;
+        // background-color: white;
+        // background: linear-gradient(145deg,
+        //         rgb(179, 209, 228) 0%,
+        //         rgb(206, 224, 235) 87%);
+        color: $msg-color-out;
+        background-color: $bubble-out;
         border-radius: 0.625rem 0.625rem 0 0.625rem;
 
         &:active {
-            background-color: #ebebeb;
+            background-color: $bubble-in;
         }
     }
 }
@@ -198,12 +200,11 @@
 
     .msg-inside {
         color: black;
-        background: white;
-
+        background-color: $bubble-in;
         border-radius: 0 0.625rem 0.625rem;
 
         &:active {
-            background: $primary-color;
+            background: $bubble-out;
         }
     }
 }

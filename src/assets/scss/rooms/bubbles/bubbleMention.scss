@@ -126,8 +126,8 @@
     }
 
     .read-msg.read {
-        background-color: $primary-color;
-        box-shadow: 0rem .1rem .2rem -.2rem rgba(253, 0, 0, 0.5)
+        background-color: $read;
+        box-shadow: 0rem .1rem .2rem -.2rem rgba(0, 253, 34, 0.5)
     }
 
     .read-msg.unread {
@@ -176,25 +176,27 @@
 .msg-box.out {
     margin-top: 0;
     margin-left: 0;
-    background-color: white;
-    background: linear-gradient(145deg,
-            rgb(179, 209, 228) 0%,
-            rgb(206, 224, 235) 87%);
+    // background-color: white;
+    // background: linear-gradient(145deg,
+    //         rgb(179, 209, 228) 0%,
+    //         rgb(206, 224, 235) 87%);
+    color: #ffffff;
+    background-color: $bubble-out;
     border-radius: 0.625rem 0.625rem 0 0.625rem;
     overflow: hidden;
 
     &:active {
-        background: #ebebeb;
+        background: $bubble-in;
     }
 
     .reply-box {
         .reply-side {
-            color: $msg-color;
+            color: $msg-color-in;
 
             .inside {
                 position: relative;
                 overflow: hidden;
-                background-color: #eaeef1;
+                background-color: $bubble-reply-inside;
                 border-radius: 0.3rem 0.3rem 0rem 0.3rem;
 
                 &::before {
@@ -202,7 +204,7 @@
                     content: "";
                     width: 0.3rem;
                     height: 100%;
-                    background-color: $primary-color;
+                    background-color: #cccccc;
                 }
 
                 .title-name {
@@ -220,7 +222,7 @@
         }
 
         .msg-inside {
-            color: rgba(0, 0, 0, .8);
+            color: $msg-color-out;
             //background-color: white;
         }
     }
@@ -242,7 +244,7 @@
     background: white;
 
     &:active {
-        background: $primary-color;
+        background: $bubble-out;
     }
 
     .reply-box {
@@ -283,5 +285,25 @@
         .msg-inside {
             color: black;
         }
+    }
+}
+
+
+.msg-inside-sticker {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 4rem;
+    height: 4rem;
+    margin: 2px;
+    padding: 5px;
+    transition: all 0.2s;
+
+    .img-emoji {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
     }
 }

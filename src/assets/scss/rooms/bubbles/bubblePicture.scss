@@ -197,13 +197,13 @@
 
     .reply-box {
         .reply-side {
-            color: $msg-color;
+            color: $msg-color-out;
 
 
         }
 
         .msg-inside {
-            color: $msg-color;
+            color: $msg-color-out;
             background-color: white;
         }
     }

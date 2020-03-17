@@ -33,8 +33,8 @@
             :title="emoji.name"
             :key="index"
             role="button"
-            @click="send(emoji)"
             @mouseover="showSticker(emoji)"
+            @click="send(emoji)"
           >
             <img class="img-emoji" :src="emoji.path" alt srcset />
           </div>
@@ -45,6 +45,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
+import ds from "@/helper/deepstream";
+
 export default {
   data() {
     return {
@@ -63,17 +66,79 @@ export default {
       ]
     };
   },
+  watch: {
+    room() {
+      //this.reloadData();
+    }
+  },
   mounted() {
     this.recently = JSON.parse(localStorage.getItem("recently"));
   },
+  computed: {
+    ...mapState("Room", ["userRoom", "room"]),
+    ...mapState("Chat", ["roomType", "roomID"]),
+    ...mapState("Group", ["participantId"]),
+    ...mapState("Identify", ["myID"])
+  },
   methods: {
+    ...mapActions("AppData", [
+      "setSearchToggle",
+      "setTabActive",
+      "showNewChat"
+    ]),
+    ...mapActions("Chat", ["setMessage"]),
+    ...mapActions("Room", ["setRoom", "setRoomActive"]),
     selectIcon(val) {
       this.indexDef = val;
     },
     showSticker(val) {
       this.sampleSticker = val;
     },
-    send() {}
+    send(val) {
+      this.setMessage({
+        msg: val.name,
+        type: 5,
+        chatwith: this.userRoom.uid,
+        rtype: this.roomType,
+        path: val.src
+      });
+    },
+    reloadData() {
+      let id = Math.random()
+        .toString(6)
+        .substr(2, 4);
+
+      ds.event.emit(`room/${this.userRoom.uid}`, this.roomID);
+      ds.event.emit(`chatroom/${this.roomID}`, this.roomID);
+
+      ds.record
+        .getRecord(`message`)
+        .set(`chatroom/${this.roomID}`, { rid: this.roomID, mid: id });
+
+      this.setTabActive(0);
+      // this.notify();
+      this.clear();
+
+      if (this.roomType == 2)
+        this.participantId.forEach(e => {
+          ds.event.emit(`room/${e.uid}`, this.roomID);
+        });
+    },
+    clear() {
+      setTimeout(() => {
+        ds.event.emit(`scroller/${this.roomID}`, {
+          rid: this.roomID,
+          uid: this.myID,
+          page: 2
+        });
+      }, 500);
+      this.setSearchToggle(false);
+      this.showNewChat(false);
+      this.setRoomActive({
+        status: true,
+        rid: this.roomID
+      });
+    }
   }
 };
 </script>
@@ -94,6 +159,7 @@ export default {
   display: flex;
   width: 100%;
   height: 2.5rem;
+  background-color: $info-color;
   .tab {
     display: flex;
     align-items: center;
@@ -112,7 +178,7 @@ export default {
   width: 100%;
   overflow: hidden;
   padding: 0.3rem;
-  background-color: $info-color;
+  background-color: white;
   border-radius: 0.2rem;
 
   .example-box {
@@ -159,8 +225,8 @@ export default {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 52px;
-      height: 52px;
+      width: 3rem;
+      height: 3rem;
       margin: 2px;
       padding: 5px;
       transition: all 0.2s;

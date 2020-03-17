@@ -3,15 +3,23 @@
 $primary-color: #EF5353;
 $secondary-color: #5B5B5B;
 $semi-secondary-color: #707070;
-$msg-color: #262626;
+$msg-color-in: #262626;
+$msg-color-out: #262626;
 $primary-hover: rgba(217, 223, 230, .25);
 $primary-active: #eff2f7;
 $primary-enter: rgba(217, 223, 230, .4);
 $info-color: #f7fafc;
 $border-color: rgb(240, 240, 240);
 $enter-color: rgba(239, 83, 83, .3);
-$primary-shadow-color: rgba(197, 9, 9, 1);
+$primary-shadow-color: rgb(9, 197, 9);
 $secondary-shadow-color: rgba(0, 0, 0, .1);
+
+$bubble-in: rgb(239, 243, 247);
+$bubble-out: #f88181;
+
+$bubble-reply-inside: #ffffff;
+
+$read: #2deb5c;
 
 $fi-primary: #3287c4;
 $fi-hover: #51a6e2;

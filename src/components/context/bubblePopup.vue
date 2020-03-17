@@ -11,9 +11,12 @@
             class="item edit"
             role="button"
             @click="replyMessage(), setToEdit(true)"
-            v-if="popupData.uid == myID && popupData.type != 4"
+            v-if="popupData.uid == myID && popupData.type != 4 && popupData.type != 5"
           >Edit message</div>
-          <div class="line" v-if="popupData.uid == myID"></div>
+          <div
+            class="line"
+            v-if="popupData.uid == myID && popupData.type != 4 && popupData.type != 5"
+          ></div>
           <div
             class="item delete"
             role="button"

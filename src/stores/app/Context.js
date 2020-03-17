@@ -18,18 +18,11 @@ const context = {
     otpBox: false,
     stickerBox: {
       status: false,
-      src: ""
-    },
-    stickerHold: {
-      state: false,
       name: "",
       src: ""
     }
   },
   mutations: {
-    setStickerHold(state, payload) {
-      state.stickerHold = payload;
-    },
     setStickerBox(state, payload) {
       state.stickerBox = payload;
     },
@@ -74,9 +67,6 @@ const context = {
     }
   },
   actions: {
-    setStickerHold({ commit }, payload) {
-      commit("setStickerHold", payload);
-    },
     setStickerBox({ commit }, payload) {
       commit("setStickerBox", payload);
     },

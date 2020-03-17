@@ -146,7 +146,8 @@ const chat = {
           type: payload.type,
           chatwith: payload.chatwith,
           rtype: payload.rtype,
-          replyid: context.state.replyID
+          replyid: context.state.replyID,
+          path: payload.path
         },
         (err, data) => {
           if (!err) {
@@ -201,8 +202,6 @@ const chat = {
         `${process.env.VUE_APP_ACCESS_API}/upload`,
         formData
       );
-
-      console.log(result.data.status);
 
       if (result.data.status) {
         if (rid == 0) {

@@ -62,7 +62,7 @@
                   class="msg"
                   :title="`${userRoomCheck(item)}${item.msg}`"
                 >
-                  <strong>{{ userRoomCheck(item) }}</strong>
+                  <strong class="person_">{{ userRoomCheck(item) }}</strong>
                   {{ item.msg }}
                 </div>
                 <div
@@ -107,6 +107,22 @@
                   : `${getFirstname(item.sender)} sent file`
                   }`
                   }}
+                </div>
+                <div
+                  v-if="item.msg_type == 5"
+                  class="msg"
+                  :title="`${userRoomCheck(item)}${item.msg}`"
+                >
+                  <strong class="person_">{{ userRoomCheck(item) }}</strong>
+                  <div class="sticker">
+                    <img
+                      data-v-5679474e
+                      :src="`/chat/img/emojis/${item.path}`"
+                      alt
+                      srcset
+                      class="img-emoji"
+                    />
+                  </div>
                 </div>
                 <div class="msg-counter-box" v-if="item.unread > 0 && item.msg_type != 2">
                   <span>

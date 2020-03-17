@@ -47,9 +47,12 @@
         <div
           :class="['msg-box', checkTime(index, msg.time) == null && !senderCheck(index, msg.uid) ? 'hide' : '', msg.uid == myID ? 'out' : 'in',]"
         >
-          <div class="msg-inside-sticker">
-            <img data-v-5679474e src="/chat/img/emojis/001-happy.svg" alt srcset class="img-emoji" />
+          <div class="msg-inside-sticker" :title="msg.msg">
+            <img data-v-5679474e :src="`/chat/img/emojis/${msg.path}`" alt srcset class="img-emoji" />
           </div>
+          <!-- <div class="msg-inside-sticker" :title="msg.msg">
+            <img data-v-5679474e :src="`/chat/img/emojis/cool.gif`" alt srcset class="img-emoji" />
+          </div>-->
         </div>
       </div>
     </div>

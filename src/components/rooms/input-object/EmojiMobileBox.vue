@@ -21,7 +21,7 @@
             :title="emoji.name"
             :key="index"
             role="button"
-            @click="setStickerBox({status: true, src: emoji.path})"
+            @touchstart="sticker(emoji)"
           >
             <img class="img-emoji" :src="emoji.path" alt srcset />
           </div>
@@ -41,10 +41,6 @@ export default {
       emojis: JSON.parse(localStorage.getItem("emojis")),
       tabs: [
         {
-          title: "Recent",
-          icon: "access_time"
-        },
-        {
           title: "Emoji",
           icon: "sentiment_very_satisfied"
         }
@@ -58,6 +54,9 @@ export default {
     ...mapActions("Context", ["setStickerBox"]),
     selectIcon(val) {
       this.indexDef = val;
+    },
+    sticker(emoji) {
+      this.setStickerBox({ status: true, name: emoji.name, src: emoji.src });
     }
   }
 };
@@ -79,6 +78,8 @@ export default {
   display: flex;
   width: 100%;
   height: 2.5rem;
+  background-color: $info-color;
+
   .tab {
     display: flex;
     align-items: center;
@@ -96,7 +97,7 @@ export default {
   width: 100%;
   overflow: auto;
   padding: 0.3rem;
-  background-color: $info-color;
+  background-color: white;
   border-radius: 0.2rem;
   .emoji-tab-inner {
     position: relative;
