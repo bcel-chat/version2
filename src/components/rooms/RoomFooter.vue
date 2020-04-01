@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState, mapMutations } from "vuex";
 // import code from "@/helper/father";
 import ds from "@/helper/deepstream";
 import { debounce } from "lodash";
@@ -146,10 +146,29 @@ export default {
       "uploadFile",
       "setReplyBoxToggle",
       "setFileBoxToggle",
-      "setPictureStatus"
+      "setPictureStatus",
+      "addMessage"
     ]),
     ...mapActions("Room", ["setRoom", "setRoomActive"]),
     ...mapActions("Context", ["setToEdit", "editMessage", "setStickerBox"]),
+    // addMessages() {
+    //   this.addMessage([
+    //     {
+    //       cid: "3677",
+    //       msg: "Iydiydiydutidxitdiitd",
+    //       type: "1",
+    //       time: "2020-03-18 16:15:21.0",
+    //       uid: "70",
+    //       rid: "1269",
+    //       displayname: "Vegeta 🤭",
+    //       picture: "20200309_144327.jpg",
+    //       status: "1",
+    //       read: "0",
+    //       path: "",
+    //       rtype: "1"
+    //     }
+    //   ]);
+    // },
     inputHandler(e) {
       if (e.keyCode === 13 && !e.shiftKey) {
         e.preventDefault();
@@ -261,8 +280,10 @@ export default {
       //   chatwith: this.userRoom.uid,
       //   rtype: this.roomType
       // });
-      this.reloadData();
-      this.setReplyBoxToggle({ toggle: false, cid: 0 });
+      setTimeout(() => {
+        this.reloadData();
+        this.setReplyBoxToggle({ toggle: false, cid: 0 });
+      }, 50);
     },
     sendFile(type) {
       this.setPictureStatus({
@@ -286,7 +307,10 @@ export default {
         .substr(2, 4);
 
       ds.event.emit(`room/${this.userRoom.uid}`, this.roomID);
-      ds.event.emit(`chatroom/${this.roomID}`, this.roomID);
+      ds.event.emit(`chatroom/${this.roomID}`, {
+        rid: this.roomID,
+        uid: this.myID
+      });
 
       ds.record
         .getRecord(`message`)

@@ -128,13 +128,14 @@ export default {
       });
 
       ds.event.subscribe(`chatroom/${val.rid}`, data => {
-        this.getMessage(val.rid);
+        this.getMessage({ rid: val.rid, limit: 30 });
       });
+
       this.setRoomType(1);
       this.setRoomID(val.rid);
       this.roomCheck({ uid: val.user_id, rid: val.rid, rtype: val.rtype });
       this.getUserRoom({ uid: val.user_id });
-      this.getMessage(val.rid);
+      this.getMessage({ rid: val.rid, limit: 30 });
       this.onChatClick({ cnt: true, module: "" });
 
       if (this.mobileMode) this.showNewChat(false);

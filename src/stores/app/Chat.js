@@ -19,15 +19,24 @@ const chat = {
     pictureStatus: {
       display: true,
       success: ""
-    }
+    },
+    reload: null
   },
   mutations: {
+    doReload(state, payload) {
+      state.reload = payload;
+    },
     setPictureStatus(state, payload) {
       state.pictureStatus = payload;
     },
     getMessage(state, payload) {
-      state.message = null;
-      state.message = payload;
+      state.message = [];
+      for (var i = 0; i < payload.length; i++)
+        state.message.unshift(payload[i]);
+    },
+    moreMessage(state, payload) {
+      for (var i = 0; i < payload.length; i++)
+        state.message.unshift(payload[i]);
     },
     reloadMessage(state, payload) {
       state.message = payload;
@@ -90,11 +99,14 @@ const chat = {
     }
   },
   actions: {
+    addMessage({ commit }, payload) {
+      commit("addMessage", payload);
+    },
     setPictureStatus({ commit }, payload) {
       commit("setPictureStatus", payload);
     },
     clearMessage({ commit }, payload) {
-      commit("getMessage", null);
+      commit("getMessage", [{}]);
     },
     getMessage({ commit }, payload) {
       const uid = code.from(localStorage.getItem("roger"));
@@ -103,11 +115,47 @@ const chat = {
           "getMessage",
           {
             uid: uid,
-            rid: payload
+            rid: payload.rid,
+            limit: payload.limit
           },
           (err, data) => {
             if (!err && data.length > 0) {
               commit("setRoomID", data[0].rid);
+              commit("getMessage", data);
+              commit("doReload", { uid: uid, rid: data[0].rid });
+            } else {
+              commit("getMessage", null);
+            }
+          }
+        );
+      else commit("getMessage", null);
+    },
+    async sendMessage(context, payload) {
+      try {
+        const res = await axios.post(
+          process.env.VUE_APP_ACCESS_API + "/sendmessage",
+          payload,
+          {
+            headers: store.getters.getToken
+          }
+        );
+        console.log(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    moreMessage({ commit }, payload) {
+      const uid = code.from(localStorage.getItem("roger"));
+      if (payload)
+        ds.rpc.make(
+          "getMessage",
+          {
+            uid: uid,
+            rid: payload.rid,
+            limit: payload.limit
+          },
+          (err, data) => {
+            if (!err && data.length > 0) {
               commit("getMessage", data);
             } else {
               commit("getMessage", null);
@@ -272,7 +320,7 @@ const chat = {
               text: "",
               fn: ""
             });
-            ds.event.emit(`chatroom/${payload.rid}`, payload.rid);
+            // ds.event.emit(`chatroom/${payload.rid}`, payload.rid);
           }, 100);
         }
       });

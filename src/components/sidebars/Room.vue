@@ -268,9 +268,16 @@ export default {
     chat(uid, rid, rtype) {
       this.roomID = rid;
 
+      ds.event.subscribe(`chatroom/${rid}`, data => {
+        if (data)
+          if (data.rid == this.roomID) {
+            this.getMessage({ rid: rid, limit: 30 });
+          }
+      });
+
       setTimeout(() => {
         this.onChatClick({ cnt: true, module: "" });
-      }, 200);
+      }, 100);
 
       this.showInfo(false);
       this.setRoomListData({ uid: uid, rid: rid, rtype: rtype });
@@ -282,11 +289,7 @@ export default {
       this.setRoomType(rtype);
       this.setRoomID(rid);
       this.roomCheck({ uid: uid, rid: rid, rtype: rtype });
-      this.getMessage(rid);
-
-      ds.event.subscribe(`chatroom/${rid}`, data => {
-        if (data) if (data == this.roomID) this.getMessage(rid);
-      });
+      this.getMessage({ rid: rid, limit: 30 });
 
       this.record.subscribe(`typing/${rid}`, this.getTyping, true);
       this.record.subscribe(`online/${uid}`, this.getOnline, true);

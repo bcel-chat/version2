@@ -102,6 +102,9 @@ export default {
         rtype: this.roomType,
         path: val.src
       });
+      setTimeout(() => {
+        this.reloadData();
+      }, 100);
     },
     reloadData() {
       let id = Math.random()

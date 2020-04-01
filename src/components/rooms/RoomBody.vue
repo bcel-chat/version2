@@ -69,10 +69,25 @@ export default {
   watch: {
     $route(to, from) {
       ds.event.unsubscribe(`chatroom/${from.params.id}`);
+      // ds.event.emit(`chatroom/${this.roomListData.rid}`, this.roomListData.rid);
+      this.clearMessage();
     },
-    message() {
+    reload(val) {
       this.$nextTick(() => {
-        this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
+        if (
+          val.rid == this.roomListData.rid &&
+          val.uid == this.roomListData.uid
+        )
+          this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
+        else if (val.rid == this.roomListData.rid && !this.toBottomDisplay) {
+          this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
+          setTimeout(() => {
+            ds.event.emit(
+              `chatroom/${this.roomListData.rid}`,
+              this.roomListData.rid
+            );
+          }, 100);
+        }
       });
     }
   },
@@ -88,13 +103,20 @@ export default {
     //   document.addEventListener("contextmenu", e => e.preventDefault());
 
     setTimeout(() => {
-      this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
+      window.scrollTo(0, this.$refs.readScroll.scrollHeight);
+      // this.$refs.readScroll.scrollTop = this.$refs.readScroll.scrollHeight;
     }, 200);
   },
   computed: {
     ...mapState("AppData", ["mobileMode"]),
     ...mapState("Identify", ["myID"]),
-    ...mapState("Chat", ["message", "roomID", "scroller", "pictureStatus"]),
+    ...mapState("Chat", [
+      "message",
+      "roomID",
+      "scroller",
+      "pictureStatus",
+      "reload"
+    ]),
     ...mapState("Room", ["countReadMsg", "roomListData"])
   },
   methods: {
@@ -105,7 +127,8 @@ export default {
       "setScroller",
       "clearMessage",
       "getMessage",
-      "reloadMessage"
+      "reloadMessage",
+      "moreMessage"
     ]),
     ...mapActions("Room", ["getUserRoom", "getCountReadMsg", "roomCheck"]),
     ...mapActions("Context", ["setDropBox"]),
@@ -143,8 +166,12 @@ export default {
       return i;
     },
     toScroll(e) {
-      let height = e.target.scrollHeight - e.target.clientHeight;
+      if (e.target.scrollTop == 0) {
+        this.moreMessage({ rid: this.roomListData.rid, limit: 60 });
+        // this.$refs.readScroll.scrollTop = 100 * 21;
+      }
 
+      let height = e.target.scrollHeight - e.target.clientHeight;
       if (e.target.scrollTop < height - 50) this.toBottomDisplay = true;
       else this.toBottomDisplay = false;
     },
